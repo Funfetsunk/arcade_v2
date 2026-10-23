@@ -7,17 +7,22 @@ const MAX_ZOOM := 4.0
 ## Margin kept around the room when fitting, as a fraction of the view.
 const FIT_MARGIN := 0.92
 
+## Screen space covered by the HUD at the top and bottom, kept clear when fitting.
+@export var hud_top := 36.0
+@export var hud_bottom := 44.0
+
 var bounds := Rect2()
 var _fit_zoom := 1.0
 
 
-## Frames the whole room.
+## Frames the whole room in the space between the top bar and the action bar.
 func fit(rect: Rect2) -> void:
 	bounds = rect
-	var view := get_viewport_rect().size
+	var view := get_viewport_rect().size - Vector2(0.0, hud_top + hud_bottom)
 	_fit_zoom = minf(view.x / rect.size.x, view.y / rect.size.y) * FIT_MARGIN
 	zoom = Vector2.ONE * _fit_zoom
-	position = rect.get_center()
+	# Shift the view so the room is centred in the free space, not the screen.
+	position = rect.get_center() + Vector2(0.0, (hud_bottom - hud_top) / 2.0) / _fit_zoom
 
 
 func pan_by(screen_delta: Vector2) -> void:

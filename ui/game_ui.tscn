@@ -1,0 +1,345 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://ui/game_ui.gd" id="1"]
+[ext_resource type="Script" path="res://ui/toasts.gd" id="2"]
+[ext_resource type="Script" path="res://ui/event_log.gd" id="3"]
+[ext_resource type="Script" path="res://ui/bottom_sheet.gd" id="4"]
+[ext_resource type="Script" path="res://ui/modal.gd" id="5"]
+
+[node name="GameUI" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBar" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_type_variation = &"BarPanel"
+
+[node name="Row" type="HBoxContainer" parent="Root/TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MenuButton" type="Button" parent="Root/TopBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 26)
+layout_mode = 2
+text = "MENU"
+
+[node name="Stats" type="HBoxContainer" parent="Root/TopBar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="CashStat" type="VBoxContainer" parent="Root/TopBar/Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Caption" type="Label" parent="Root/TopBar/Row/Stats/CashStat"]
+layout_mode = 2
+theme_type_variation = &"StatCaption"
+text = "CASH"
+
+[node name="Cash" type="Label" parent="Root/TopBar/Row/Stats/CashStat"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StatValue"
+text = "$0"
+
+[node name="RepStat" type="VBoxContainer" parent="Root/TopBar/Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Caption" type="Label" parent="Root/TopBar/Row/Stats/RepStat"]
+layout_mode = 2
+theme_type_variation = &"StatCaption"
+text = "REP"
+
+[node name="Rep" type="Label" parent="Root/TopBar/Row/Stats/RepStat"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StatValue"
+text = "0"
+
+[node name="VisitorStat" type="VBoxContainer" parent="Root/TopBar/Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Caption" type="Label" parent="Root/TopBar/Row/Stats/VisitorStat"]
+layout_mode = 2
+theme_type_variation = &"StatCaption"
+text = "VISITORS"
+
+[node name="Visitors" type="Label" parent="Root/TopBar/Row/Stats/VisitorStat"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StatValue"
+text = "0"
+
+[node name="MoodStat" type="VBoxContainer" parent="Root/TopBar/Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Caption" type="Label" parent="Root/TopBar/Row/Stats/MoodStat"]
+layout_mode = 2
+theme_type_variation = &"StatCaption"
+text = "MOOD"
+
+[node name="Mood" type="Label" parent="Root/TopBar/Row/Stats/MoodStat"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "🙂"
+
+[node name="DayStat" type="VBoxContainer" parent="Root/TopBar/Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Caption" type="Label" parent="Root/TopBar/Row/Stats/DayStat"]
+layout_mode = 2
+theme_type_variation = &"StatCaption"
+text = "DAY"
+
+[node name="Day" type="Label" parent="Root/TopBar/Row/Stats/DayStat"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StatValue"
+text = "0"
+
+[node name="Repairs" type="Button" parent="Root"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 40.0
+offset_right = 150.0
+offset_bottom = 66.0
+theme_type_variation = &"DangerButton"
+text = "🔧 REPAIRS NEEDED"
+
+[node name="Toasts" type="VBoxContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 40.0
+offset_right = 130.0
+offset_bottom = 120.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+script = ExtResource("2")
+
+[node name="Log" type="VBoxContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -190.0
+offset_right = 270.0
+offset_bottom = -46.0
+grow_vertical = 0
+mouse_filter = 2
+alignment = 2
+script = ExtResource("3")
+
+[node name="LogPanel" type="PanelContainer" parent="Root/Log"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+theme_type_variation = &"BarPanel"
+
+[node name="LogText" type="RichTextLabel" parent="Root/Log/LogPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+scroll_following = true
+
+[node name="LogToggle" type="Button" parent="Root/Log"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 9
+text = "📜 EVENT LOG"
+
+[node name="Sheet" type="PanelContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 0.36
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_right = -4.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"SheetPanel"
+script = ExtResource("4")
+
+[node name="Layout" type="VBoxContainer" parent="Root/Sheet"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Root/Sheet/Layout"]
+layout_mode = 2
+
+[node name="SheetTitle" type="Label" parent="Root/Sheet/Layout/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderLabel"
+text = "SHOP"
+clip_text = true
+
+[node name="SheetClose" type="Button" parent="Root/Sheet/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+text = "X"
+
+[node name="SheetScroll" type="ScrollContainer" parent="Root/Sheet/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SheetBody" type="VBoxContainer" parent="Root/Sheet/Layout/SheetScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionBar" type="PanelContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"BarPanel"
+
+[node name="Row" type="HBoxContainer" parent="Root/ActionBar"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="FloorButton" type="Button" parent="Root/ActionBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "🕹 FLOOR"
+
+[node name="ShopButton" type="Button" parent="Root/ActionBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "🛒 SHOP"
+
+[node name="StaffButton" type="Button" parent="Root/ActionBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "👤 STAFF"
+
+[node name="BooksButton" type="Button" parent="Root/ActionBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "💰 BOOKS"
+
+[node name="NextDay" type="Button" parent="Root/ActionBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.6
+theme_type_variation = &"PrimaryButton"
+text = "NEXT DAY"
+
+[node name="Modal" type="Control" parent="Root"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5")
+
+[node name="Dim" type="ColorRect" parent="Root/Modal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.08, 0.6)
+
+[node name="Center" type="CenterContainer" parent="Root/Modal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Box" type="PanelContainer" parent="Root/Modal/Center"]
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+theme_type_variation = &"SheetPanel"
+
+[node name="Layout" type="VBoxContainer" parent="Root/Modal/Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="HBoxContainer" parent="Root/Modal/Center/Box/Layout"]
+layout_mode = 2
+
+[node name="ModalTitle" type="Label" parent="Root/Modal/Center/Box/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderLabel"
+autowrap_mode = 3
+
+[node name="ModalClose" type="Button" parent="Root/Modal/Center/Box/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+size_flags_vertical = 0
+text = "X"
+
+[node name="ModalBody" type="VBoxContainer" parent="Root/Modal/Center/Box/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6

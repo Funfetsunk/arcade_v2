@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://main.gd" id="1"]
 [ext_resource type="PackedScene" path="res://floor/floor.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://floor/place_bar.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://sandbox/debug_hud.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/game_ui.tscn" id="4"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1")
@@ -13,5 +13,5 @@ script = ExtResource("1")
 [node name="PlaceBar" parent="." node_paths=PackedStringArray("arcade_floor") instance=ExtResource("3")]
 arcade_floor = NodePath("../Floor")
 
-[node name="DebugHud" parent="." node_paths=PackedStringArray("arcade_floor") instance=ExtResource("4")]
+[node name="GameUI" parent="." node_paths=PackedStringArray("arcade_floor") instance=ExtResource("4")]
 arcade_floor = NodePath("../Floor")

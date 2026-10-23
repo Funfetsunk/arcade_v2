@@ -3,7 +3,12 @@
 # test scripts and still reports success).
 param([string]$Godot = "$PSScriptRoot\..\..\Godot_v4.7.2-stable_win64.exe")
 $project = Resolve-Path "$PSScriptRoot\.."
+# The import step runs a headless editor, whose MCP plugin edits project.godot
+# on exit; keep the open editor's copy intact.
+$settings = Join-Path $project "project.godot"
+$saved = Get-Content $settings -Raw
 & $Godot --headless --path $project --import | Out-Null
+[IO.File]::WriteAllText($settings, $saved)
 $output = & $Godot --headless --path $project -s addons/gut/gut_cmdln.gd 2>&1 | ForEach-Object { "$_" }
 $output
 $gutExit = $LASTEXITCODE

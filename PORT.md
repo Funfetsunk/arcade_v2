@@ -149,7 +149,26 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
    - The MCP plugin adds its three autoloads to `project.godot` when the editor starts and
      removes them on exit or plugin reload; if a game run from the editor stops answering the
      MCP, reload the plugin.
-3. **UI**: Theme, header/HUD, bottom-sheet panels, modals, toasts, log, charts.
+3. **UI** (first pass done 2026-10-23):
+   - Base viewport is now **360×360 with aspect expand**: desktop 1280×720 shows 640×360
+     logical px, a portrait phone about 360×780, so one text size reads on both.
+   - `ui/theme/arcade_theme.tres` (project theme): slate panels, amber primary buttons, type
+     variations (HeaderLabel, StatValue, PrimaryButton, DangerButton, TabButton, CardPanel,
+     SheetPanel, ToastPanel, BarPanel). Pixel font `assets/fonts/arcade_empire_pixel.ttf`
+     (PixelLab, ASCII only, falls back to the default font) for headings/numbers; the default
+     font for body text.
+   - `ui/game_ui.tscn` (`GameUI`): top bar stats, action bar (Floor/Shop/Staff/Books + Next
+     Day), `BottomSheet` hosting the panels, toasts, event log, repairs button, `Modal`
+     (decisions, confirmations, victory / scenario win / daily complete). `UiKit` builds cards
+     and rows. Panels in `ui/panels/`: shop (machines, upgrades), staff, floor (machines,
+     expand room), books (yesterday, running costs, totals, loans), machine (status, price
+     with demand hint, upgrades, stock, DIP switches, move/repair/refurbish/sell).
+   - Still to do: the game menu screens (how to play, achievements, scenarios, marketing,
+     contracts, research, franchises, progress/perks/difficulty, leaderboard, decor/themes/
+     facilities, daily challenge, credits), finance charts, the visitor popup, customer emotes,
+     and an emoji font for the web build (browsers give Godot no emoji fallback).
+   - `tests/run_tests.ps1` restores `project.godot` after its headless import, because the
+     headless editor's MCP plugin strips its autoloads on exit.
 4. **Minigames**: port in batches of ~5. Six used keyboard and need touch controls: barrelhop,
    breakout, dance, maze, pinball, racing (swipe/drag, on-screen buttons, lane taps).
 5. **Audio, polish, web export, hosting.**
