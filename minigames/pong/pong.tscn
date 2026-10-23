@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
+[ext_resource type="Script" path="res://minigames/pong/pong.gd" id="2"]
+
+[node name="PaddleBlip" instance=ExtResource("1")]
+script = ExtResource("2")
+game_name = "Paddle Blip"
+title_icon = "🏓"
+hint = "Drag to move your paddle. First to 5!"

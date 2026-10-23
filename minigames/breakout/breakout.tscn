@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
+[ext_resource type="Script" path="res://minigames/breakout/breakout.gd" id="2"]
+
+[node name="BrickSmash" instance=ExtResource("1")]
+script = ExtResource("2")
+game_name = "Brick Smash"
+title_icon = "🧱"
+hint = "Move the paddle: drag · mouse · ← →"

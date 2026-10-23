@@ -159,6 +159,16 @@ func reinforce_machine(state: GameState, m: MachineInstance) -> bool:
 	return true
 
 
+## Playing a cabinet's minigame pays a bonus and a little buzz. Returns the bonus.
+func award_minigame(state: GameState, game_name: String, score: int) -> int:
+	var bonus := mini(180, GameMath.js_round(score * 0.4))
+	if bonus > 0:
+		state.cash += bonus
+		state.buzz += GameMath.js_round(score / 20.0)
+	_log("🎮 You played %s — scored %d, earned %s!" % [game_name, score, GameMath.money(bonus)], Sim.LogKind.GOOD)
+	return bonus
+
+
 # ── Stock ──
 
 func toggle_stock_item(slot: StockSlot) -> void:

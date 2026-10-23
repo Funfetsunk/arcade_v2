@@ -22,6 +22,10 @@ func refresh() -> void:
 	var def := m.def
 	var actions := Game.actions
 	title = def.display_name
+	if def.minigame:
+		var play := UiKit.button("🎮 PLAY", func() -> void: ui.play_minigame(m), &"PrimaryButton")
+		play.size_flags_horizontal = SIZE_EXPAND_FILL
+		add_child(play)
 	add_child(UiKit.stat_row("Status", "⛔ NOT WORKING" if m.is_broken() else "✅ WORKING", Color("ff4f7b") if m.is_broken() else Color("7cff6b")))
 	var condition := UiKit.hbox([UiKit.label("Condition", &"DimLabel"), UiKit.bar(m.hp, 100.0, UiKit.condition_color(m.hp)),
 		UiKit.label("%d%%%s" % [GameMath.js_round(m.hp), " / max %d%%" % GameMath.js_round(m.max_hp) if m.max_hp < 99.0 else ""])])

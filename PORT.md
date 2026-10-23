@@ -186,6 +186,16 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      headless editor's MCP plugin strips its autoloads on exit.
 4. **Minigames**: port in batches of ~5. Six used keyboard and need touch controls: barrelhop,
    breakout, dance, maze, pinball, racing (swipe/drag, on-screen buttons, lane taps).
+   - Framework (done 2026-10-23): `minigames/minigame.tscn` + `MiniGame` base (title, HUD,
+     quit/done, results screen; fixed 360×460 board scaled to fit; logic in `_tick()` at 60
+     ticks/s like the original's per-frame steps; pointer input in board coordinates, same for
+     touch and mouse; drawing helpers incl. emoji glyphs). Each game is its own inherited
+     scene in `minigames/<game>/`, linked from `MachineDef.minigame`; the machine panel shows
+     🎮 PLAY. `Actions.award_minigame` pays min(180, round(score × 0.4)) + score/20 buzz.
+     `tests/test_minigames.gd` boots every linked game and plays 20 s of random taps.
+   - Batch 1 (done): breakout (drag, hover or ← →), whack, pong, invaders, claw.
+   - Next batches: aim, airhockey, hoops, lightgun, crane · coinpush, slots, snap, starsquad,
+     racing · vrpod, motionsim, barrelhop, dance, rhythm · carsmash, maze, quiz, social, pinball.
 5. **Audio, polish, web export, hosting.**
 
 ## Art workflow

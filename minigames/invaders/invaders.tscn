@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
+[ext_resource type="Script" path="res://minigames/invaders/invaders.gd" id="2"]
+
+[node name="SpaceDefend" instance=ExtResource("1")]
+script = ExtResource("2")
+game_name = "Space Defend"
+title_icon = "👾"
+hint = "Drag to fly — your cannon autofires!"

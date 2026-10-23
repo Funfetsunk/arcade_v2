@@ -121,6 +121,20 @@ func close_sheet() -> void:
 	sheet.close()
 
 
+## Opens a machine's minigame over everything; playing pays a small bonus.
+func play_minigame(m: MachineInstance) -> void:
+	if m.def.minigame == null or get_node_or_null(^"Root/MiniGame"):
+		return
+	sheet.close()
+	var game := m.def.minigame.instantiate() as MiniGame
+	game.name = "MiniGame"
+	game.finished.connect(func(score: int) -> void:
+		game.bonus = Game.actions.award_minigame(Game.state, game.game_name, score)
+		Game.save_game()
+		EventBus.state_changed.emit())
+	$Root.add_child(game)
+
+
 ## Opens a menu screen: a sheet panel, or the how-to-play / credits dialogs.
 func open_screen(id: StringName) -> void:
 	match id:

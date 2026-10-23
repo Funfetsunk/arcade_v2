@@ -25,6 +25,8 @@ enum Special { NONE, JACKPOT, BUZZ }
 @export var footprint := Vector2i(1, 2)
 @export var genre: GenreDef
 @export var dip_switches: Array[DipSwitchDef] = []
+## The playable minigame behind this cabinet (a MiniGame scene); none for amenities.
+@export var minigame: PackedScene
 
 @export_group("Sprites")
 ## One per facing. Machines without art yet fall back to a tinted placeholder.
