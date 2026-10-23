@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"prize_counter"
+display_name = "PRIZE BOOTH"
+emoji = "🧸"
+cost = 1100
+base_earn = 0.0
+electricity = 2
+popularity = 0
+rep_gain = 0.4
+rep_req = 5
+description = "Redeem tickets won on prize machines. Stock prizes; keep it full or ticket-holders get grumpy."
+default_price = 0.0
+type = 3
+audience = 4
+special = 0

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Aggressive promo"
+cost = 350
+rep_add = 3
+foot_mul = 1.35
+log_message = "😈 Promo blitz — you held your crowd!"
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Ignore them"
+foot_mul = 0.85
+log_message = "Lost a few customers to the new rival."
+
+[resource]
+script = ExtResource("1")
+id = &"rival"
+emoji = "😈"
+title = "Rival Opens Nearby"
+description = "A competitor just opened down the street. Run a counter-promo?"
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])

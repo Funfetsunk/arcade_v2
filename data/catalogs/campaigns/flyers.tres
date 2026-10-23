@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CampaignDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/campaign_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"flyers"
+display_name = "Flyer Drop"
+emoji = "📄"
+cost = 200
+foot_mul = 1.15
+days = 3
+blurb = "Hand out flyers nearby. Small, cheap bump."

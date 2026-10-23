@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="GameBalance" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/game_balance.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+stock_cap = 40
+restock_cost_rate = 0.35
+weekday_names = PackedStringArray("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+weekday_long_names = PackedStringArray("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+weekday_foot = PackedFloat64Array(0.8, 0.8, 0.85, 0.95, 1.15, 1.4, 1.2)
+season_length = 14
+prestige_rate = 0.03
+atm_fee = 0.4
+max_decor = 12
+discount_foot_mul = 1.25
+discount_earn_mul = 0.8
+daily_challenge_days = 12
+franchise_rep_req = 40
+rival_names = PackedStringArray("Pixel Palace", "Joystick Junction", "Neon Nights", "Game Over Arcade", "Coin Kingdom", "Turbo Town", "High Score Heroes", "The Big Quarter")
+rival_news = PackedStringArray("added a flashy new cabinet", "ran a big weekend promo", "is pulling a crowd", "slashed its prices", "opened a snack bar")
+rival_appear_day = 8
+rival_growth = 2.5
+undercut_cost = 800
+undercut_hit = 25

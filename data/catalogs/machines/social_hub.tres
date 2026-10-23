@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/immersive.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"social_hub"
+display_name = "SOCIAL HUB"
+emoji = "📸"
+cost = 1800
+base_earn = 40.0
+electricity = 4
+popularity = 12
+rep_gain = 1.2
+rep_req = 15
+description = "(2018) Selfie/clip station — the more it is played, the more buzz it builds and the bigger tomorrow's crowd."
+default_price = 0.75
+type = 0
+audience = 2
+special = 2
+genre = ExtResource("2")

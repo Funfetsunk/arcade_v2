@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/upgrade_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"party_room"
+display_name = "PARTY ROOM"
+cost = 4500
+description = "+$80/day event income"
+emoji = "🎉"
+rep_req = 60

@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ScenarioDef" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://data/defs/scenario_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/pong.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/pinball.tres" id="3"]
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="4"]
+[ext_resource type="Script" path="res://data/defs/stat_requirement.gd" id="5"]
+
+[sub_resource type="Resource" id="stat_requirement_1"]
+script = ExtResource("5")
+stat = 7
+target = 5.0
+
+[sub_resource type="Resource" id="stat_requirement_2"]
+script = ExtResource("5")
+stat = 2
+target = 25.0
+
+[resource]
+script = ExtResource("1")
+id = &"retro"
+display_name = "Retro Purist"
+emoji = "👾"
+blurb = "Classics only. Prove the old screen cabinets still pull a crowd."
+start_cash = 3500
+start_rep = 10
+start_day = 0
+start_machines = Array[ExtResource("4")]([ExtResource("2"), ExtResource("3")])
+goal_label = "Own 5 retro-classic machines and reach 25 reputation"
+goal = Array[ExtResource("5")]([SubResource("stat_requirement_1"), SubResource("stat_requirement_2")])
+par_days = 22

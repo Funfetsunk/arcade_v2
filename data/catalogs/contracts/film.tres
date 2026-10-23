@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ContractDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/contract_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"film"
+display_name = "Film Shoot"
+emoji = "🎬"
+days = 1
+cash = 2000
+rep = 8
+need = "a packed-looking floor: 6+ machines"
+blurb = "Rent the floor for a movie scene."

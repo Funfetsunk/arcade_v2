@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ThemeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/theme_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"mint"
+display_name = "Mint Lounge"
+emoji = "🪩"
+wall = Color(0.023529411764705882, 0.12549019607843137, 0.10980392156862745, 1)
+floor_tint = Color(0.023529411764705882, 0.8392156862745098, 0.6274509803921569, 0.15)
+sign_color = Color(0.023529411764705882, 0.8392156862745098, 0.6274509803921569, 1)

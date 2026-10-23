@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RandomEventDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/random_event_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/vending.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+message = "Vending machine restocked. 📦 -$30."
+kind = 2
+id = &"vend_restock"
+cash = -30
+needs_machine = ExtResource("2")

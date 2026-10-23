@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Protect the machines"
+cost = 300
+protect = true
+log_message = "⚡ Surge protection in place for the night."
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Risk it"
+log_message = "Rolled the dice on the storm…"
+
+[resource]
+script = ExtResource("1")
+id = &"storm"
+emoji = "⛈️"
+title = "Storm Warning"
+description = "Forecasters predict power surges overnight. Pay for protection, or risk machine damage?"
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])

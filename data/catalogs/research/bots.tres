@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ResearchDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/research_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/research/power.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"bots"
+display_name = "Maintenance Bots"
+emoji = "🔧"
+cost = 2400
+description = "−40% manual repair cost."
+requires = Array[ExtResource("1")]([ExtResource("2")])

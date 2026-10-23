@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StockItemDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/stock_item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"energy"
+display_name = "ENERGY DRINK"
+emoji = "⚡"
+base_pop = 1.0
+default_price = 2.5
+description = "Gamers love a boost."
+perish = 0.0

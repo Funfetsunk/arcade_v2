@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="DipSwitchDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/dip_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="dip_option_def_1"]
+script = ExtResource("2")
+value = &"10k"
+label = "10K"
+earn_mul = 0.93
+rep_mul = 1.1
+
+[sub_resource type="Resource" id="dip_option_def_2"]
+script = ExtResource("2")
+value = &"20k"
+label = "20K"
+earn_mul = 1.0
+rep_mul = 1.0
+
+[sub_resource type="Resource" id="dip_option_def_3"]
+script = ExtResource("2")
+value = &"50k"
+label = "50K"
+earn_mul = 1.05
+rep_mul = 0.95
+
+[sub_resource type="Resource" id="dip_option_def_4"]
+script = ExtResource("2")
+value = &"off"
+label = "NONE"
+earn_mul = 1.1
+rep_mul = 0.85
+
+[resource]
+script = ExtResource("1")
+id = &"bonusLife"
+label = "Bonus Life"
+options = Array[ExtResource("2")]([SubResource("dip_option_def_1"), SubResource("dip_option_def_2"), SubResource("dip_option_def_3"), SubResource("dip_option_def_4")])

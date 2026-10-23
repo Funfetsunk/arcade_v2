@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StockItemDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/stock_item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"sticker"
+display_name = "STICKER"
+emoji = "⭐"
+base_pop = 0.0
+default_price = 0.0
+description = "Cheap and cheerful — clears small ticket wins."
+perish = 0.0
+ticket_cost = 10
+wholesale_cost = 0.1

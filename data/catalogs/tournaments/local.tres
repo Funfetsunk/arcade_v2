@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TournamentDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/tournament_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"local"
+display_name = "Local Cup"
+emoji = "🥉"
+cost = 300
+lead_days = 3
+foot_mul = 1.4
+entrants = 20
+entry_fee = 5
+prize = 150
+rep_gain = 6
+rep_req = 10
+blurb = "A friendly neighbourhood comp."

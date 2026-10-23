@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TournamentDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/tournament_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"champ"
+display_name = "Championship"
+emoji = "🥇"
+cost = 2000
+lead_days = 5
+foot_mul = 2.1
+entrants = 90
+entry_fee = 12
+prize = 1500
+rep_gain = 22
+rep_req = 55
+blurb = "The big one — huge crowd, huge stakes."

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/immersive.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/difficulty.tres" id="3"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/game_length.tres" id="4"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="5"]
+[ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="6"]
+
+[resource]
+script = ExtResource("1")
+id = &"vr"
+display_name = "VIRTUAL REALITY POD"
+emoji = "🥽"
+cost = 5500
+base_earn = 120.0
+electricity = 18
+popularity = 30
+rep_gain = 3.0
+rep_req = 50
+description = "(2026) Cutting-edge. Huge earner."
+default_price = 2.0
+type = 0
+audience = 3
+special = 0
+genre = ExtResource("2")
+dip_switches = Array[ExtResource("6")]([ExtResource("3"), ExtResource("4"), ExtResource("5")])

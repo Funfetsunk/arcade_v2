@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/classic.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"trivia"
+display_name = "QUIZ KING"
+emoji = "❓"
+cost = 1300
+base_earn = 46.0
+electricity = 3
+popularity = 13
+rep_gain = 1.0
+rep_req = 8
+description = "(1985) Pub-quiz cabinet. Regulars love a comeback."
+default_price = 0.75
+type = 0
+audience = 3
+special = 0
+genre = ExtResource("2")

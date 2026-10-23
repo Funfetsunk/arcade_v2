@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GenreDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/genre_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"immersive"
+label = "Immersive Zone"
+emoji = "🥽"
+color = Color(0.22745098039215686, 0.5254901960784314, 1.0, 1)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StockItemDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/stock_item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"pretzel"
+display_name = "PRETZEL"
+emoji = "🥨"
+base_pop = 0.8
+default_price = 4.0
+description = "Upmarket snack."
+perish = 0.15

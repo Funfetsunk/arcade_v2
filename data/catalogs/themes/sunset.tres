@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ThemeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/theme_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"sunset"
+display_name = "Sunset Strip"
+emoji = "🌇"
+wall = Color(0.10196078431372549, 0.050980392156862744, 0.09411764705882353, 1)
+floor_tint = Color(1.0, 0.3686274509803922, 0.47058823529411764, 0.16)
+sign_color = Color(1.0, 0.0, 0.43137254901960786, 1)

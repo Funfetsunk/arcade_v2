@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TournamentDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/tournament_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"regional"
+display_name = "Regional Open"
+emoji = "🥈"
+cost = 800
+lead_days = 4
+foot_mul = 1.7
+entrants = 45
+entry_fee = 8
+prize = 500
+rep_gain = 12
+rep_req = 30
+blurb = "Players travel in from across the city."

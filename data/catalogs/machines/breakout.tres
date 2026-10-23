@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/classic.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/difficulty.tres" id="3"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/lives.tres" id="4"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="5"]
+[ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="6"]
+
+[resource]
+script = ExtResource("1")
+id = &"breakout"
+display_name = "BRICK SMASH"
+emoji = "🧱"
+cost = 350
+base_earn = 15.0
+electricity = 1
+popularity = 5
+rep_gain = 0.4
+rep_req = 0
+description = "(1976) Smash blocks with a paddle and ball."
+default_price = 0.25
+type = 0
+audience = 1
+special = 0
+genre = ExtResource("2")
+dip_switches = Array[ExtResource("6")]([ExtResource("3"), ExtResource("4"), ExtResource("5")])

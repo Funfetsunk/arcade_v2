@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FacilityDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/facility_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"seating"
+display_name = "Seating Area"
+emoji = "🛋️"
+cost = 500
+need_at = 30
+penalty = 6
+blurb = "Somewhere to rest keeps tired players happy."

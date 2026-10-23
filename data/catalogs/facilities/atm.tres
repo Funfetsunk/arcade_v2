@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FacilityDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/facility_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"atm"
+display_name = "ATM"
+emoji = "🏧"
+cost = 900
+need_at = 35
+penalty = 6
+blurb = "Cash on hand = more spending. Earns a fee per visitor."

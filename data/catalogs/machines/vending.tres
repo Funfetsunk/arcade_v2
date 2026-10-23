@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"vending"
+display_name = "VENDING MACHINE"
+emoji = "🥤"
+cost = 800
+base_earn = 0.0
+electricity = 1
+popularity = 0
+rep_gain = 0.1
+rep_req = 0
+description = "Stock up to 5 snacks & drinks. Set price per item. Passive income."
+default_price = 0.0
+type = 1
+audience = 4
+special = 0

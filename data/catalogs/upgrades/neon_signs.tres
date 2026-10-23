@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/upgrade_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"neon_signs"
+display_name = "NEON SIGNAGE"
+cost = 400
+description = "+20% daily footfall"
+emoji = "✨"
+rep_req = 0

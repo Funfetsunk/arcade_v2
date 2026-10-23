@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeatherDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/weather_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"snow"
+display_name = "Snow"
+emoji = "❄️"
+foot_mul = 0.9
+weight = 1
+blurb = "Pretty, but travel is hard."

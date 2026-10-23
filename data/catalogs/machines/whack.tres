@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/prize.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"whack"
+display_name = "WHACK-IT"
+emoji = "🔨"
+cost = 900
+base_earn = 36.0
+electricity = 2
+popularity = 11
+rep_gain = 0.7
+rep_req = 3
+description = "(1976) Bop the critters as they pop up. Wins tickets."
+default_price = 0.5
+type = 0
+audience = 1
+special = 0
+genre = ExtResource("2")

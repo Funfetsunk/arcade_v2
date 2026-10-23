@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TownDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/town_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"university"
+display_name = "Uni Quarter"
+emoji = "🎓"
+cost = 11000
+income = 250
+blurb = "Students with time to kill and tokens to spend."

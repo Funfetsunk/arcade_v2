@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="DipSwitchDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/dip_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="dip_option_def_1"]
+script = ExtResource("2")
+value = &"1"
+label = "1"
+earn_mul = 1.15
+rep_mul = 0.95
+
+[sub_resource type="Resource" id="dip_option_def_2"]
+script = ExtResource("2")
+value = &"2"
+label = "2"
+earn_mul = 1.0
+rep_mul = 1.0
+
+[sub_resource type="Resource" id="dip_option_def_3"]
+script = ExtResource("2")
+value = &"3"
+label = "3"
+earn_mul = 0.9
+rep_mul = 1.1
+
+[resource]
+script = ExtResource("1")
+id = &"songsPerCredit"
+label = "Songs/Credit"
+options = Array[ExtResource("2")]([SubResource("dip_option_def_1"), SubResource("dip_option_def_2"), SubResource("dip_option_def_3")])

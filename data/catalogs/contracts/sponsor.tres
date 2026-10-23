@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ContractDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/contract_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"sponsor"
+display_name = "Brand Sponsor"
+emoji = "📣"
+days = 5
+cash = 1500
+rep = 6
+need = "keep satisfaction at 60%+ to the deadline"
+blurb = "Run a soda brand's banners for a week."

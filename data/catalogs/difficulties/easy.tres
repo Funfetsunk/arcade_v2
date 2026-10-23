@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DifficultyDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/difficulty_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"easy"
+display_name = "Casual"
+emoji = "🌤️"
+foot_mul = 1.2
+blurb = "Bigger crowds, gentler pressure — a relaxed build."

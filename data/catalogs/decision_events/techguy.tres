@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Hire him"
+cost = 150
+repair_all = true
+log_message = "🔧 Every machine serviced — good as new!"
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Skip it"
+log_message = "Skipped the maintenance offer."
+
+[resource]
+script = ExtResource("1")
+id = &"techguy"
+emoji = "🔧"
+title = "Travelling Technician"
+description = "A tech offers a cut-price once-over of every machine."
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])
+condition = 1

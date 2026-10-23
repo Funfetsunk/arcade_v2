@@ -92,8 +92,26 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
    - Folders: `core/` (autoloads, Sim, RNG, GameState), `data/defs/` (Resource class scripts),
      `data/catalogs/` (.tres), `floor/`, `actors/`, `ui/` (+ `ui/theme/`), `minigames/`,
      `assets/{sprites,tiles,audio,fonts}/`, `tests/` (GUT, installed in phase 1).
-1. **Sim + data**: Resources for catalogs, `GameState`, RNG, `Sim.run_day()`, signals, save/load,
-   GUT tests passing against original golden values.
+1. **Sim + data**, split in two:
+   - **1a (done 2026-10-23):** every catalog is a Resource class in `data/defs/` with one `.tres`
+     per entry in `data/catalogs/`, all gathered in `data/catalogs/game_data.tres` (`GameData`,
+     with id lookups). Tunables live in `game_balance.tres`. Runtime state is `GameState` plus
+     `MachineInstance` / `StaffInstance` / `StockSlot` / `LoanState` / `DayBuff` in `core/state/`.
+     `Rng` (bit-exact mulberry32), `Economy`, `GameMath` (JS-style rounding), and `Sim.run_day()`
+     with signals live in `core/`. Autoloads: `Data`, `EventBus`, `Game`. `SaveSystem` writes
+     `user://save.tres`. GUT 9.7.1 is in `addons/gut/` (tests excluded from export).
+     Run tests: `powershell -File tests/run_tests.ps1`. 50 tests pass, including
+     `test_sim_parity.gd`, which checks the Godot sim day by day against the original
+     TypeScript sim on 4 setups (fixture made by running the original in Node).
+     The original catalogs were converted once by a script; the `.tres` files are now the source.
+     Dropped: `DECOR_SPOTS` / `FACILITY_SPOTS` (pixel positions for the old 3×3 layout; phase 2
+     places decor on the grid).
+   - **1b (next):** the pre/post-day systems that lived in `main.ts` around `runDayNow()`:
+     weekday rhythm, promos/campaigns, weather roll, rival, decisions, tickets & prizes,
+     facilities/ATM, franchises, specials (jackpot, buzz), aging, research, staff morale,
+     satisfaction, tournaments, contracts, daily challenge, goals, achievements, scenario win,
+     plus the player actions (buy/sell/repair/restock/hire/loan/expand...). Same approach:
+     port into `core/` systems driven by `Game`, with tests.
 2. **Floor scene**: tilemap room, cabinets, customers/techs with pathing, placement mode
    (drag ghost, tap/click to place, on-screen rotate/place/cancel), camera pan/zoom (drag + pinch +
    mouse wheel), zoom-to-fit.

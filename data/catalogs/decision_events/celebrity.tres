@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Roll out the red carpet"
+cost = 400
+rep_add = 10
+foot_mul = 1.4
+log_message = "🌟 Celeb visit — the buzz is huge!"
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Let them be"
+log_message = "Gave the celeb their space."
+
+[resource]
+script = ExtResource("1")
+id = &"celebrity"
+emoji = "🌟"
+title = "Celebrity Sighting"
+description = "A B-list celebrity is in town and might drop by for a photo op."
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])

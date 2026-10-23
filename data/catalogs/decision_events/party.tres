@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Accept the booking"
+gain_cash = 400
+foot_mul = 1.3
+log_message = "🎂 Party booked — cash up front, floor packed!"
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Keep it casual"
+log_message = "Declined the party booking."
+
+[resource]
+script = ExtResource("1")
+id = &"party"
+emoji = "🎂"
+title = "Birthday Booking"
+description = "A family wants to book a big birthday party. They pay up front and fill the floor."
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])

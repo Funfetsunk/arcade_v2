@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/upgrade_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"snack_bar"
+display_name = "SNACK BAR"
+cost = 1800
+description = "+$30/day passive income"
+emoji = "🍟"
+rep_req = 20

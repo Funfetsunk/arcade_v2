@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/prize.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"basketball"
+display_name = "PRO HOOPS"
+emoji = "🏀"
+cost = 1200
+base_earn = 44.0
+electricity = 3
+popularity = 14
+rep_gain = 0.9
+rep_req = 6
+description = "(1991) Sink as many hoops as you can before the buzzer."
+default_price = 0.5
+type = 0
+audience = 1
+special = 0
+genre = ExtResource("2")

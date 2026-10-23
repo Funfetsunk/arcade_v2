@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StaffDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/staff_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"cashier"
+display_name = "CASHIER"
+emoji = "💁"
+wage = 45
+role = "+10% token earnings"
+skill = 1
+level = 1
+rep_req = 0

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ContractDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/contract_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"party"
+display_name = "Birthday Party"
+emoji = "🎂"
+days = 2
+cash = 600
+rep = 4
+need = "4+ machines and a snack/vending option"
+blurb = "Host the Henderson twins' bash."

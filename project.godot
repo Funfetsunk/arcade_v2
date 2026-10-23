@@ -15,6 +15,9 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [autoload]
 
+Data="*res://core/data.gd"
+EventBus="*res://core/event_bus.gd"
+Game="*res://core/game.gd"
 MCPScreenshot="*res://addons/godot_mcp/mcp_screenshot_service.gd"
 MCPInputService="*res://addons/godot_mcp/mcp_input_service.gd"
 MCPGameInspector="*res://addons/godot_mcp/mcp_game_inspector_service.gd"

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="DailyVariantDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/defs/daily_variant_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/difficulties/normal.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/claw.tres" id="3"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/pinball.tres" id="4"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/ddr.tres" id="5"]
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="6"]
+
+[resource]
+script = ExtResource("1")
+id = &"standard"
+cash = 3000
+rep = 5
+blurb = "A balanced start — out-earn yesterday."
+difficulty = ExtResource("2")
+machines = Array[ExtResource("6")]([ExtResource("3"), ExtResource("4"), ExtResource("5")])

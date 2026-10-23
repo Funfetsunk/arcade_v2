@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DailyVariantDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/daily_variant_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/difficulties/normal.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"startup"
+cash = 5000
+rep = 0
+blurb = "Empty unit, fat wallet. Build fast."
+difficulty = ExtResource("2")

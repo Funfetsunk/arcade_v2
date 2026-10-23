@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/prize.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"air_hockey"
+display_name = "AIR HOCKEY"
+emoji = "🏒"
+cost = 1400
+base_earn = 46.0
+electricity = 4
+popularity = 14
+rep_gain = 1.0
+rep_req = 6
+description = "(1972) Fast 2-player table. A family favourite."
+default_price = 0.75
+type = 0
+audience = 1
+special = 0
+genre = ExtResource("2")

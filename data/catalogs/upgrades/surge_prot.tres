@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/upgrade_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"surge_prot"
+display_name = "SURGE PROTECT"
+cost = 650
+description = "Halves machine damage from power surges"
+emoji = "⚡"
+rep_req = 0

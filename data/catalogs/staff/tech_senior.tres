@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StaffDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/staff_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"tech_senior"
+display_name = "SENIOR TECH"
+emoji = "⚙️"
+wage = 100
+role = "Auto-repairs (fast, 2/day)"
+skill = 0
+level = 2
+rep_req = 25

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AchievementDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://data/defs/achievement_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/stat_requirement.gd" id="2"]
+
+[sub_resource type="Resource" id="stat_requirement_1"]
+script = ExtResource("2")
+stat = 3
+target = 1000.0
+
+[resource]
+script = ExtResource("1")
+id = &"grand"
+emoji = "🪙"
+title = "First Grand"
+description = "Earn $1,000 total."
+requirement = SubResource("stat_requirement_1")

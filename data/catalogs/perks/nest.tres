@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PerkDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/perk_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"nest"
+display_name = "Nest Egg"
+emoji = "🥚"
+max_rank = 5
+per_rank = 1000.0
+kind = 4
+description = "+$1,000 starting cash per rank."

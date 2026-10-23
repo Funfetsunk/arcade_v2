@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"food_counter"
+display_name = "FOOD COUNTER"
+emoji = "🍔"
+cost = 2000
+base_earn = 0.0
+electricity = 3
+popularity = 0
+rep_gain = 0.3
+rep_req = 20
+description = "Hot food counter. Needs a COUNTER ATTENDANT for full yield. Stock up to 5 items."
+default_price = 0.0
+type = 2
+audience = 4
+special = 0

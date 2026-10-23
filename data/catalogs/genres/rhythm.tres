@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GenreDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/genre_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"rhythm"
+label = "Rhythm & Motion"
+emoji = "🎸"
+color = Color(0.7803921568627451, 0.49019607843137253, 1.0, 1)

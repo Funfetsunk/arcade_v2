@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StaffDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/staff_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"manager"
+display_name = "FLOOR MANAGER"
+emoji = "📋"
+wage = 140
+role = "+20% all machine income"
+skill = 3
+level = 1
+rep_req = 45

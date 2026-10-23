@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Host it"
+cost = 500
+rep_add = 8
+foot_mul = 1.6
+log_message = "🏆 Tournament night — the place is packed!"
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Maybe next time"
+log_message = "Passed on the tournament."
+
+[resource]
+script = ExtResource("1")
+id = &"tournament"
+emoji = "🏆"
+title = "Host a Tournament?"
+description = "A gaming club wants to run a tournament tonight. Big crowd, big buzz — if you cover the prize pool."
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])

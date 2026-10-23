@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CampaignDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/campaign_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"radio"
+display_name = "Radio Spot"
+emoji = "📻"
+cost = 750
+foot_mul = 1.35
+days = 4
+blurb = "Drive-time ads pull a bigger crowd."

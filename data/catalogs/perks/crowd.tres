@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PerkDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/perk_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"crowd"
+display_name = "Crowd Pleaser"
+emoji = "😊"
+max_rank = 5
+per_rank = 3.0
+kind = 2
+description = "+3 satisfaction per rank."

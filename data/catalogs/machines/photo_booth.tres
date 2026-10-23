@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/immersive.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/print_quality.tres" id="3"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="4"]
+[ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="5"]
+
+[resource]
+script = ExtResource("1")
+id = &"photo_booth"
+display_name = "SNAP BOOTH"
+emoji = "📸"
+cost = 2200
+base_earn = 62.0
+electricity = 3
+popularity = 14
+rep_gain = 1.3
+rep_req = 30
+description = "(2010) Snap, print, share. Group party fun."
+default_price = 3.0
+type = 0
+audience = 3
+special = 0
+genre = ExtResource("2")
+dip_switches = Array[ExtResource("5")]([ExtResource("3"), ExtResource("4")])

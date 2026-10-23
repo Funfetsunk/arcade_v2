@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/prize.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"jackpot_machine"
+display_name = "MEGA JACKPOT"
+emoji = "🎰"
+cost = 2600
+base_earn = 60.0
+electricity = 5
+popularity = 16
+rep_gain = 1.4
+rep_req = 25
+description = "(2000) A slice of every play feeds a progressive jackpot — when it hits, the crowd erupts."
+default_price = 1.0
+type = 0
+audience = 3
+special = 1
+genre = ExtResource("2")

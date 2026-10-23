@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ScenarioDef" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://data/defs/scenario_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/claw.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/pinball.tres" id="3"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/ddr.tres" id="4"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/crane.tres" id="5"]
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="6"]
+[ext_resource type="Script" path="res://data/defs/stat_requirement.gd" id="7"]
+
+[sub_resource type="Resource" id="stat_requirement_1"]
+script = ExtResource("7")
+stat = 3
+target = 8000.0
+
+[resource]
+script = ExtResource("1")
+id = &"weekend"
+display_name = "Weekend Warrior"
+emoji = "🌟"
+blurb = "It's Friday night. Ride the weekend rush and bank $8,000 in takings."
+start_cash = 2500
+start_rep = 20
+start_day = 5
+start_machines = Array[ExtResource("6")]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5")])
+goal_label = "Earn $8,000 total"
+goal = Array[ExtResource("7")]([SubResource("stat_requirement_1")])
+par_days = 12

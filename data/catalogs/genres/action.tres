@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GenreDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/genre_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"action"
+label = "Action Cabs"
+emoji = "🥊"
+color = Color(1.0, 0.0, 0.43137254901960786, 1)

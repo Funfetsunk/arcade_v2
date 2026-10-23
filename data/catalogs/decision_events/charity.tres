@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DecisionEventDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/defs/decision_event_def.gd" id="1"]
+[ext_resource type="Script" path="res://data/defs/decision_option_def.gd" id="2"]
+
+[sub_resource type="Resource" id="decision_option_def_1"]
+script = ExtResource("2")
+label = "Host for charity"
+cost = 150
+rep_add = 9
+log_message = "❤️ Charity night — the community loves you!"
+
+[sub_resource type="Resource" id="decision_option_def_2"]
+script = ExtResource("2")
+label = "Not this time"
+rep_add = -1
+log_message = "Declined the charity night."
+
+[resource]
+script = ExtResource("1")
+id = &"charity"
+emoji = "❤️"
+title = "Charity Game Night"
+description = "A local charity asks to host a fundraiser night — goodwill over profit."
+options = Array[ExtResource("2")]([SubResource("decision_option_def_1"), SubResource("decision_option_def_2")])

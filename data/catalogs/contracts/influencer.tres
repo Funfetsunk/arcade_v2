@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ContractDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/contract_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"influencer"
+display_name = "Influencer Visit"
+emoji = "🤳"
+days = 3
+cash = 800
+rep = 10
+need = "a Social Hub installed for the buzz"
+blurb = "A streamer features your arcade."

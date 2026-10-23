@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/rhythm.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"motion_sim"
+display_name = "MOTION SIMULATOR"
+emoji = "🎢"
+cost = 4200
+base_earn = 100.0
+electricity = 14
+popularity = 26
+rep_gain = 2.4
+rep_req = 40
+description = "(2015) Hydraulic motion pod. Thrill-seekers queue up."
+default_price = 1.5
+type = 0
+audience = 2
+special = 0
+genre = ExtResource("2")

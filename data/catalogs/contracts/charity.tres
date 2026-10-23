@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ContractDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/contract_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"charity"
+display_name = "Charity Day"
+emoji = "🎗️"
+days = 2
+cash = 0
+rep = 14
+need = "a Prize Booth (donate a day of prizes)"
+blurb = "Give back — pure reputation."

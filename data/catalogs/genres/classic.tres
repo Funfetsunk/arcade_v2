@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GenreDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/genre_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"classic"
+label = "Retro Classics"
+emoji = "👾"
+color = Color(0.0, 0.9607843137254902, 0.8313725490196079, 1)

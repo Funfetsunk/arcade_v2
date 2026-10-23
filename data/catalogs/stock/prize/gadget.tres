@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StockItemDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/stock_item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"gadget"
+display_name = "GADGET"
+emoji = "🎮"
+base_pop = 0.0
+default_price = 0.0
+description = "Teens grind tickets for these."
+perish = 0.0
+ticket_cost = 350
+wholesale_cost = 8.0

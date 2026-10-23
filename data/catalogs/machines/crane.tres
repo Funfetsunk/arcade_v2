@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MachineDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/genres/prize.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/win_rate.tres" id="3"]
+[ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="4"]
+[ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="5"]
+
+[resource]
+script = ExtResource("1")
+id = &"crane"
+display_name = "PRIZE CRANE"
+emoji = "🎁"
+cost = 1000
+base_earn = 38.0
+electricity = 3
+popularity = 9
+rep_gain = 0.6
+rep_req = 0
+description = "(1985) Kids love the prizes."
+default_price = 0.5
+type = 0
+audience = 1
+special = 0
+genre = ExtResource("2")
+dip_switches = Array[ExtResource("5")]([ExtResource("3"), ExtResource("4")])

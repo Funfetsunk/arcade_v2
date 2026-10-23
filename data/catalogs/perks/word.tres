@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PerkDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/perk_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"word"
+display_name = "Word of Mouth"
+emoji = "📢"
+max_rank = 5
+per_rank = 0.04
+kind = 1
+description = "+4% footfall per rank."

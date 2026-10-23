@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ThemeDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/defs/theme_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"retro"
+display_name = "Retro Arcade"
+emoji = "👾"
+wall = Color(0.06274509803921569, 0.06274509803921569, 0.18823529411764706, 1)
+floor_tint = Color(0.22745098039215686, 0.5254901960784314, 1.0, 0.16)
+sign_color = Color(0.22745098039215686, 0.5254901960784314, 1.0, 1)

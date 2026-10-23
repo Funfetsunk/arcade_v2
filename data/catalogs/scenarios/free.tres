@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ScenarioDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/defs/scenario_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/claw.tres" id="2"]
+[ext_resource type="Resource" path="res://data/catalogs/machines/pinball.tres" id="3"]
+[ext_resource type="Script" path="res://data/defs/machine_def.gd" id="4"]
+[ext_resource type="Script" path="res://data/defs/stat_requirement.gd" id="5"]
+
+[sub_resource type="Resource" id="stat_requirement_1"]
+script = ExtResource("5")
+stat = 11
+target = 1.0
+
+[resource]
+script = ExtResource("1")
+id = &"free"
+display_name = "Free Play"
+emoji = "🎮"
+blurb = "Build your arcade empire at your own pace. No fixed deadline — chase the GOALS list and aim for 100 reputation."
+start_cash = 2000
+start_rep = 5
+start_day = 0
+start_machines = Array[ExtResource("4")]([ExtResource("2"), ExtResource("3")])
+goal_label = "Complete every milestone goal"
+goal = Array[ExtResource("5")]([SubResource("stat_requirement_1")])
