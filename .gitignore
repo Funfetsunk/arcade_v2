@@ -8,3 +8,6 @@
 
 # Local Claude Code settings
 .claude/settings.local.json
+
+# Godot MCP Pro is a paid addon (proprietary licence): keep it local, never commit it.
+/addons/godot_mcp/

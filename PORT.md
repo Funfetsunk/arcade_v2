@@ -33,6 +33,13 @@ Order of work:
 - **PixelLab MCP** — Tier 2, 5000 generations/cycle, resets ~21st monthly (3,920 left on 2026-10-23).
 - Write `.gd` scripts as plain files (diffable); use Godot MCP for scene building, running, errors,
   screenshots.
+- **Godot MCP Pro is proprietary (no redistribution).** It is git-ignored, was stripped from the
+  history on 2026-10-23, and is excluded from the web export. Never commit it. The local
+  `backup/before-addon-strip` branch still contains it: never push that branch; delete it once
+  the public repo is set up.
+- **GitHub Pages test build:** `.github/workflows/pages.yml` runs the tests, exports the web build
+  and deploys it on every push to `main`. One-time setup: repo Settings → Pages → Source:
+  "GitHub Actions".
 
 ## Source repo overview
 
