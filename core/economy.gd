@@ -40,17 +40,22 @@ static func base_footfall(state: GameState) -> int:
 ## Covering more audience segments (kids / teen / adult) draws a bigger crowd:
 ## all three +15%, two neutral, one -15%. Amenities serve everyone and don't count.
 static func audience_mix_mul(state: GameState) -> float:
-	var covered := {}
-	for m in state.machines:
-		var aud := m.def.audience
-		if aud in [MachineDef.Audience.KIDS, MachineDef.Audience.TEEN, MachineDef.Audience.ADULT] and m.def.popularity > 0:
-			covered[aud] = true
-	match covered.size():
+	match audiences_covered(state):
 		3:
 			return 1.15
 		1:
 			return 0.85
 	return 1.0
+
+
+## How many of kids / teen / adult the arcade machines serve.
+static func audiences_covered(state: GameState) -> int:
+	var covered := {}
+	for m in state.machines:
+		var aud := m.def.audience
+		if aud in [MachineDef.Audience.KIDS, MachineDef.Audience.TEEN, MachineDef.Audience.ADULT] and m.def.popularity > 0:
+			covered[aud] = true
+	return covered.size()
 
 
 ## Plays fall as price rises above default. 1.0 at default price; revenue

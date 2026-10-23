@@ -12,6 +12,8 @@ extends Resource
 @export var perish: float
 ## Prize booth only: tickets needed to redeem one.
 @export var ticket_cost: int
+## Prize booth only: share of each day's redemptions that go to this prize.
+@export var redeem_weight: float = 0.25
 ## Explicit wholesale cost per unit; negative means derive it from the sale price.
 @export var wholesale_cost: float = -1.0
 

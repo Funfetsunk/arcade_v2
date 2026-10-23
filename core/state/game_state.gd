@@ -57,6 +57,30 @@ const SAVE_VERSION := 1
 @export var scenario_won: bool
 @export var difficulty: StringName = &"normal"
 
+@export_group("Systems")
+## Sticky once a junior tech has ever been hired.
+@export var senior_tech_unlocked: bool
+@export var total_tickets: int
+@export var last_day_tickets: int
+@export var last_day_redeemed: int
+@export var ticket_machines: int
+@export var campaign: CampaignState
+## Happy-hour discount: more visitors, thinner takings.
+@export var discount_on: bool
+@export var tournament: TournamentBooking
+@export var decor: Array[DecorPropDef] = []
+@export var facilities: Array[FacilityDef] = []
+## Forecast for the next day to run; null until first rolled.
+@export var weather: WeatherDef
+@export var buzz: float
+@export var daily_key: String
+## Days left in the daily challenge; -1 when not playing one.
+@export var daily_days_left: int = -1
+@export var rival: RivalState
+@export var contract: ContractBooking
+@export var research: Array[ResearchDef] = []
+@export var franchises: Array[FranchiseState] = []
+
 @export_group("Sim multipliers")
 ## Each is neutral at 1.0. The day-orchestration systems set them before a day runs.
 @export var day_rhythm_mul: float = 1.0
@@ -86,6 +110,29 @@ func machine_by_id(id: int) -> MachineInstance:
 
 func has_upgrade(id: StringName) -> bool:
 	return upgrades.any(func(u: UpgradeDef) -> bool: return u.id == id)
+
+
+func has_research(id: StringName) -> bool:
+	return research.any(func(r: ResearchDef) -> bool: return r.id == id)
+
+
+func has_facility(id: StringName) -> bool:
+	return facilities.any(func(f: FacilityDef) -> bool: return f.id == id)
+
+
+func has_machine_type(type: MachineDef.Type) -> bool:
+	return machines.any(func(m: MachineInstance) -> bool: return m.def.type == type)
+
+
+func has_machine(id: StringName) -> bool:
+	return machines.any(func(m: MachineInstance) -> bool: return m.def.id == id)
+
+
+func franchise_in(town: TownDef) -> FranchiseState:
+	for f in franchises:
+		if f.town == town:
+			return f
+	return null
 
 
 ## Highest staff level hired for a skill; 0 if nobody has it.

@@ -12,4 +12,5 @@ default_price = 0.0
 description = "Cheap and cheerful — clears small ticket wins."
 perish = 0.0
 ticket_cost = 10
+redeem_weight = 0.5
 wholesale_cost = 0.1

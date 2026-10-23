@@ -39,6 +39,30 @@ extends Resource
 @export var daily_challenge_days: int = 12
 @export var franchise_rep_req: int = 40
 
+@export_group("Room")
+@export var max_room := Vector2i(40, 30)
+## Tiles added per expansion.
+@export var expand_step: int = 4
+@export var expand_base_cost: int = 1500
+@export var expand_cost_growth: float = 1.6
+
+@export_group("Machine upkeep")
+@export var tune_up_max: int = 3
+## Tune-Up cost per level as a fraction of the machine price.
+@export var tune_up_cost_rate: float = 0.35
+@export var reinforce_max: int = 2
+@export var reinforce_cost_rate: float = 0.30
+## Days before a cabinet starts losing max condition.
+@export var aging_starts_day: int = 25
+@export var aging_per_day: float = 0.4
+@export var aging_floor: float = 40.0
+@export var refurbish_cost_rate: float = 0.25
+
+@export_group("Tickets")
+@export var tickets_per_play: int = 4
+## Average tickets one redeemed prize represents.
+@export var tickets_per_prize: int = 12
+
 @export_group("Rival")
 @export var rival_names: PackedStringArray
 @export var rival_news: PackedStringArray

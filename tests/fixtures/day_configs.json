@@ -1,0 +1,607 @@
+[
+ {
+  "name": "free_play_growth",
+  "scenario": "free",
+  "seed": 11,
+  "world": 21,
+  "days": 70,
+  "actions": [
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "vending"
+   },
+   {
+    "at": 1,
+    "do": "hire",
+    "id": "tech_junior"
+   },
+   {
+    "at": 2,
+    "do": "buy",
+    "id": "space_inv"
+   },
+   {
+    "at": 3,
+    "do": "campaign",
+    "id": "flyers"
+   },
+   {
+    "at": 4,
+    "do": "upgrade",
+    "id": "neon_signs"
+   },
+   {
+    "at": 5,
+    "do": "hire",
+    "id": "cashier"
+   },
+   {
+    "at": 6,
+    "do": "buy",
+    "id": "skee"
+   },
+   {
+    "at": 8,
+    "do": "loan",
+    "id": "medium"
+   },
+   {
+    "at": 9,
+    "do": "buy",
+    "id": "prize_counter"
+   },
+   {
+    "at": 10,
+    "do": "contract",
+    "id": "party"
+   },
+   {
+    "at": 12,
+    "do": "tournament",
+    "id": "local"
+   },
+   {
+    "at": 14,
+    "do": "facility",
+    "id": "atm"
+   },
+   {
+    "at": 15,
+    "do": "decor",
+    "id": "plant"
+   },
+   {
+    "at": 16,
+    "do": "research",
+    "id": "power"
+   },
+   {
+    "at": 18,
+    "do": "buy",
+    "id": "jackpot_machine"
+   },
+   {
+    "at": 20,
+    "do": "buy",
+    "id": "social_hub"
+   },
+   {
+    "at": 22,
+    "do": "restock",
+    "i": 2
+   },
+   {
+    "at": 25,
+    "do": "discount"
+   },
+   {
+    "at": 28,
+    "do": "train",
+    "i": 0
+   },
+   {
+    "at": 30,
+    "do": "tune",
+    "i": 0
+   },
+   {
+    "at": 31,
+    "do": "reinforce",
+    "i": 1
+   },
+   {
+    "at": 32,
+    "do": "expand",
+    "dim": "w"
+   },
+   {
+    "at": 34,
+    "do": "discount"
+   },
+   {
+    "at": 35,
+    "do": "undercut"
+   },
+   {
+    "at": 36,
+    "do": "research",
+    "id": "pricing"
+   },
+   {
+    "at": 38,
+    "do": "research",
+    "id": "stock"
+   },
+   {
+    "at": 40,
+    "do": "franchise",
+    "id": "springton"
+   },
+   {
+    "at": 42,
+    "do": "buy",
+    "id": "ddr"
+   },
+   {
+    "at": 44,
+    "do": "repairBroken"
+   },
+   {
+    "at": 46,
+    "do": "contract",
+    "id": "charity"
+   },
+   {
+    "at": 48,
+    "do": "price",
+    "i": 1,
+    "delta": 0.25
+   },
+   {
+    "at": 50,
+    "do": "sell",
+    "i": 3
+   },
+   {
+    "at": 52,
+    "do": "franchiseUp",
+    "id": "springton"
+   },
+   {
+    "at": 55,
+    "do": "refurb",
+    "i": 0
+   },
+   {
+    "at": 58,
+    "do": "facility",
+    "id": "toilet"
+   },
+   {
+    "at": 60,
+    "do": "campaign",
+    "id": "billboard"
+   },
+   {
+    "at": 62,
+    "do": "hire",
+    "id": "tech_senior"
+   },
+   {
+    "at": 64,
+    "do": "repay"
+   }
+  ]
+ },
+ {
+  "name": "rescue_job",
+  "scenario": "rescue",
+  "seed": 5,
+  "world": 9,
+  "days": 45,
+  "actions": [
+   {
+    "at": 0,
+    "do": "hire",
+    "id": "tech_junior"
+   },
+   {
+    "at": 3,
+    "do": "repairBroken"
+   },
+   {
+    "at": 10,
+    "do": "buy",
+    "id": "claw"
+   },
+   {
+    "at": 20,
+    "do": "tournament",
+    "id": "local"
+   },
+   {
+    "at": 30,
+    "do": "fire",
+    "i": 0
+   }
+  ]
+ },
+ {
+  "name": "daily_with_perks",
+  "scenario": "daily",
+  "seed": 3378988834,
+  "world": 77,
+  "days": 13,
+  "dailyDays": 12,
+  "cash": 2600,
+  "rep": 14,
+  "machines": [
+   "claw",
+   "crane",
+   "vr"
+  ],
+  "difficulty": "hard",
+  "prestige": 4,
+  "perks": {
+   "coins": 2,
+   "word": 1,
+   "crowd": 1
+  },
+  "actions": [
+   {
+    "at": 1,
+    "do": "buy",
+    "id": "pinball"
+   },
+   {
+    "at": 2,
+    "do": "hire",
+    "id": "security"
+   },
+   {
+    "at": 4,
+    "do": "campaign",
+    "id": "social"
+   }
+  ]
+ },
+ {
+  "name": "miserable_arcade",
+  "scenario": "free",
+  "seed": 44,
+  "world": 45,
+  "days": 40,
+  "difficulty": "easy",
+  "staff": [
+   "cashier",
+   "security",
+   "manager",
+   "attendant"
+  ],
+  "set": {
+   "cash": 20000,
+   "rep": 60
+  },
+  "actions": [
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "food_counter"
+   },
+   {
+    "at": 0,
+    "do": "price",
+    "i": 0,
+    "delta": 3
+   },
+   {
+    "at": 0,
+    "do": "price",
+    "i": 1,
+    "delta": 3
+   },
+   {
+    "at": 1,
+    "do": "buy",
+    "id": "coin_push"
+   },
+   {
+    "at": 2,
+    "do": "buy",
+    "id": "whack"
+   },
+   {
+    "at": 5,
+    "do": "upgrade",
+    "id": "wifi"
+   },
+   {
+    "at": 9,
+    "do": "tournament",
+    "id": "champ"
+   },
+   {
+    "at": 12,
+    "do": "buy",
+    "id": "prize_counter"
+   },
+   {
+    "at": 15,
+    "do": "contract",
+    "id": "film"
+   }
+  ]
+ },
+ {
+  "name": "tycoon_everything",
+  "scenario": "free",
+  "seed": 123,
+  "world": 456,
+  "days": 60,
+  "prestige": 3,
+  "perks": {
+   "crew": 2,
+   "crowd": 1
+  },
+  "set": {
+   "cash": 90000,
+   "rep": 70
+  },
+  "staff": [
+   "cashier",
+   "security"
+  ],
+  "staffMorale": 5,
+  "actions": [
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "jackpot_machine"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "social_hub"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "ddr"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "vr"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "vending"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "food_counter"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "prize_counter"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "skee"
+   },
+   {
+    "at": 0,
+    "do": "buy",
+    "id": "rhythm"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "neon_signs"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "token_system"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "ac_unit"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "wifi"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "surge_prot"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "snack_bar"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "loyalty_card"
+   },
+   {
+    "at": 1,
+    "do": "upgrade",
+    "id": "repair_bench"
+   },
+   {
+    "at": 1,
+    "do": "hire",
+    "id": "tech_junior"
+   },
+   {
+    "at": 2,
+    "do": "hire",
+    "id": "tech_senior"
+   },
+   {
+    "at": 2,
+    "do": "hire",
+    "id": "attendant"
+   },
+   {
+    "at": 3,
+    "do": "research",
+    "id": "power"
+   },
+   {
+    "at": 3,
+    "do": "research",
+    "id": "pricing"
+   },
+   {
+    "at": 3,
+    "do": "research",
+    "id": "buzz"
+   },
+   {
+    "at": 3,
+    "do": "research",
+    "id": "stock"
+   },
+   {
+    "at": 3,
+    "do": "research",
+    "id": "bots"
+   },
+   {
+    "at": 3,
+    "do": "research",
+    "id": "hype"
+   },
+   {
+    "at": 4,
+    "do": "facility",
+    "id": "toilet"
+   },
+   {
+    "at": 4,
+    "do": "facility",
+    "id": "seating"
+   },
+   {
+    "at": 4,
+    "do": "facility",
+    "id": "atm"
+   },
+   {
+    "at": 4,
+    "do": "facility",
+    "id": "water"
+   },
+   {
+    "at": 5,
+    "do": "decor",
+    "id": "plant"
+   },
+   {
+    "at": 5,
+    "do": "decor",
+    "id": "neon"
+   },
+   {
+    "at": 5,
+    "do": "decor",
+    "id": "trophy"
+   },
+   {
+    "at": 5,
+    "do": "decor",
+    "id": "bench"
+   },
+   {
+    "at": 6,
+    "do": "franchise",
+    "id": "springton"
+   },
+   {
+    "at": 7,
+    "do": "franchise",
+    "id": "baytown"
+   },
+   {
+    "at": 9,
+    "do": "franchiseUp",
+    "id": "springton"
+   },
+   {
+    "at": 10,
+    "do": "expand",
+    "dim": "w"
+   },
+   {
+    "at": 11,
+    "do": "expand",
+    "dim": "h"
+   },
+   {
+    "at": 12,
+    "do": "undercut"
+   },
+   {
+    "at": 14,
+    "do": "contract",
+    "id": "influencer"
+   },
+   {
+    "at": 16,
+    "do": "tournament",
+    "id": "regional"
+   },
+   {
+    "at": 20,
+    "do": "campaign",
+    "id": "radio"
+   },
+   {
+    "at": 25,
+    "do": "restock",
+    "i": 5
+   },
+   {
+    "at": 26,
+    "do": "restock",
+    "i": 4
+   },
+   {
+    "at": 30,
+    "do": "repairBroken"
+   },
+   {
+    "at": 32,
+    "do": "tune",
+    "i": 0
+   },
+   {
+    "at": 33,
+    "do": "tune",
+    "i": 0
+   },
+   {
+    "at": 40,
+    "do": "sell",
+    "i": 7
+   },
+   {
+    "at": 45,
+    "do": "contract",
+    "id": "sponsor"
+   }
+  ]
+ }
+]

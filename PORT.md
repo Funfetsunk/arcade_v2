@@ -106,12 +106,29 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      The original catalogs were converted once by a script; the `.tres` files are now the source.
      Dropped: `DECOR_SPOTS` / `FACILITY_SPOTS` (pixel positions for the old 3×3 layout; phase 2
      places decor on the grid).
-   - **1b (next):** the pre/post-day systems that lived in `main.ts` around `runDayNow()`:
-     weekday rhythm, promos/campaigns, weather roll, rival, decisions, tickets & prizes,
-     facilities/ATM, franchises, specials (jackpot, buzz), aging, research, staff morale,
-     satisfaction, tournaments, contracts, daily challenge, goals, achievements, scenario win,
-     plus the player actions (buy/sell/repair/restock/hire/loan/expand...). Same approach:
-     port into `core/` systems driven by `Game`, with tests.
+   - **1b (done 2026-10-23):** the day loop and player actions from `main.ts`.
+     `DayCycle` (`core/day_cycle.gd`) is `runDayNow()` and everything it called, in the same
+     order: weekday rhythm, promos, weather, rival, the sim, goals, achievements, tickets,
+     ATM, franchises, jackpot/buzz, aging, auto-stockers, staff morale, satisfaction,
+     scenario win, then the campaign / tournament / weather / daily / rival / contract ticks,
+     plus pre-day decision events. `Actions` (`core/actions.gd`) has every player action
+     (buy/move/sell/repair/refurbish/tune-up/reinforce/price/DIP/stock/restock, expand,
+     upgrades, facilities, decor, staff hire/fire/train, loans, campaigns, discount,
+     tournaments, rival price war, contracts, research, franchises, perks, difficulty).
+     Both extend `GameSystem` and report via signals; `Game` relays everything to `EventBus`
+     and owns `next_day()` / `choose_decision()`, new game / daily / restart / prestige, and
+     save + `MetaProgress` (prestige, perks, achievements, leaderboard, daily bests →
+     `user://meta.tres`). The original's `Math.random()` calls use a separate `world_rng`,
+     so the sim's seeded stream is unchanged.
+     `test_day_parity.gd` replays 5 scripted games (228 days, 50+ decisions, most actions)
+     against the original `main.ts` functions run in Node with a seeded `Math.random`, and
+     matches every number and every log line. 65 tests, ~21k checks.
+     Not ported here (belongs to later phases): placement validity and themed zones
+     (phase 2, with the grid), the tutorial, share card, jukebox and sound effects.
+   - Dev note: the editor shows a modal "Files have been modified outside Godot" after
+     scripts change on disk (my edits, headless test runs), and while it's open the Godot MCP
+     can't talk to a running game. Enable Editor Settings → Text Editor → Behavior → Files →
+     "Auto Reload Scripts on External Change" to avoid it.
 2. **Floor scene**: tilemap room, cabinets, customers/techs with pathing, placement mode
    (drag ghost, tap/click to place, on-screen rotate/place/cancel), camera pan/zoom (drag + pinch +
    mouse wheel), zoom-to-fit.

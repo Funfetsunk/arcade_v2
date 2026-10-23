@@ -12,4 +12,5 @@ default_price = 0.0
 description = "The dream prize on the top shelf."
 perish = 0.0
 ticket_cost = 800
+redeem_weight = 0.05
 wholesale_cost = 20.0

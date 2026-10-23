@@ -12,4 +12,5 @@ default_price = 0.0
 description = "Teens grind tickets for these."
 perish = 0.0
 ticket_cost = 350
+redeem_weight = 0.15
 wholesale_cost = 8.0
