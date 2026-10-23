@@ -33,6 +33,13 @@ func test_every_minigame_runs() -> void:
 				press.pressed = true
 				press.position = at
 				game._on_board_input(press)
+			elif frame % 7 == 4:
+				# Release too, so hold-and-release games (Pro Hoops) actually shoot.
+				var release := InputEventMouseButton.new()
+				release.button_index = MOUSE_BUTTON_LEFT
+				release.pressed = false
+				release.position = Vector2(randf() * 360.0, randf() * 460.0)
+				game._on_board_input(release)
 			game._physics_process(1.0 / 60.0)
 			game.board.queue_redraw()
 		assert_true(game.score >= 0, "%s score" % def.id)

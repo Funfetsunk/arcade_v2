@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
+[ext_resource type="Script" path="res://minigames/hoops/hoops.gd" id="2"]
+
+[node name="ProHoops" instance=ExtResource("1")]
+script = ExtResource("2")
+game_name = "Pro Hoops"
+title_icon = "🏀"
+hint = "HOLD to charge — release to shoot!"

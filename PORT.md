@@ -194,8 +194,10 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      🎮 PLAY. `Actions.award_minigame` pays min(180, round(score × 0.4)) + score/20 buzz.
      `tests/test_minigames.gd` boots every linked game and plays 20 s of random taps.
    - Batch 1 (done): breakout (drag, hover or ← →), whack, pong, invaders, claw.
-   - Next batches: aim, airhockey, hoops, lightgun, crane · coinpush, slots, snap, starsquad,
-     racing · vrpod, motionsim, barrelhop, dance, rhythm · carsmash, maze, quiz, social, pinball.
+   - Batch 2 (done): aim (skee), airhockey, hoops (hold to charge, release to shoot — the base
+     now has a pointer-release hook), lightgun (shooter), crane.
+   - Next batches: coinpush, slots, snap, starsquad, racing · vrpod, motionsim, barrelhop,
+     dance, rhythm · carsmash, maze, quiz, social, pinball.
 5. **Audio, polish, web export, hosting.**
 
 ## Art workflow

@@ -43,6 +43,9 @@ func _ready() -> void:
 	_quit.pressed.connect(close)
 	board.draw.connect(_on_board_draw)
 	board.gui_input.connect(_on_board_input)
+	board.mouse_exited.connect(func() -> void:
+		if not over:
+			_pointer_released(board.get_local_mouse_position()))
 	board.resized.connect(_fit_board)
 	%BoardFrame.resized.connect(_fit_board)
 	_setup()
@@ -73,6 +76,11 @@ func _pointer_pressed(_at: Vector2) -> void:
 
 
 func _pointer_moved(_at: Vector2) -> void:
+	pass
+
+
+## The press ended (released, or the pointer left the board).
+func _pointer_released(_at: Vector2) -> void:
 	pass
 
 
@@ -125,9 +133,12 @@ func _on_board_draw() -> void:
 func _on_board_input(event: InputEvent) -> void:
 	if over:
 		return
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		_pointer_pressed(event.position)
-		_pointer_moved(event.position)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_pointer_pressed(event.position)
+			_pointer_moved(event.position)
+		else:
+			_pointer_released(event.position)
 		accept_event()
 	elif event is InputEventMouseMotion:
 		_pointer_moved(event.position)

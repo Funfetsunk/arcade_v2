@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MachineDef" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="MachineDef" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
 [ext_resource type="Resource" path="res://data/catalogs/genres/action.tres" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" path="res://data/catalogs/dip_switches/lives.tres" id="4"]
 [ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="5"]
 [ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="6"]
+[ext_resource type="PackedScene" path="res://minigames/lightgun/lightgun.tscn" id="7"]
 
 [resource]
 script = ExtResource("1")
@@ -25,3 +26,4 @@ audience = 2
 special = 0
 genre = ExtResource("2")
 dip_switches = Array[ExtResource("6")]([ExtResource("3"), ExtResource("4"), ExtResource("5")])
+minigame = ExtResource("7")
