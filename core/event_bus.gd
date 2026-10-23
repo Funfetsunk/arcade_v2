@@ -17,6 +17,10 @@ signal customers_reset
 signal coin_spawned(machine_id: int, value: int)
 signal repair_worker_spawned(machine_id: int, is_senior: bool)
 signal machine_broke
+## A VIP left a tip on the way out (floor position, amount).
+signal tip_received(position: Vector2, amount: int)
+## The player tapped a machine on the floor (-1 = tapped empty floor).
+signal machine_selected(machine_id: int)
 signal jackpot_hit(machine_id: int, amount: int)
 ## A machine was bought, sold or moved: recompute zones and walking paths.
 signal machines_changed

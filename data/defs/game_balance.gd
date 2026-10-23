@@ -46,6 +46,14 @@ extends Resource
 @export var expand_base_cost: int = 1500
 @export var expand_cost_growth: float = 1.6
 
+@export_group("Themed zones")
+## Earnings bonus per same-genre neighbour.
+@export var zone_rate: float = 0.06
+## Neighbours counted at most.
+@export var zone_cap: int = 3
+## Centre-to-centre Manhattan distance, in tiles.
+@export var zone_radius: float = 2.0
+
 @export_group("Machine upkeep")
 @export var tune_up_max: int = 3
 ## Tune-Up cost per level as a fraction of the machine price.

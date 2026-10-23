@@ -25,3 +25,21 @@ enum Special { NONE, JACKPOT, BUZZ }
 @export var footprint := Vector2i(1, 2)
 @export var genre: GenreDef
 @export var dip_switches: Array[DipSwitchDef] = []
+
+@export_group("Sprites")
+## One per facing. Machines without art yet fall back to a tinted placeholder.
+@export var sprite_south: Texture2D
+@export var sprite_east: Texture2D
+@export var sprite_north: Texture2D
+@export var sprite_west: Texture2D
+
+
+func sprite_for(facing: int) -> Texture2D:
+	match facing:
+		0:
+			return sprite_north
+		1:
+			return sprite_east
+		3:
+			return sprite_west
+	return sprite_south

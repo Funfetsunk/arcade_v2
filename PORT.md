@@ -129,9 +129,26 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      scripts change on disk (my edits, headless test runs), and while it's open the Godot MCP
      can't talk to a running game. Enable Editor Settings → Text Editor → Behavior → Files →
      "Auto Reload Scripts on External Change" to avoid it.
-2. **Floor scene**: tilemap room, cabinets, customers/techs with pathing, placement mode
-   (drag ghost, tap/click to place, on-screen rotate/place/cancel), camera pan/zoom (drag + pinch +
-   mouse wheel), zoom-to-fit.
+2. **Floor scene** (first pass done 2026-10-23; `main.tscn` is the main scene):
+   - `core/floor_grid.gd`: the original layout/placement/zones rules in tile units (footprint,
+     base and stand tiles, `can_place`, auto-layout, themed-zone bonus), with the original tests
+     ported. `Actions` recomputes zones on buy/move/sell; `Game` lays out scenario machines.
+   - `floor/floor.tscn` (`ArcadeFloor`): carpet `TileMapLayer`, `Room` (walls drawn in the
+     theme colour as a placeholder until wall art), y-sorted `Cabinet` scenes using
+     `MachineDef.sprite_*` per facing (machines without art borrow the space_inv sprites tinted
+     by genre), `Crowd` (customers queue/play/leave, VIP tips, star buzz, repair techs called by
+     the sim, roaming staff), `WalkGrid` (AStarGrid2D + string-pulled any-angle legs),
+     coin pops, `FloorCamera` (drag pan, wheel and pinch zoom, fit; minimum zoom = fit).
+   - Placement mode: drag the ghost (green/red with footprint and stand tile), `PlaceBar`
+     (Rotate ←/→, Place, Cancel; R/Enter/Escape on keyboard). Tap a machine to select it
+     (`EventBus.machine_selected`). Touch is handled directly; emulated mouse events are ignored.
+   - `sandbox/debug_hud.tscn` is a TEMPORARY HUD (next day, buy, move, sell, decisions) until
+     phase 3's real UI replaces it.
+   - Not done yet: customer emotes and the visitor popup (need UI/icon art), floor staff and
+     tech art (tinted customer sprite for now), decor/facility props on the floor, theme sign.
+   - The MCP plugin adds its three autoloads to `project.godot` when the editor starts and
+     removes them on exit or plugin reload; if a game run from the editor stops answering the
+     MCP, reload the plugin.
 3. **UI**: Theme, header/HUD, bottom-sheet panels, modals, toasts, log, charts.
 4. **Minigames**: port in batches of ~5. Six used keyboard and need touch controls: barrelhop,
    breakout, dance, maze, pinball, racing (swipe/drag, on-screen buttons, lane taps).

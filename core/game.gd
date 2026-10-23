@@ -115,6 +115,7 @@ func load_game() -> bool:
 	if loaded == null:
 		return false
 	state = loaded
+	FloorGrid.recompute_zones(state, Data.db.balance)
 	day_cycle.apply_meta(state)
 	day_cycle.apply_research(state)
 	EventBus.game_loaded.emit()
@@ -159,6 +160,8 @@ func _run_day() -> void:
 
 
 func _start_run() -> void:
+	FloorGrid.auto_layout(state)
+	FloorGrid.recompute_zones(state, Data.db.balance)
 	day_cycle.apply_meta(state)
 	day_cycle.apply_research(state)
 	state.cash += meta.perk_effect(Data.db, &"nest")

@@ -84,6 +84,7 @@ func _act(a: Dictionary, state: GameState, actions: Actions) -> void:
 			var def := d.machine(StringName(a.id))
 			if state.rep >= def.rep_req and state.cash >= def.cost:
 				actions.buy_machine(state, def, Vector2i.ZERO, MachineInstance.Facing.S)
+				_neutral_zones(state)
 		"hire": actions.hire_staff(state, d.staff_role(StringName(a.id)))
 		"campaign": actions.start_campaign(state, d.campaign(StringName(a.id)))
 		"upgrade": actions.buy_upgrade(state, d.upgrade(StringName(a.id)))
@@ -102,7 +103,9 @@ func _act(a: Dictionary, state: GameState, actions: Actions) -> void:
 		"undercut": actions.undercut_rival(state)
 		"franchise": actions.open_franchise(state, d.town(StringName(a.id)))
 		"franchiseUp": actions.upgrade_franchise(state, d.town(StringName(a.id)))
-		"sell": actions.sell_machine(state, m.call(int(a.i)))
+		"sell":
+			actions.sell_machine(state, m.call(int(a.i)))
+			_neutral_zones(state)
 		"repairBroken":
 			for machine in state.machines:
 				if machine.hp <= 0.0:
@@ -113,6 +116,12 @@ func _act(a: Dictionary, state: GameState, actions: Actions) -> void:
 		"fire": actions.fire_staff(state, state.staff[int(a.i)])
 		"repay": actions.repay_loan_early(state)
 		_: fail_test("unknown action " + str(a.do))
+
+
+## The harness stubbed out themed zones (machines aren't placed), so keep them neutral here.
+func _neutral_zones(state: GameState) -> void:
+	for machine in state.machines:
+		machine.zone_mul = 1.0
 
 
 func _check_day(at: String, e: Dictionary, s: GameState, event: DecisionEventDef, chose: int, logs: Array[String]) -> void:

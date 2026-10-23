@@ -39,16 +39,18 @@ func buy_machine(state: GameState, def: MachineDef, tile: Vector2i, facing: Mach
 	state.machines.append(m)
 	_log("Bought %s for %s." % [def.display_name, GameMath.money(def.cost)], Sim.LogKind.MONEY)
 	_toast("%s %s placed!" % [def.emoji, def.display_name])
+	FloorGrid.recompute_zones(state, data.balance)
 	machines_changed.emit()
 	day_cycle.check_goals(state)
 	return m
 
 
-func move_machine(m: MachineInstance, tile: Vector2i, facing: MachineInstance.Facing) -> void:
+func move_machine(state: GameState, m: MachineInstance, tile: Vector2i, facing: MachineInstance.Facing) -> void:
 	m.tile = tile
 	m.facing = facing
 	_log("Moved %s." % m.def.display_name, Sim.LogKind.INFO)
 	_toast("Moved! ✅")
+	FloorGrid.recompute_zones(state, data.balance)
 	machines_changed.emit()
 
 
@@ -67,6 +69,7 @@ func sell_machine(state: GameState, m: MachineInstance) -> bool:
 	state.pending_repairs.erase(m.id)
 	_log("Sold %s for %s." % [m.def.display_name, GameMath.money(value)], Sim.LogKind.MONEY)
 	_toast("Sold for %s 💰" % GameMath.money(value))
+	FloorGrid.recompute_zones(state, data.balance)
 	machines_changed.emit()
 	return true
 

@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://floor/floor.gd" id="1"]
+[ext_resource type="Script" path="res://floor/floor_camera.gd" id="2"]
+[ext_resource type="TileSet" path="res://assets/tiles/floor.tres" id="3"]
+[ext_resource type="Script" path="res://floor/room.gd" id="4"]
+[ext_resource type="Script" path="res://floor/crowd.gd" id="5"]
+[ext_resource type="PackedScene" path="res://floor/cabinet.tscn" id="6"]
+
+[node name="Floor" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("2")
+
+[node name="Carpet" type="TileMapLayer" parent="."]
+z_index = -2
+tile_set = ExtResource("3")
+
+[node name="Room" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("4")
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Crowd" type="Node" parent="." node_paths=PackedStringArray("entities")]
+script = ExtResource("5")
+entities = NodePath("../Entities")
+
+[node name="Ghost" parent="." instance=ExtResource("6")]
+z_index = 5
+
+[node name="Pops" type="Node2D" parent="."]
+z_index = 20
