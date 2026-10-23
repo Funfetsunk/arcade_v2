@@ -79,6 +79,11 @@ the machine's `.tres` shows as NEW - REVIEW; wire it in only after the user appr
 | `pong` | `91834203-9287-4632-a6e6-4bad91209f0c` |
 | `fighter` | `d0b926b5-3e97-4ded-a3a8-b55b380c3bcd` |
 | `gorilla` | `4a79a195-7c6a-4997-b4cd-de9f722aaf1f` |
+| `space_fleet` | `0d424f89-aa89-42a9-aa52-5da462e9f1ff` |
+| `shooter` | `3ba1a701-e1f5-4acb-a3fa-7f291267ea79` |
+| `trivia` | `27c2d890-7bd4-4150-9e19-d78a4cbb7361` |
+| `rhythm` | `ba395826-eda7-4be3-b23b-580d28119eff` |
+| `vending` | `21830ed6-a099-43ce-9b66-e77668faf1ff` |
 
 ## Characters
 
