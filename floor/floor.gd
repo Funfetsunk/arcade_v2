@@ -185,6 +185,22 @@ func machine_at(floor_point: Vector2) -> MachineInstance:
 	return null
 
 
+## The customer whose body covers a floor point (nearest wins in a queue).
+func customer_at(floor_point: Vector2) -> Customer:
+	var best: Customer = null
+	var best_distance := INF
+	for c in crowd.customers:
+		var half_width := 7.0 * c.scale.x
+		var height := 30.0 * c.scale.y
+		if absf(floor_point.x - c.position.x) > half_width or floor_point.y < c.position.y - height or floor_point.y > c.position.y + 4.0:
+			continue
+		var d := floor_point.distance_to(c.position - Vector2(0, height / 2.0))
+		if d < best_distance:
+			best_distance = d
+			best = c
+	return best
+
+
 # ── Input: one pointer pans (or drags the ghost), two pinch-zoom, wheel zooms ──
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -268,7 +284,14 @@ func _on_drag(screen_point: Vector2, relative: Vector2) -> void:
 func _on_release(screen_point: Vector2) -> void:
 	if _dragged or is_placing():
 		return
-	var m := machine_at(camera.screen_to_floor(screen_point))
+	var at := camera.screen_to_floor(screen_point)
+	# People standing in front of a cabinet win the tap.
+	var visitor := customer_at(at)
+	if visitor:
+		EventBus.visitor_selected.emit(visitor)
+		return
+	EventBus.visitor_selected.emit(null)
+	var m := machine_at(at)
 	select(m.id if m else -1)
 
 

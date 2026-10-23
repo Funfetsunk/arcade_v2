@@ -283,6 +283,20 @@ size_flags_stretch_ratio = 1.6
 theme_type_variation = &"PrimaryButton"
 text = "NEXT DAY"
 
+[node name="VisitorPopup" type="PanelContainer" parent="Root"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_type_variation = &"ToastPanel"
+
+[node name="VisitorText" type="Label" parent="Root/VisitorPopup"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+
 [node name="Modal" type="Control" parent="Root"]
 unique_name_in_owner = true
 visible = false

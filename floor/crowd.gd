@@ -88,6 +88,7 @@ func spawn_customer(persona := -1, kid := false) -> void:
 	c.queue_pos = _heading_to(target.id).size()
 	c.persona = (persona as Customer.Persona) if persona >= 0 else _roll_persona()
 	c.kid = kid
+	c.audience = &"kids" if kid else (&"teen" if randf() < 0.6 else &"adult")
 	c.favourite_genre = favourite
 	c.speed = randf_range(30.0, 56.0)
 	c.play_time = randf_range(1.5, 4.5)

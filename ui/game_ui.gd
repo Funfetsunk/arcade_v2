@@ -10,25 +10,70 @@ const PANEL_SCRIPTS := {
 	&"staff": preload("res://ui/panels/staff_panel.gd"),
 	&"books": preload("res://ui/panels/books_panel.gd"),
 	&"machine": preload("res://ui/panels/machine_panel.gd"),
+	&"menu": preload("res://ui/panels/menu_panel.gd"),
+	&"scenarios": preload("res://ui/panels/scenarios_panel.gd"),
+	&"daily": preload("res://ui/panels/daily_panel.gd"),
+	&"progress": preload("res://ui/panels/progress_panel.gd"),
+	&"leaderboard": preload("res://ui/panels/leaderboard_panel.gd"),
+	&"achievements": preload("res://ui/panels/achievements_panel.gd"),
+	&"marketing": preload("res://ui/panels/marketing_panel.gd"),
+	&"contracts": preload("res://ui/panels/contracts_panel.gd"),
+	&"research": preload("res://ui/panels/research_panel.gd"),
+	&"franchises": preload("res://ui/panels/franchises_panel.gd"),
+	&"decor": preload("res://ui/panels/decor_panel.gd"),
 }
+
+const TUTORIAL := [
+	["🎮", "Welcome, Tycoon!", "Build the ultimate arcade: buy machines, price them well, keep all ages happy, and expand your room to grow. Tap OPEN ARCADE to run each day."],
+	["🛒", "Buy & Place", "Open SHOP to buy cabinets — each has a cost, an audience and popularity. Tap any machine on the floor to manage it. More machines earn more (but raise the rent!)."],
+	["💰", "Price = Profit", "In a machine's panel, raise its PRICE PER PLAY. Charge more and fewer people play — there's a sweet spot near ~1.9× the default. Watch the Plays / Revenue readout."],
+	["🎯", "Mix Your Audience", "Machines target Kids, Teens or Adults. Cover all three for a footfall bonus — a one-note arcade draws a smaller crowd."],
+	["⚙️", "Events & Upgrades", "Some days a CHOICE pops up — host a tournament, dodge a storm. Each machine can buy Tune-Up (+earn) and Reinforce (−wear). Hit GOALS (in BOOKS) for cash & rep!"],
+	["🏗️", "Grow Your Room", "Fill the floor, then expand the room (FLOOR panel) — go WIDER or DEEPER to fit more cabinets. Cost rises with each expansion. You've got this — open those doors!"],
+]
+
+const CREDITS := [
+	["PRODUCER", "Graham Harbour"],
+	["DEVELOPMENT", "Graham Harbour · Tom Evans"],
+	["ART", "Graham Harbour"],
+	["TECHNICAL ASSISTANCE & PUBLISHING", "Alex Rogers"],
+	["SPECIAL THANKS", "Hadeed Khalid · Maiju Peltola"],
+]
+
+## Action-bar tabs: panel id, icon, label.
+const TABS := [[&"floor", "🕹", "FLOOR"], [&"shop", "🛒", "SHOP"], [&"staff", "👤", "STAFF"], [&"books", "💰", "BOOKS"]]
+## Below this logical width the action bar switches to its compact layout.
+const COMPACT_WIDTH := 480.0
+
+## Seconds between visitor popup text refreshes.
+const VISITOR_REFRESH := 0.1
 
 @export var arcade_floor: ArcadeFloor
 
 var panels: Dictionary[StringName, Control] = {}
+var _visitor: Customer
+var _visitor_timer := 0.0
 
 @onready var sheet: BottomSheet = %Sheet
 @onready var modal: Modal = %Modal
 @onready var _action_bar: Control = %ActionBar
 @onready var _next_day: Button = %NextDay
 @onready var _repairs: Button = %Repairs
+@onready var _visitor_popup: PanelContainer = %VisitorPopup
+@onready var _visitor_text: Label = %VisitorText
 
 
 func _ready() -> void:
-	# The pixel font only has basic ASCII; anything else (emoji, £, ...) falls
-	# back to the default font.
+	# The pixel font only has basic ASCII; anything else falls back to the
+	# default font, and emoji to a bundled emoji font (browsers give Godot no
+	# system fallback, so without it emoji would show as boxes on the web).
+	var emoji_font: FontFile = load("res://assets/fonts/noto_color_emoji_subset.ttf")
+	var default_font := ThemeDB.fallback_font
+	if not default_font.fallbacks.has(emoji_font):
+		default_font.fallbacks = default_font.fallbacks + [emoji_font]
 	var pixel_font: FontFile = load("res://assets/fonts/arcade_empire_pixel.ttf")
-	if not pixel_font.fallbacks.has(ThemeDB.fallback_font):
-		pixel_font.fallbacks = [ThemeDB.fallback_font]
+	if not pixel_font.fallbacks.has(default_font):
+		pixel_font.fallbacks = [default_font, emoji_font]
 	for id: StringName in PANEL_SCRIPTS:
 		var panel := VBoxContainer.new()
 		panel.set_script(PANEL_SCRIPTS[id])
@@ -41,9 +86,14 @@ func _ready() -> void:
 	for id: StringName in [&"floor", &"shop", &"staff", &"books"]:
 		var b: Button = get_node("%" + String(id).capitalize() + "Button")
 		b.pressed.connect(toggle_panel.bind(id))
+	get_viewport().size_changed.connect(_fit_action_bar)
+	_fit_action_bar()
 	_next_day.pressed.connect(_on_next_day)
 	_repairs.pressed.connect(_show_repairs)
-	%MenuButton.pressed.connect(_show_menu)
+	%MenuButton.pressed.connect(toggle_panel.bind(&"menu"))
+	_visitor_popup.hide()
+	EventBus.visitor_selected.connect(_on_visitor_selected)
+	EventBus.customers_reset.connect(_on_visitor_selected.bind(null))
 	sheet.closed.connect(_on_sheet_closed)
 	arcade_floor.placing_changed.connect(_on_placing_changed)
 	EventBus.state_changed.connect(_refresh)
@@ -71,6 +121,87 @@ func close_sheet() -> void:
 	sheet.close()
 
 
+## Opens a menu screen: a sheet panel, or the how-to-play / credits dialogs.
+func open_screen(id: StringName) -> void:
+	match id:
+		&"tutorial":
+			show_tutorial()
+		&"credits":
+			_show_credits()
+		_:
+			open_panel(id)
+
+
+func show_tutorial(page := 0) -> void:
+	var entry: Array = TUTORIAL[page]
+	var last := page == TUTORIAL.size() - 1
+	var finish := func() -> void:
+		modal.close()
+		Game.meta.tutorial_done = true
+		Game.save_meta()
+	var next := UiKit.button("LET'S GO!" if last else "NEXT", finish if last else show_tutorial.bind(page + 1), &"PrimaryButton")
+	var skip := UiKit.button("SKIP", finish)
+	var icon := UiKit.label(entry[0])
+	icon.add_theme_font_size_override(&"font_size", 28)
+	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	modal.present("%s  (%d/%d)" % [entry[1], page + 1, TUTORIAL.size()], [
+		icon, UiKit.label(entry[2], &"", true), UiKit.hbox([skip, UiKit.spacer(), next])], false)
+
+
+func _show_credits() -> void:
+	var body := []
+	for row: Array in CREDITS:
+		body.append(UiKit.section(row[0]))
+		body.append(UiKit.label(row[1]))
+	body.append(UiKit.label("This game has been developed using AI.", &"DimLabel", true))
+	modal.present("🎬 CREDITS", body)
+
+
+func _on_visitor_selected(visitor: Node2D) -> void:
+	_visitor = visitor as Customer
+	_visitor_popup.visible = _visitor != null
+	_visitor_timer = 0.0
+	if _visitor:
+		_update_visitor_popup()
+
+
+func _process(delta: float) -> void:
+	if _visitor == null:
+		return
+	if not is_instance_valid(_visitor) or _visitor.is_queued_for_deletion():
+		_on_visitor_selected(null)
+		return
+	_visitor_timer -= delta
+	if _visitor_timer <= 0.0:
+		_visitor_timer = VISITOR_REFRESH
+		_update_visitor_popup()
+	# Follow the visitor: above their head, kept on screen.
+	var head := arcade_floor.get_canvas_transform() * (_visitor.position - Vector2(0, 34) * _visitor.scale.y)
+	var view := get_viewport().get_visible_rect().size
+	var size := _visitor_popup.size
+	_visitor_popup.position = Vector2(clampf(head.x - size.x / 2.0, 4.0, view.x - size.x - 4.0), clampf(head.y - size.y - 4.0, 38.0, view.y - size.y - 46.0))
+
+
+func _update_visitor_popup() -> void:
+	var c := _visitor
+	var s := Game.state
+	var mood: Dictionary = c.mood(s)
+	var persona := ""
+	match c.persona:
+		Customer.Persona.VIP:
+			persona = " · 🎩 VIP"
+		Customer.Persona.STAR:
+			persona = " · ⭐ STAR"
+		Customer.Persona.FAMILY:
+			persona = " · 👪"
+	var genre := Data.db.genre(c.favourite_genre)
+	_visitor_text.text = "%s%s%s
+%s %s
+%s
+Loves %s · %s" % [c.display_name(), " (KID)" if c.kid else "", persona, mood.emoji, mood.label,
+		c.activity(s), "%s %s" % [genre.emoji, genre.label] if genre else "🎲 Anything", c.audience]
+
+
 func _refresh() -> void:
 	var s := Game.state
 	if s == null:
@@ -81,11 +212,26 @@ func _refresh() -> void:
 	%Visitors.text = str(s.last_day_customers)
 	%Mood.text = UiKit.mood_face(s.satisfaction)
 	%Day.text = "%d %s" % [s.day, Data.db.weekday_name(maxi(1, s.day)).to_upper()]
-	_next_day.text = "OPEN ARCADE" if s.day == 0 else "NEXT DAY"
+	var compact := get_viewport().get_visible_rect().size.x < COMPACT_WIDTH
+	var label := "OPEN ARCADE" if s.day == 0 else "NEXT DAY"
+	_next_day.text = label.replace(" ", "\n") if compact else label
 	_next_day.disabled = Game.pending_decision != null
 	var broken := s.machines.filter(func(m: MachineInstance) -> bool: return m.is_broken()).size()
 	_repairs.visible = broken > 0
 	_repairs.text = "🔧 %d REPAIR%s NEEDED" % [broken, "S" if broken > 1 else ""]
+
+
+## On narrow (portrait phone) screens the tab buttons stack their icon over a
+## small label so all five buttons fit.
+func _fit_action_bar() -> void:
+	var compact := get_viewport().get_visible_rect().size.x < COMPACT_WIDTH
+	for tab: Array in TABS:
+		var b: Button = get_node("%" + String(tab[0]).capitalize() + "Button")
+		b.text = "%s\n%s" % [tab[1], tab[2]] if compact else "%s %s" % [tab[1], tab[2]]
+		b.add_theme_font_size_override(&"font_size", 9 if compact else 11)
+		b.clip_text = compact
+	_next_day.add_theme_font_size_override(&"font_size", 12 if compact else 16)
+	_refresh()
 
 
 func _on_next_day() -> void:
@@ -173,10 +319,3 @@ func _show_daily_finished(score: int, best: int, new_best: bool) -> void:
 			modal.close()
 			Game.start_daily(), &"PrimaryButton"),
 		UiKit.button("▶ FREE PLAY", modal.close)])
-
-
-## The game menu. More screens (marketing, research, ...) join in the next pass.
-func _show_menu() -> void:
-	modal.present("ARCADE EMPIRE", [
-		UiKit.button("🔄 RESTART GAME", func() -> void:
-			modal.confirm("🔄 RESTART?", "All progress in this arcade will be lost.", "Restart", Game.restart, true), &"DangerButton")])

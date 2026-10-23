@@ -21,6 +21,8 @@ signal machine_broke
 signal tip_received(position: Vector2, amount: int)
 ## The player tapped a machine on the floor (-1 = tapped empty floor).
 signal machine_selected(machine_id: int)
+## The player tapped a visitor (null = tapped something else).
+signal visitor_selected(visitor: Node2D)
 signal jackpot_hit(machine_id: int, amount: int)
 ## A machine was bought, sold or moved: recompute zones and walking paths.
 signal machines_changed

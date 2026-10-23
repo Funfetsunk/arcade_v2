@@ -163,10 +163,18 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      and rows. Panels in `ui/panels/`: shop (machines, upgrades), staff, floor (machines,
      expand room), books (yesterday, running costs, totals, loans), machine (status, price
      with demand hint, upgrades, stock, DIP switches, move/repair/refurbish/sell).
-   - Still to do: the game menu screens (how to play, achievements, scenarios, marketing,
-     contracts, research, franchises, progress/perks/difficulty, leaderboard, decor/themes/
-     facilities, daily challenge, credits), finance charts, the visitor popup, customer emotes,
-     and an emoji font for the web build (browsers give Godot no emoji fallback).
+   - Second pass (done 2026-10-23): the MENU sheet and every screen it opens (how to play,
+     scenarios, daily challenge, marketing, contracts, research, franchises, decor, progress,
+     achievements, leaderboard, credits); Books now matches the original (goals, snapshot,
+     loans, reputation tier, metrics, machine charts with period/metric toggles and rank
+     arrows); the visitor popup (tap a customer); how-to-play on a first run; a compact
+     action bar below 480 px wide.
+   - Emoji on the web: `assets/fonts/noto_color_emoji_subset.ttf` is Noto Color Emoji (OFL,
+     licence beside it) cut down to the ~160 characters the game uses (371 KB), set as the
+     fallback for the default and pixel fonts. After adding new emoji, re-cut it with
+     `tools/subset_emoji_font.py` (instructions at the top of the script). Verified in a real web export in the
+     browser, desktop and 375×812 phone.
+   - Still to do (later phases): customer emotes, sound, the jukebox in Decor.
    - `tests/run_tests.ps1` restores `project.godot` after its headless import, because the
      headless editor's MCP plugin strips its autoloads on exit.
 4. **Minigames**: port in batches of ~5. Six used keyboard and need touch controls: barrelhop,
