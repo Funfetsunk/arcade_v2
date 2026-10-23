@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MachineDef" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="MachineDef" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
 [ext_resource type="Resource" path="res://data/catalogs/genres/rhythm.tres" id="2"]
@@ -7,6 +7,10 @@
 [ext_resource type="Resource" path="res://data/catalogs/dip_switches/players.tres" id="5"]
 [ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="6"]
 [ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/ddr/south.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/ddr/east.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/ddr/north.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/ddr/west.png" id="11"]
 
 [resource]
 script = ExtResource("1")
@@ -26,3 +30,7 @@ audience = 2
 special = 0
 genre = ExtResource("2")
 dip_switches = Array[ExtResource("7")]([ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6")])
+sprite_south = ExtResource("8")
+sprite_east = ExtResource("9")
+sprite_north = ExtResource("10")
+sprite_west = ExtResource("11")

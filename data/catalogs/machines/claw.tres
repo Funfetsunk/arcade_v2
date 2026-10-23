@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MachineDef" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="MachineDef" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
 [ext_resource type="Resource" path="res://data/catalogs/genres/prize.tres" id="2"]
@@ -6,6 +6,10 @@
 [ext_resource type="Resource" path="res://data/catalogs/dip_switches/free_play.tres" id="4"]
 [ext_resource type="Script" path="res://data/defs/dip_switch_def.gd" id="5"]
 [ext_resource type="PackedScene" path="res://minigames/claw/claw.tscn" id="6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/claw/south.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/claw/east.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/claw/north.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cabinets/claw/west.png" id="10"]
 
 [resource]
 script = ExtResource("1")
@@ -25,4 +29,8 @@ audience = 1
 special = 0
 genre = ExtResource("2")
 dip_switches = Array[ExtResource("5")]([ExtResource("3"), ExtResource("4")])
+sprite_south = ExtResource("7")
+sprite_east = ExtResource("8")
+sprite_north = ExtResource("9")
+sprite_west = ExtResource("10")
 minigame = ExtResource("6")

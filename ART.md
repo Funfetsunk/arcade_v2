@@ -84,6 +84,23 @@ the machine's `.tres` shows as NEW - REVIEW; wire it in only after the user appr
 | `trivia` | `27c2d890-7bd4-4150-9e19-d78a4cbb7361` |
 | `rhythm` | `ba395826-eda7-4be3-b23b-580d28119eff` |
 | `vending` | `21830ed6-a099-43ce-9b66-e77668faf1ff` |
+| `air_hockey` | `612fbab7-3a0d-4a47-b71f-b8064043dd3d` |
+| `basketball` | `b851f445-086f-48ac-bcd3-7d0464cc3409` |
+| `claw` | `bb9335a5-8ba7-4e00-bc04-84ca5a2b90b7` |
+| `coin_push` | `8443eafb-f5ba-42e3-a1c0-fe5a5162bd58` |
+| `crane` | `9029bf8b-e95a-4867-84a7-92a86349bf75` |
+| `ddr` | `42680036-6187-4fc6-9f7c-b2b5896a0cec` |
+| `food_counter` | `9d15cadd-c407-48b9-868a-56408b80b762` |
+| `jackpot_machine` | `9b91d0ad-8cd9-48da-8862-c1ac69d2a5dc` |
+| `motion_sim` | `8f86406d-77f3-43d1-8bae-26f569e18d4e` |
+| `photo_booth` | `66bbe1d7-98c3-4f6f-9282-6a920aeae776` |
+| `pinball` | `00ae3c39-d1a6-4338-a55a-afb0e7e2a600` |
+| `prize_counter` | `5a4026d8-b554-433a-a94f-b95ef6901bb2` |
+| `racing` | `87b63d95-e08d-410f-a1cf-038d626488ad` |
+| `skee` | `01ae8262-b8a6-4bb8-a0d6-d5c6c1b43eaf` |
+| `social_hub` | `46f13c11-367b-4390-8414-a7badf527c54` |
+| `vr` | `56b7f39d-70a7-42fb-8d29-c35e18148298` |
+| `whack` | `857a7794-96ba-49a0-8b2d-fedc217c34ee` |
 
 ## Characters
 
