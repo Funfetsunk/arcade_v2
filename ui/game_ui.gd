@@ -233,6 +233,8 @@ func _update_visitor_popup() -> void:
 %s
 Loves %s · %s" % [c.display_name(), " (KID)" if c.kid else "", persona, mood.emoji, mood.label,
 		c.activity(s), "%s %s" % [genre.emoji, genre.label] if genre else "🎲 Anything", c.audience]
+	if c.is_emoting():
+		_visitor_text.text += "\n💭 Thinking: %s" % c.emote
 
 
 func _refresh() -> void:
@@ -341,13 +343,15 @@ func _show_victory() -> void:
 		UiKit.button("⭐ PRESTIGE", func() -> void:
 			modal.close()
 			Game.prestige(), &"PrimaryButton"),
+		UiKit.button("📸 SHARE CARD", ShareCard.save.bind(self)),
 		UiKit.button("▶ KEEP PLAYING", modal.close)])
 
 
 func _show_scenario_win(scenario: ScenarioDef, stars: int) -> void:
 	modal.present("%s SCENARIO COMPLETE" % scenario.emoji, [
 		UiKit.label("%s — %s%s in %d days." % [scenario.display_name, "★".repeat(stars), "☆".repeat(3 - stars), Game.state.day], &"", true),
-		UiKit.button("▶ KEEP PLAYING", modal.close, &"PrimaryButton")])
+		UiKit.button("▶ KEEP PLAYING", modal.close, &"PrimaryButton"),
+		UiKit.button("📸 SHARE CARD", ShareCard.save.bind(self))])
 
 
 func _show_daily_finished(score: int, best: int, new_best: bool) -> void:

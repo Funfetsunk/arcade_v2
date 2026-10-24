@@ -34,6 +34,16 @@ var _staff_signature := ""
 
 func _ready() -> void:
 	EventBus.customers_reset.connect(clear_customers)
+	# Big moments get a reaction from everyone on the floor.
+	EventBus.jackpot_hit.connect(func(_id: int, _amount: int) -> void: react(["🎉", "🤩", "💰", "😲"], 0.85, 90))
+	EventBus.contract_resolved.connect(func(_c: ContractDef, delivered: bool) -> void:
+		if delivered:
+			react(["🎉", "🤩", "📸"], 0.6, 80))
+	EventBus.tournament_resolved.connect(func(_t: TournamentDef, success: bool) -> void:
+		if success:
+			react(["🏆", "🎉", "🤩"], 0.7, 90))
+	EventBus.empire_completed.connect(func() -> void: react(["🎉", "🏆", "🤩", "❤️"], 0.85, 110))
+	EventBus.machine_broke.connect(func() -> void: react(["😟", "😱", "🙁", "😞"], 0.5, 60))
 	EventBus.repair_worker_spawned.connect(spawn_technician)
 	EventBus.staff_changed.connect(sync_staff)
 	EventBus.state_changed.connect(sync_staff)
@@ -185,9 +195,30 @@ func _arrive(c: Customer, m: MachineInstance) -> void:
 	if c.queue_pos <= 0:
 		c.state = Customer.State.PLAYING
 		c.face(FloorGeometry.machine_anchor(m) - c.position if m.facing != MachineInstance.Facing.N else Vector2.UP)
+		_emote_playing(c, m)
 	else:
 		c.state = Customer.State.WAITING
 		c.face(Vector2.UP)
+		if c.queue_pos >= 2 and randf() < 0.45:
+			c.set_emote(["😠", "💢", "⏳", "😤"].pick_random(), 75)
+
+
+## How a customer feels as they start playing (the original's thought bubbles).
+func _emote_playing(c: Customer, m: MachineInstance) -> void:
+	if c.persona == Customer.Persona.VIP and randf() < 0.6:
+		c.set_emote(["🤑", "💎", "😎"].pick_random(), 90)
+	elif c.persona == Customer.Persona.STAR and randf() < 0.6:
+		c.set_emote(["🏆", "🔥", "⭐"].pick_random(), 90)
+	elif randf() < 0.5:
+		var prize := m.def.genre != null and m.def.genre.id == &"prize"
+		c.set_emote((["🎟️", "🧸", "🤩"] if prize else ["😄", "🤩", "🎮", "🎵", "❤️"]).pick_random(), 80 + randf() * 50)
+
+
+## The whole crowd reacts to a big moment, each customer with some chance.
+func react(icons: Array, chance: float, frames: float) -> void:
+	for c in customers:
+		if randf() < chance:
+			c.set_emote(icons.pick_random(), frames)
 
 
 ## The front of the queue steps up the moment the machine frees; everyone

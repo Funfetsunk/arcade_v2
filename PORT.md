@@ -219,6 +219,15 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      (clicks on confirms, the tutorial, the placing bar, visitor taps, toggles).
    - 🔊 / 🔇 button at the right of the top bar; jukebox in Decor. Both are remembered in
      `MetaProgress` (`sound_muted`, `jukebox_track`).
+   - Customer emotes (done): `EmoteBubble` (child of each Customer, drawn above every walker)
+     shows the original's thought bubbles: on arriving to play (VIP / star / prize-corner /
+     general sets), when stuck far back in a queue, and crowd-wide reactions to jackpots,
+     contracts, tournaments, the empire win and breakdowns (`Crowd.react`). With no bubble
+     it shows the persona badge (🎩 VIP, pulsing ⭐ star). The visitor popup lists the thought.
+   - Share card (done): `ShareCard` renders the run summary (name in the theme's sign colour,
+     scenario, day, prestige, six stats, machine strip) in an off-screen SubViewport;
+     `JavaScriptBridge.download_buffer` saves it on the web, `user://share/` elsewhere.
+     Buttons on the victory and scenario-win dialogs and the leaderboard, as in the original.
    - Sfx finds Game at runtime: the machine catalogs load minigame scenes that call Sfx, so
      a static `Game` reference in it would make a Data → Sfx → Game → Data load cycle.
 

@@ -29,11 +29,28 @@ var persona := Persona.REGULAR
 var kid := false
 var favourite_genre: StringName
 var audience := &"teen"
+## The thought bubble showing, and seconds left on it.
+var emote := ""
+var emote_time := 0.0
 
 
 func _init() -> void:
 	visitor_id = _next_id
 	_next_id += 1
+
+
+func _ready() -> void:
+	add_child(EmoteBubble.new())
+
+
+## Shows a thought bubble for a number of frames (the original's 60 fps units).
+func set_emote(icon: String, frames: float) -> void:
+	emote = icon
+	emote_time = frames / 60.0
+
+
+func is_emoting() -> bool:
+	return emote_time > 0.0
 
 
 func display_name() -> String:
