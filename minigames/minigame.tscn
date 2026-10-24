@@ -50,6 +50,7 @@ size_flags_vertical = 3
 
 [node name="Board" type="Control" parent="Layout/BoardFrame"]
 unique_name_in_owner = true
+clip_contents = true
 layout_mode = 0
 offset_right = 360.0
 offset_bottom = 460.0

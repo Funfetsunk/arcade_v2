@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MachineDef" load_steps=11 format=3]
+[gd_resource type="Resource" script_class="MachineDef" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
 [ext_resource type="Resource" path="res://data/catalogs/genres/classic.tres" id="2"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/cabinets/pinball/east.png" id="8"]
 [ext_resource type="Texture2D" path="res://assets/sprites/cabinets/pinball/north.png" id="9"]
 [ext_resource type="Texture2D" path="res://assets/sprites/cabinets/pinball/west.png" id="10"]
+[ext_resource type="PackedScene" path="res://minigames/pinball/pinball.tscn" id="11"]
 
 [resource]
 script = ExtResource("1")
@@ -33,3 +34,4 @@ sprite_south = ExtResource("7")
 sprite_east = ExtResource("8")
 sprite_north = ExtResource("9")
 sprite_west = ExtResource("10")
+minigame = ExtResource("11")

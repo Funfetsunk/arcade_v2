@@ -77,16 +77,16 @@ func _land() -> void:
 
 
 func _draw_board() -> void:
-	var size := N * CELL
-	board.draw_rect(Rect2(GRID - Vector2(8, 8), Vector2(size + 16, size + 16)), Color("1c1430"))
+	var span := N * CELL
+	board.draw_rect(Rect2(GRID - Vector2(8, 8), Vector2(span + 16, span + 16)), Color("1c1430"))
 	for i in N + 1:
-		board.draw_line(GRID + Vector2(i * CELL, 0), GRID + Vector2(i * CELL, size), Color("2a2a44"), 1.0)
-		board.draw_line(GRID + Vector2(0, i * CELL), GRID + Vector2(size, i * CELL), Color("2a2a44"), 1.0)
+		board.draw_line(GRID + Vector2(i * CELL, 0), GRID + Vector2(i * CELL, span), Color("2a2a44"), 1.0)
+		board.draw_line(GRID + Vector2(0, i * CELL), GRID + Vector2(span, i * CELL), Color("2a2a44"), 1.0)
 	for p in prizes:
 		glyph(p.emoji, GRID + (Vector2(p.cell) + Vector2(0.5, 0.5)) * CELL, 26)
-	board.draw_line(Vector2(crane.x, GRID.y - 18), Vector2(crane.x, GRID.y + size + 18), Color("6b4a23"), 3.0)
+	board.draw_line(Vector2(crane.x, GRID.y - 18), Vector2(crane.x, GRID.y + span + 18), Color("6b4a23"), 3.0)
 	if phase != Phase.SWEEP_X:
-		board.draw_line(Vector2(GRID.x - 18, crane.y), Vector2(GRID.x + size + 18, crane.y), Color("6b4a23"), 3.0)
+		board.draw_line(Vector2(GRID.x - 18, crane.y), Vector2(GRID.x + span + 18, crane.y), Color("6b4a23"), 3.0)
 	var at := Vector2(crane.x, GRID.y - 18 if phase == Phase.SWEEP_X else crane.y)
 	var s := 1.0 + _drop_timer / 30.0 if phase == Phase.DROP else 1.0
 	board.draw_arc(at, 12 * s, 0, TAU, 24, GOLD, 2.0)

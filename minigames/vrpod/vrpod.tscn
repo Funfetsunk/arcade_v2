@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
+[ext_resource type="Script" path="res://minigames/vrpod/vrpod.gd" id="2"]
+
+[node name="TunnelRush" instance=ExtResource("1")]
+script = ExtResource("2")
+game_name = "Tunnel Rush"
+title_icon = "🥽"
+hint = "Drag around the tunnel — thread the gaps!"

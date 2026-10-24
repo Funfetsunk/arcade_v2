@@ -196,8 +196,15 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
    - Batch 1 (done): breakout (drag, hover or ← →), whack, pong, invaders, claw.
    - Batch 2 (done): aim (skee), airhockey, hoops (hold to charge, release to shoot — the base
      now has a pointer-release hook), lightgun (shooter), crane.
-   - Next batches: coinpush, slots, snap, starsquad, racing · vrpod, motionsim, barrelhop,
-     dance, rhythm · carsmash, maze, quiz, social, pinball.
+   - Batches 3–5 (done): coinpush (endless; quitting banks the score), slots, snap, starsquad,
+     racing (hold a half to steer) · vrpod, motionsim, barrelhop, dance, rhythm · carsmash,
+     maze (swipe), quiz, social, pinball. All 25 cabinets now have their game; amenities
+     (vending, food counter, prize booth) have none, as in the original.
+   - Changes from the original: the quiz's answer buttons are drawn on the board instead of
+     sitting under it, with larger text for phones; the board clips its contents like the
+     original canvas did; the riff master's note beeps wait for the audio phase.
+   - `MiniGame` gained `_draw_results()` (drawing over the results screen, e.g. the photo
+     strip) and a tint for `glyph()`.
 5. **Audio, polish, web export, hosting.**
 
 ## Art workflow

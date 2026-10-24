@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
+[ext_resource type="Script" path="res://minigames/social/social.gd" id="2"]
+
+[node name="TrendMatch" instance=ExtResource("1")]
+script = ExtResource("2")
+game_name = "Trend Match"
+title_icon = "📸"
+hint = "Watch the trend, then repeat it!"

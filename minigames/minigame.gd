@@ -67,6 +67,11 @@ func _draw_board() -> void:
 	pass
 
 
+## Extra drawing on top of the results screen (a photo strip, a final tally).
+func _draw_results() -> void:
+	pass
+
+
 func _hud_text() -> String:
 	return "SCORE %d" % score
 
@@ -128,6 +133,7 @@ func _on_board_draw() -> void:
 		text("SCORE %d" % score, Vector2(BOARD.x / 2, BOARD.y / 2 + 6), 20, GOLD)
 		if bonus > 0:
 			text("+$%d BONUS" % bonus, Vector2(BOARD.x / 2, BOARD.y / 2 + 38), 18, CREAM)
+		_draw_results()
 
 
 func _on_board_input(event: InputEvent) -> void:
@@ -166,11 +172,11 @@ func text(value: String, at: Vector2, font_size: int, color: Color, font: Font =
 	board.draw_string(font, at - Vector2(width / 2.0, 0), value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
 
-## An emoji (or any glyph) centred on a point.
-func glyph(value: String, at: Vector2, font_size: int) -> void:
+## An emoji (or any glyph) centred on a point; `color` tints it (alpha fades it).
+func glyph(value: String, at: Vector2, font_size: int, color := Color.WHITE) -> void:
 	var font := ThemeDB.fallback_font
-	var size := font.get_string_size(value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
-	board.draw_string(font, at + Vector2(-size.x / 2.0, font.get_ascent(font_size) - size.y / 2.0), value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
+	var extent := font.get_string_size(value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
+	board.draw_string(font, at + Vector2(-extent.x / 2.0, font.get_ascent(font_size) - extent.y / 2.0), value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
 
 ## Floating "+10" style pops: call add_pop() while playing, draw_pops() each frame.

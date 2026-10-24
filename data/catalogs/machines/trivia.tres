@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MachineDef" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="MachineDef" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://data/defs/machine_def.gd" id="1"]
 [ext_resource type="Resource" path="res://data/catalogs/genres/classic.tres" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/cabinets/trivia/east.png" id="4"]
 [ext_resource type="Texture2D" path="res://assets/sprites/cabinets/trivia/north.png" id="5"]
 [ext_resource type="Texture2D" path="res://assets/sprites/cabinets/trivia/west.png" id="6"]
+[ext_resource type="PackedScene" path="res://minigames/quiz/quiz.tscn" id="7"]
 
 [resource]
 script = ExtResource("1")
@@ -28,3 +29,4 @@ sprite_south = ExtResource("3")
 sprite_east = ExtResource("4")
 sprite_north = ExtResource("5")
 sprite_west = ExtResource("6")
+minigame = ExtResource("7")
