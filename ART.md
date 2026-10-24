@@ -71,11 +71,16 @@ the machine's `.tres` shows as NEW - REVIEW; wire it in only after the user appr
 
 ### Cabinets in the game
 
+Side views must be fully side-on with the control box sticking out at the front. To
+regenerate a cabinet to match, pass an approved cabinet's object as `style_object_id`
+to `create_8_direction_object` along with the front-view reference (pick one whose side
+art won't leak in).
+
 | Machine | PixelLab 8-direction object |
 |---|---|
-| `space_inv` | `775bb75e-1c4a-4f97-8bbf-c83309c0b50e` |
-| `pac` | `e091b618-b174-4b56-91b3-af90e1e670dd` |
-| `breakout` | `175a6436-9e7c-450f-bb98-3685069be542` |
+| `space_inv` | `24f742e2-f9f7-4ec2-ae91-c01b92cc1e22` (style: rhythm object) |
+| `pac` | `22232afc-401e-4f50-adea-e1d44fadf680` (style: space_fleet object) |
+| `breakout` | `29fabf9d-33dd-4181-bf77-6216db04488a` (style: space_fleet object) |
 | `pong` | `91834203-9287-4632-a6e6-4bad91209f0c` |
 | `fighter` | `d0b926b5-3e97-4ded-a3a8-b55b380c3bcd` |
 | `gorilla` | `4a79a195-7c6a-4997-b4cd-de9f722aaf1f` |
