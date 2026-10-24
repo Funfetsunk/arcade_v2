@@ -19,5 +19,6 @@ func refresh() -> void:
 				return
 			ui.modal.confirm("START \"%s\"?" % sc.display_name.to_upper(), "Your current game will be replaced.", "🎯 START", func() -> void:
 				ui.close_sheet()
-				Game.new_game(sc.id)), &"" if playing else &"PrimaryButton")
+				Game.new_game(sc.id)
+				Sfx.buy()), &"" if playing else &"PrimaryButton")
 		add_child(UiKit.card(sc.emoji, sc.display_name + ("  • PLAYING" if playing else ""), sc.blurb + goal, start))

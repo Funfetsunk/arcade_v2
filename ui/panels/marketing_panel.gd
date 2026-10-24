@@ -27,6 +27,7 @@ func refresh() -> void:
 		"+%d%% footfall, −%d%% takings. Toggle anytime." % [_pct(b.discount_foot_mul), GameMath.js_round((1.0 - b.discount_earn_mul) * 100.0)],
 		UiKit.button("STOP" if s.discount_on else "START", func() -> void:
 			Game.actions.toggle_discount(Game.state)
+			Sfx.click()
 			EventBus.state_changed.emit())))
 
 	add_child(UiKit.section("🏆 TOURNAMENTS"))

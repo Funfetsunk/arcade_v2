@@ -38,6 +38,7 @@ func buy_machine(state: GameState, def: MachineDef, tile: Vector2i, facing: Mach
 	m.facing = facing
 	state.machines.append(m)
 	_log("Bought %s for %s." % [def.display_name, GameMath.money(def.cost)], Sim.LogKind.MONEY)
+	purchased.emit()
 	_toast("%s %s placed!" % [def.emoji, def.display_name])
 	FloorGrid.recompute_zones(state, data.balance)
 	machines_changed.emit()
@@ -49,6 +50,7 @@ func move_machine(state: GameState, m: MachineInstance, tile: Vector2i, facing: 
 	m.tile = tile
 	m.facing = facing
 	_log("Moved %s." % m.def.display_name, Sim.LogKind.INFO)
+	purchased.emit()
 	_toast("Moved! ✅")
 	FloorGrid.recompute_zones(state, data.balance)
 	machines_changed.emit()
@@ -92,6 +94,7 @@ func repair_machine(state: GameState, m: MachineInstance) -> bool:
 	state.total_repairs += 1
 	state.total_repair_cost += cost
 	_log("Repaired %s for %s." % [m.def.display_name, GameMath.money(cost)], Sim.LogKind.INFO)
+	purchased.emit()
 	_toast("Repaired! 🔧")
 	return true
 
@@ -112,6 +115,7 @@ func refurbish_machine(state: GameState, m: MachineInstance) -> bool:
 	m.max_hp = 100.0
 	m.hp = maxf(m.hp, 60.0)
 	_log("🔧 Refurbished %s — back to mint condition." % m.def.display_name, Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("✨ Refurbished!")
 	return true
 
@@ -142,6 +146,7 @@ func tune_up_machine(state: GameState, m: MachineInstance) -> bool:
 		return false
 	m.tune_up_level += 1
 	_log("%s: Tune-Up → Lv%d." % [m.def.display_name, m.tune_up_level], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("⚡ Tune-Up Lv%d!" % m.tune_up_level)
 	return true
 
@@ -155,6 +160,7 @@ func reinforce_machine(state: GameState, m: MachineInstance) -> bool:
 		return false
 	m.reinforce_level += 1
 	_log("%s: Reinforce → Lv%d." % [m.def.display_name, m.reinforce_level], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("🛡️ Reinforce Lv%d!" % m.reinforce_level)
 	return true
 
@@ -204,6 +210,7 @@ func restock_machine(state: GameState, m: MachineInstance) -> bool:
 		if slot.active:
 			slot.qty = data.balance.stock_cap
 	_log("Restocked %s for %s." % [m.def.display_name, GameMath.money(cost)], Sim.LogKind.MONEY)
+	purchased.emit()
 	_toast("📦 Restocked — %s" % GameMath.money(cost))
 	return true
 
@@ -226,12 +233,14 @@ func expand_room(state: GameState, axis: Vector2i) -> bool:
 	var cost := expand_cost(state)
 	var max_room := data.balance.max_room
 	if (axis == Vector2i.RIGHT and state.room.x >= max_room.x) or (axis == Vector2i.DOWN and state.room.y >= max_room.y):
+		refused.emit()
 		_toast("Room is at its max in that direction.", Sim.LogKind.MONEY)
 		return false
 	if not _pay(state, cost):
 		return false
 	state.room += axis * data.balance.expand_step
 	_log("🏗️ Expanded the room (+%d %s) for %s." % [data.balance.expand_step, "wide" if axis == Vector2i.RIGHT else "deep", GameMath.money(cost)], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("🏗️ Room expanded!")
 	day_cycle.check_achievements(state)
 	return true
@@ -248,6 +257,7 @@ func buy_upgrade(state: GameState, upgrade: UpgradeDef) -> bool:
 	state.total_spent += upgrade.cost
 	state.upgrades.append(upgrade)
 	_log("Upgrade: %s installed." % upgrade.display_name, Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("%s %s!" % [upgrade.emoji, upgrade.display_name])
 	return true
 
@@ -260,6 +270,7 @@ func buy_facility(state: GameState, facility: FacilityDef) -> bool:
 		return false
 	state.facilities.append(facility)
 	_log("%s Installed %s." % [facility.emoji, facility.display_name], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("%s %s installed!" % [facility.emoji, facility.display_name])
 	return true
 
@@ -272,6 +283,7 @@ func buy_decor(state: GameState, prop: DecorPropDef) -> bool:
 		return false
 	state.decor.append(prop)
 	_log("%s Placed %s." % [prop.emoji, prop.display_name], Sim.LogKind.MONEY)
+	purchased.emit()
 	_toast("%s %s placed!" % [prop.emoji, prop.display_name])
 	return true
 
@@ -319,6 +331,7 @@ func hire_staff(state: GameState, role: StaffDef) -> StaffInstance:
 	if role.id == &"tech_junior":
 		state.senior_tech_unlocked = true
 	_log("Hired %s — %s/day." % [role.display_name, GameMath.money(role.wage)], Sim.LogKind.INFO)
+	purchased.emit()
 	_toast("%s %s hired!" % [role.emoji, role.display_name])
 	staff_changed.emit()
 	return s
@@ -341,6 +354,7 @@ func train_staff(state: GameState, s: StaffInstance) -> bool:
 	s.trained = true
 	s.morale = 100.0
 	_log("🎓 Trained %s — morale maxed, more reliable." % s.def.display_name, Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("🎓 Trained!")
 	return true
 
@@ -389,6 +403,7 @@ func start_campaign(state: GameState, campaign: CampaignDef) -> bool:
 	running.days_left = campaign.days
 	state.campaign = running
 	_log("%s Launched %s — +%d%% footfall for %d days." % [campaign.emoji, campaign.display_name, GameMath.js_round((campaign.foot_mul - 1.0) * 100.0), campaign.days], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("%s %s live!" % [campaign.emoji, campaign.display_name], Sim.LogKind.MONEY)
 	return true
 
@@ -414,6 +429,7 @@ func schedule_tournament(state: GameState, tournament: TournamentDef) -> bool:
 	state.tournament = booking
 	var risk := "⚠ rep %d/%d — may flop." % [GameMath.js_round(state.rep), tournament.rep_req] if state.rep < tournament.rep_req else "Rep looks good!"
 	_log("%s Booked %s — in %d days. %s" % [tournament.emoji, tournament.display_name, tournament.lead_days, risk], Sim.LogKind.MONEY)
+	purchased.emit()
 	_toast("%s %s booked!" % [tournament.emoji, tournament.display_name], Sim.LogKind.MONEY)
 	return true
 
@@ -426,6 +442,7 @@ func undercut_rival(state: GameState) -> bool:
 		return false
 	state.rival.strength = maxf(5.0, state.rival.strength - data.balance.undercut_hit)
 	_log("💢 Price war! %s lost ground." % state.rival.display_name, Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("💢 Rival undercut!", Sim.LogKind.MONEY)
 	day_cycle.apply_rival(state)
 	return true
@@ -446,6 +463,7 @@ func accept_contract(state: GameState, contract: ContractDef) -> bool:
 	booking.days_left = contract.days
 	state.contract = booking
 	_log("📋 Accepted: %s — deliver in %d day(s) for %s%s." % [contract.display_name, contract.days, GameMath.money(contract.cash), " +%d rep" % contract.rep if contract.rep else ""], Sim.LogKind.MONEY)
+	purchased.emit()
 	_toast("📋 %s accepted!" % contract.display_name, Sim.LogKind.MONEY)
 	return true
 
@@ -468,6 +486,7 @@ func do_research(state: GameState, project: ResearchDef) -> bool:
 	state.research.append(project)
 	apply_research(state)
 	_log("🔬 Researched %s — %s" % [project.display_name, project.description], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("🔬 %s!" % project.display_name, Sim.LogKind.MONEY)
 	return true
 
@@ -485,6 +504,7 @@ func open_franchise(state: GameState, town: TownDef) -> bool:
 	f.town = town
 	state.franchises.append(f)
 	_log("🏬 Opened a franchise in %s! +%s/day." % [town.display_name, GameMath.money(town.daily_income(1))], Sim.LogKind.GOOD)
+	celebrated.emit()
 	_toast("%s %s franchise open!" % [town.emoji, town.display_name], Sim.LogKind.MONEY)
 	return true
 
@@ -497,6 +517,7 @@ func upgrade_franchise(state: GameState, town: TownDef) -> bool:
 		return false
 	f.level += 1
 	_log("🏬 Invested in %s — now level %d (+%s/day)." % [town.display_name, f.level, GameMath.money(town.daily_income(f.level))], Sim.LogKind.GOOD)
+	purchased.emit()
 	_toast("%s %s upgraded!" % [town.emoji, town.display_name])
 	return true
 
@@ -508,11 +529,13 @@ func buy_perk(state: GameState, perk: PerkDef) -> bool:
 		_toast("Perk maxed out.", Sim.LogKind.MONEY)
 		return false
 	if meta.perk_points() <= 0:
+		refused.emit()
 		_toast("No prestige points to spend!", Sim.LogKind.MONEY)
 		return false
 	meta.perk_ranks[perk.id] = meta.perk_rank(perk.id) + 1
 	apply_meta(state)
 	_log("%s Perk: %s → rank %d." % [perk.emoji, perk.display_name, meta.perk_rank(perk.id)], Sim.LogKind.GOOD)
+	purchased.emit()
 	return true
 
 

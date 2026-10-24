@@ -13,6 +13,9 @@ const MAX_LEADERBOARD := 25
 ## Daily challenge date ("YYYY-MM-DD") -> best takings that day.
 @export var daily_bests: Dictionary[String, int] = {}
 @export var tutorial_done: bool
+## Sound settings (the original kept these in localStorage).
+@export var sound_muted: bool
+@export var jukebox_track: StringName = &"arcade"
 
 
 func perk_rank(id: StringName) -> int:

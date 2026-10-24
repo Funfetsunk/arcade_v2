@@ -38,7 +38,11 @@ func close() -> void:
 ## A yes/no confirmation; `on_yes` runs only if confirmed.
 func confirm(title: String, message: String, yes_text: String, on_yes: Callable, danger := false) -> void:
 	var yes := UiKit.button(yes_text, func() -> void:
+		Sfx.click()
 		close()
 		on_yes.call(), &"DangerButton" if danger else &"PrimaryButton")
-	var no := UiKit.button("Cancel", close)
+	var no := UiKit.button("Cancel", func() -> void:
+		Sfx.click()
+		close())
 	present(title, [UiKit.label(message, &"", true), UiKit.hbox([no, UiKit.spacer(), yes])])
+	Sfx.click()

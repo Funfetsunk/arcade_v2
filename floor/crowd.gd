@@ -51,6 +51,7 @@ func _process(delta: float) -> void:
 			spawn_customer()
 	for c in customers.duplicate():
 		_update_customer(c, delta)
+	Sfx.set_crowd(customers.size())
 	for t in technicians.duplicate():
 		_update_technician(t, delta)
 

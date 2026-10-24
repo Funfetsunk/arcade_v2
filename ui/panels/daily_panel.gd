@@ -17,7 +17,8 @@ func refresh() -> void:
 	add_child(UiKit.button("🔁 BEAT YOUR BEST" if best else "▶ START CHALLENGE", func() -> void:
 		ui.modal.confirm("📅 START DAILY CHALLENGE?", "\"%s\"\n\nEarn the most over %d days. Replaces your current game." % [variant.blurb, Data.db.balance.daily_challenge_days], "📅 START", func() -> void:
 			ui.close_sheet()
-			Game.start_daily(date)), &"PrimaryButton"))
+			Game.start_daily(date)
+			Sfx.buy()), &"PrimaryButton"))
 	var days := Game.meta.daily_bests.keys()
 	days.sort()
 	days.reverse()

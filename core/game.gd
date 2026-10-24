@@ -30,6 +30,10 @@ func _ready() -> void:
 	for system: Object in [sim, day_cycle, actions]:
 		system.logged.connect(EventBus.logged.emit)
 		system.toast_requested.connect(EventBus.toast_requested.emit)
+	for system: GameSystem in [day_cycle, actions]:
+		system.purchased.connect(EventBus.purchased.emit)
+		system.refused.connect(EventBus.refused.emit)
+		system.celebrated.connect(EventBus.celebrated.emit)
 	sim.customers_reset.connect(EventBus.customers_reset.emit)
 	sim.coin_spawned.connect(EventBus.coin_spawned.emit)
 	sim.repair_worker_spawned.connect(EventBus.repair_worker_spawned.emit)
@@ -107,6 +111,7 @@ func prestige() -> bool:
 	save_meta()
 	new_game(&"free")
 	EventBus.logged.emit("⭐ Prestiged to level %d — spend your new perk point!" % meta.prestige_level, Sim.LogKind.GOOD)
+	EventBus.celebrated.emit()
 	return true
 
 

@@ -5,6 +5,10 @@ extends Node
 
 signal logged(message: String, kind: Sim.LogKind)
 signal toast_requested(message: String, kind: Sim.LogKind)
+## Sound cues relayed from the systems (see GameSystem).
+signal purchased
+signal refused
+signal celebrated
 
 ## The state changed in a way the HUD and panels should redraw for.
 signal state_changed

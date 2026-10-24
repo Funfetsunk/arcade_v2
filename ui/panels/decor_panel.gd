@@ -18,12 +18,24 @@ func refresh() -> void:
 	add_child(name_edit)
 	add_child(UiKit.label("Shown on the neon sign over your back wall.", &"DimLabel", true))
 
+	add_child(UiKit.section("🎵 JUKEBOX"))
+	var tracks := HFlowContainer.new()
+	tracks.add_theme_constant_override(&"h_separation", 6)
+	tracks.add_theme_constant_override(&"v_separation", 6)
+	for t in Sfx.TRACKS:
+		var on: bool = t.id == Sfx.track()
+		tracks.add_child(UiKit.button(("▶ " if on else "") + t.name, func() -> void:
+			Sfx.set_track(t.id)
+			EventBus.state_changed.emit(), &"PrimaryButton" if on else &""))
+	add_child(tracks)
+
 	add_child(UiKit.section("THEME"))
 	for t in Data.db.themes:
 		var on := t.id == s.theme
 		add_child(UiKit.card(t.emoji, t.display_name + ("  • active" if on else ""), "",
 			UiKit.button("✓" if on else "USE", func() -> void:
 				actions.set_theme(Game.state, t)
+				Sfx.click()
 				EventBus.state_changed.emit(), &"PrimaryButton" if on else &"", not on)))
 
 	var max_decor := Data.db.balance.max_decor

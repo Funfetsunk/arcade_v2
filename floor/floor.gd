@@ -88,6 +88,7 @@ func rotate_ghost(direction := 1) -> void:
 		return
 	ghost_facing = posmod(ghost_facing + direction, 4) as MachineInstance.Facing
 	_set_ghost_tile(ghost_tile)
+	Sfx.click()
 
 
 func ghost_valid() -> bool:
@@ -98,6 +99,7 @@ func commit_placing() -> bool:
 	if not is_placing():
 		return false
 	if not ghost_valid():
+		Sfx.error()
 		EventBus.toast_requested.emit("Can't place there — blocked or out of bounds.", Sim.LogKind.BAD)
 		return false
 	var placed_id: int
@@ -122,6 +124,7 @@ func commit_placing() -> bool:
 func cancel_placing() -> void:
 	if is_placing():
 		_end_placing()
+		Sfx.click()
 
 
 func _begin_placing(def: MachineDef, facing: MachineInstance.Facing, tile: Vector2i) -> void:

@@ -91,6 +91,7 @@ func _ready() -> void:
 	_next_day.pressed.connect(_on_next_day)
 	_repairs.pressed.connect(_show_repairs)
 	%MenuButton.pressed.connect(toggle_panel.bind(&"menu"))
+	_add_sound_button()
 	_visitor_popup.hide()
 	EventBus.visitor_selected.connect(_on_visitor_selected)
 	EventBus.customers_reset.connect(_on_visitor_selected.bind(null))
@@ -103,6 +104,18 @@ func _ready() -> void:
 	EventBus.scenario_won.connect(_show_scenario_win)
 	EventBus.daily_finished.connect(_show_daily_finished)
 	_refresh()
+
+
+## The 🔊 / 🔇 toggle at the right of the top bar.
+func _add_sound_button() -> void:
+	var menu: Button = %MenuButton
+	var sound := Button.new()
+	sound.name = "SoundButton"
+	sound.custom_minimum_size = menu.custom_minimum_size
+	sound.tooltip_text = "Toggle sound"
+	sound.text = "🔇" if Sfx.muted else "🔊"
+	sound.pressed.connect(func() -> void: sound.text = "🔇" if Sfx.toggle_mute() else "🔊")
+	menu.get_parent().add_child(sound)
 
 
 func toggle_panel(id: StringName) -> void:
@@ -130,6 +143,7 @@ func play_minigame(m: MachineInstance) -> void:
 	game.name = "MiniGame"
 	game.finished.connect(func(score: int) -> void:
 		game.bonus = Game.actions.award_minigame(Game.state, game.game_name, score)
+		Sfx.goal()
 		Game.save_game()
 		EventBus.state_changed.emit())
 	$Root.add_child(game)
@@ -150,10 +164,13 @@ func show_tutorial(page := 0) -> void:
 	var entry: Array = TUTORIAL[page]
 	var last := page == TUTORIAL.size() - 1
 	var finish := func() -> void:
+		Sfx.click()
 		modal.close()
 		Game.meta.tutorial_done = true
 		Game.save_meta()
-	var next := UiKit.button("LET'S GO!" if last else "NEXT", finish if last else show_tutorial.bind(page + 1), &"PrimaryButton")
+	var next := UiKit.button("LET'S GO!" if last else "NEXT", finish if last else func() -> void:
+		Sfx.click()
+		show_tutorial(page + 1), &"PrimaryButton")
 	var skip := UiKit.button("SKIP", finish)
 	var icon := UiKit.label(entry[0])
 	icon.add_theme_font_size_override(&"font_size", 28)
@@ -176,6 +193,7 @@ func _on_visitor_selected(visitor: Node2D) -> void:
 	_visitor_popup.visible = _visitor != null
 	_visitor_timer = 0.0
 	if _visitor:
+		Sfx.click()
 		_update_visitor_popup()
 
 
@@ -305,6 +323,11 @@ func _show_decision(event: DecisionEventDef) -> void:
 		var extra := " — %s" % GameMath.money(o.cost) if o.cost else " — +%s" % GameMath.money(o.gain_cash) if o.gain_cash else ""
 		var b := UiKit.button(o.label + extra, func() -> void:
 			if Game.choose_decision(i):
+				# Options that spend, pay out or help the day chime; the rest click.
+				if o.cost or o.gain_cash or o.repair_all or o.foot_mul > 1:
+					Sfx.buy()
+				else:
+					Sfx.click()
 				modal.close(), &"PrimaryButton" if i == 0 else &"", o.cost == 0 or Game.state.cash >= o.cost)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		body.append(b)

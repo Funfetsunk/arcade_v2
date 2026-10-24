@@ -5,6 +5,11 @@ extends RefCounted
 
 signal logged(message: String, kind: Sim.LogKind)
 signal toast_requested(message: String, kind: Sim.LogKind)
+## Sound cues, as in the original: something was bought, an action was refused,
+## or a milestone deserves a fanfare.
+signal purchased
+signal refused
+signal celebrated
 
 var data: GameData
 var meta: MetaProgress
@@ -29,6 +34,7 @@ func _toast(message: String, kind := Sim.LogKind.INFO) -> void:
 
 ## Shows the reason an action couldn't happen; returns false for convenient early returns.
 func _refuse(message: String) -> bool:
+	refused.emit()
 	_toast(message, Sim.LogKind.BAD)
 	return false
 

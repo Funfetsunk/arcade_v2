@@ -1,12 +1,13 @@
 extends MiniGame
 ## Riff Master (unlike the dance mat): two wide tracks with tap notes and hold
 ## notes. Tap a note on the line; press and ride a long note's tail for bonus
-## ticks. 25 s. (The original's note beeps arrive with the audio phase.)
+## ticks. 25 s.
 
 const HIT_Y := 380.0
 const TRACKS := 2
 const TW := BOARD.x / TRACKS
 const ROUND := 25 * 60
+const NOTES := [330.0, 440.0]
 
 var notes: Array[Dictionary] = []
 var combo := 0
@@ -34,6 +35,7 @@ func _pointer_pressed(at: Vector2) -> void:
 		best.hit = true
 		combo += 1
 		score += 12
+		Sfx.beep(NOTES[track] * (1.5 if combo >= 6 else 1.0))
 		add_pop(Vector2(x, HIT_Y + 34), "+12", 26, Color("06d6a0"))
 		if best.tail > 0:
 			_holding[track] = best
@@ -70,6 +72,8 @@ func _tick() -> void:
 				held.hold_ticks += 1
 				if held.hold_ticks % 6 == 0:
 					score += 2
+					if held.hold_ticks % 18 == 0:
+						Sfx.beep(NOTES[track] * 2)
 			else:
 				_holding[track] = null
 		_glow[track] = maxi(0, _glow[track] - 1)

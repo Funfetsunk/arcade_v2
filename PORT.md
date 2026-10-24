@@ -206,6 +206,21 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
    - `MiniGame` gained `_draw_results()` (drawing over the results screen, e.g. the photo
      strip) and a tint for `glyph()`.
 5. **Audio, polish, web export, hosting.**
+   - Sound (done): the original synthesized everything live with Web Audio (`sfx.ts`).
+     `tools/render_sfx.py` renders the same oscillators, envelopes and filtered noise to
+     `assets/audio/*.wav` (imported QOA-compressed; loops set to forward in the `.import`
+     files): coin, buy, day, break, click, error, goal, ambient bleeps, Riff Master's beeps,
+     the arcade hum, the crowd murmur and the four jukebox tracks.
+   - `Sfx` autoload (`core/sfx.gd`) plays them on the SFX / Ambience / Music buses
+     (`default_bus_layout.tres`; master at the original's 0.6). Ambience and music start on
+     the first tap, with the original's "sound on" ding. The murmur follows the crowd size.
+   - Cues: `GameSystem` emits `purchased` / `refused` / `celebrated` where the original
+     played buy / error / goal; the rest come from existing EventBus signals and the UI
+     (clicks on confirms, the tutorial, the placing bar, visitor taps, toggles).
+   - 🔊 / 🔇 button at the right of the top bar; jukebox in Decor. Both are remembered in
+     `MetaProgress` (`sound_muted`, `jukebox_track`).
+   - Sfx finds Game at runtime: the machine catalogs load minigame scenes that call Sfx, so
+     a static `Game` reference in it would make a Data → Sfx → Game → Data load cycle.
 
 ## Art workflow
 

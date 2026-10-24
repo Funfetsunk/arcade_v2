@@ -15,6 +15,7 @@ func refresh() -> void:
 		add_child(UiKit.card(d.emoji, "%s  %d%% footfall" % [d.display_name, GameMath.js_round(d.foot_mul * 100.0)], d.blurb,
 			UiKit.button("✓" if on else "PICK", func() -> void:
 				Game.actions.set_difficulty(Game.state, d)
+				Sfx.click()
 				EventBus.state_changed.emit(), &"PrimaryButton" if on else &"", not on)))
 	add_child(UiKit.section("PRESTIGE"))
 	add_child(UiKit.stat_row("Prestige level", "⭐ %d" % meta.prestige_level))

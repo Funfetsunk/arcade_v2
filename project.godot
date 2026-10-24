@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 Data="*res://core/data.gd"
 EventBus="*res://core/event_bus.gd"
 Game="*res://core/game.gd"
+Sfx="*res://core/sfx.gd"
 
 [display]
 
