@@ -96,6 +96,7 @@ func _ready() -> void:
 	EventBus.visitor_selected.connect(_on_visitor_selected)
 	EventBus.customers_reset.connect(_on_visitor_selected.bind(null))
 	sheet.closed.connect(_on_sheet_closed)
+	sheet.touch_scroll.blocker = modal
 	arcade_floor.placing_changed.connect(_on_placing_changed)
 	EventBus.state_changed.connect(_refresh)
 	EventBus.machine_selected.connect(_on_machine_selected)

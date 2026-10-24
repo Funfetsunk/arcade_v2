@@ -7,6 +7,8 @@ extends PanelContainer
 signal closed
 
 var current: Control
+## Drag-to-scroll anywhere over the panel (see TouchScroll).
+var touch_scroll := TouchScroll.new()
 
 @onready var _title: Label = %SheetTitle
 @onready var _body: VBoxContainer = %SheetBody
@@ -15,6 +17,7 @@ var current: Control
 
 func _ready() -> void:
 	hide()
+	_scroll.add_child(touch_scroll)
 	%SheetClose.pressed.connect(close)
 	EventBus.state_changed.connect(_refresh)
 
