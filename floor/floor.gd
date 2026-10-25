@@ -38,6 +38,7 @@ var _dragged := false
 @onready var entities: Node2D = $Entities
 @onready var crowd: Crowd = $Crowd
 @onready var props: PropLayer = $Props
+@onready var desk: CashierDesk = $Entities/CashierDesk
 @onready var ghost: Cabinet = $Ghost
 @onready var pops: Node2D = $Pops
 
@@ -320,6 +321,7 @@ func _on_state_changed() -> void:
 		walk_grid.rebuild(state.room, state.machines, _prop_blocked)
 		crowd.reroute()
 	room.show_room(state.room, Data.db.theme(state.theme))
+	desk.show_desk(state.room)
 	for c: Cabinet in cabinets.values():
 		c.refresh()
 
@@ -356,6 +358,7 @@ func _sync_props() -> bool:
 		return false
 	_prop_key = key
 	_prop_blocked = PropLayout.blocked_tiles(spots)
+	_prop_blocked.append_array(FloorGrid.desk_tiles(Game.state.room))
 	props.show_spots(spots, Game.state.arcade_name, theme.sign_color)
 	return true
 

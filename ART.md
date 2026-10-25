@@ -95,7 +95,7 @@ art won't leak in).
 | `coin_push` | `8443eafb-f5ba-42e3-a1c0-fe5a5162bd58` |
 | `crane` | `9029bf8b-e95a-4867-84a7-92a86349bf75` |
 | `ddr` | `42680036-6187-4fc6-9f7c-b2b5896a0cec` |
-| `food_counter` | `9d15cadd-c407-48b9-868a-56408b80b762` |
+| `food_counter` | open counter: front `3ce129e9-0d7e-40ac-9ed4-79f137e72afd` (FOOD lettering redrawn by hand), sides and back `52b9bf23-b605-4c1a-b80d-138305b3d439` (style: prize_counter). The old kiosk was `9d15cadd-c407-48b9-868a-56408b80b762` |
 | `jackpot_machine` | `9b91d0ad-8cd9-48da-8862-c1ac69d2a5dc` |
 | `motion_sim` | `8f86406d-77f3-43d1-8bae-26f569e18d4e` |
 | `photo_booth` | `66bbe1d7-98c3-4f6f-9282-6a920aeae776` |
@@ -179,6 +179,17 @@ Not a sprite: `floor/neon_sign.gd` draws the arcade's name in the pixel font on 
 with a 1 px neon frame, in the theme's `sign_color`, with a soft glow and a flicker. The first
 Neon Sign bought lights it, centred on the back wall over the neon rail; more Neon Signs hang as
 the PLAY sprite. `docs/sign_sheet.png` shows it in every theme (in-game captures).
+
+## Cashier's desk
+
+`assets/sprites/decor/cashier_desk.png` is PixelLab object `58ee4b58-64c1-4339-bbe0-8bbdad25cc78`
+(a straight-on 1-direction object; the angled batch didn't match the cabinets), with its cyan
+trim recoloured to the neon rail's pinks and the front rectangle redrawn cleanly by hand.
+`floor/cashier_desk.gd` stands it in the front-left corner (`FloorGrid.desk_tiles`, kept clear of
+machines and props), and is drawn with the walls' shader so the whole desk takes each theme's
+colour (`docs/desk_sheet.png`). The hired cashier stands behind it (`docs/counter_sheet.png`).
+The food counter is an open counter; a hired attendant stands on its serving side in every
+facing (`docs/food_counter_sheet.png`).
 
 ## Decor and facilities
 

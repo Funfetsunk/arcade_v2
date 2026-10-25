@@ -46,6 +46,8 @@ static func layout(state: GameState) -> Array[Spot]:
 		for t in FloorGrid.footprint_tiles(m.tile, m.def.footprint):
 			machine_tiles[t] = true
 	var stands := FloorGrid.reserved_stand_tiles(state.machines)
+	for t in FloorGrid.desk_tiles(room):
+		machine_tiles[t] = true
 	var lane := door_lane(room)
 	var solid := machine_tiles.duplicate()
 	var taken := {}        # floor tiles used by any prop, rugs included

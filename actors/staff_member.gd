@@ -1,9 +1,12 @@
 class_name StaffMember
 extends Walker
-## A hired techie, guard or manager pacing the open strip at the front of the floor.
+## A hired techie, guard or manager pacing the open strip at the front of the floor,
+## or a cashier or attendant standing at their counter.
 
 ## The strip they pace, in floor pixels.
 var roam_area := Rect2()
+## Counter staff stay put, facing the room.
+var stationary := false
 var _pause := 0.0
 
 
@@ -13,7 +16,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
-	if is_moving():
+	if stationary or is_moving():
 		return
 	_pause -= delta
 	if _pause <= 0.0:

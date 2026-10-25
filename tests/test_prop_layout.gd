@@ -120,3 +120,12 @@ func test_wall_props_keep_clear_of_the_name_sign() -> void:
 	for s in PropLayout.layout(state):
 		if not s.name_sign:
 			assert_false(covered.has(s.tile.x), "poster at %s clear of the sign" % s.tile)
+
+
+func test_props_keep_off_the_cashiers_desk() -> void:
+	for i in 12:
+		state.decor.append(H.DATA.decor_prop(&"plant"))
+	var desk := FloorGrid.desk_tiles(ROOM)
+	for s in PropLayout.layout(state):
+		for t in s.tiles():
+			assert_false(desk.has(t), "plant at %s clear of the desk" % t)

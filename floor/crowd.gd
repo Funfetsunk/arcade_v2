@@ -53,6 +53,7 @@ func _ready() -> void:
 	EventBus.machine_broke.connect(func() -> void: react(["😟", "😱", "🙁", "😞"], 0.5, 60))
 	EventBus.repair_worker_spawned.connect(spawn_technician)
 	EventBus.staff_changed.connect(sync_staff)
+	EventBus.machines_changed.connect(sync_staff)
 	EventBus.state_changed.connect(sync_staff)
 
 
@@ -151,23 +152,32 @@ func reroute() -> void:
 			t.walk(walk_grid.route(t.position, t.waypoints[-1]))
 
 
-## Keeps the roaming staff in step with who's hired.
+## Keeps the floor staff in step with who's hired: roamers pace the front strip,
+## the cashier stands behind the desk and an attendant behind each food counter.
 func sync_staff() -> void:
 	if Game.state == null:
 		return
-	var roaming := Game.state.staff.filter(func(s: StaffInstance) -> bool: return s.def.skill in ROAMING_SKILLS)
+	var state := Game.state
+	var roaming := state.staff.filter(func(s: StaffInstance) -> bool: return s.def.skill in ROAMING_SKILLS)
 	var ids: Array = roaming.map(func(s: StaffInstance) -> String: return s.def.id)
 	ids.sort()
-	var signature := ",".join(ids)
+	var cashier := state.staff_level(StaffDef.Skill.CASHIER) >= 1
+	var attendants: Array[MachineInstance] = []
+	if state.staff_level(StaffDef.Skill.ATTENDANT) >= 1:
+		attendants.assign(state.machines.filter(func(m: MachineInstance) -> bool: return m.def.type == MachineDef.Type.FOOD))
+	var attendant_spots: Array = attendants.map(func(m: MachineInstance) -> Array: return [m.tile, m.facing])
+	var signature := "%s|%s|%s|%s" % [",".join(ids), state.room, cashier, attendant_spots]
 	if signature == _staff_signature:
 		return
 	_staff_signature = signature
 	for s in staff:
 		s.queue_free()
 	staff.clear()
-	var room := Game.state.room
+	var room := state.room
 	var front := FloorGeometry.front_y(room)
-	var area := Rect2(20.0, front - 16.0, room.x * FloorGeometry.TILE - 40.0, 20.0)
+	# Clear of the cashier's desk in the front-left corner.
+	var left := 2 * FloorGeometry.TILE + 10.0
+	var area := Rect2(left, front - 16.0, room.x * FloorGeometry.TILE - left - 20.0, 20.0)
 	for i in roaming.size():
 		var s: StaffMember = STAFF_SCENE.instantiate()
 		s.roam_area = area
@@ -176,6 +186,39 @@ func sync_staff() -> void:
 		entities.add_child(s)
 		s.sprite.sprite_frames = _frames(StringName("staff_" + roaming[i].def.id))
 		staff.append(s)
+	if cashier:
+		var desk: CashierDesk = entities.get_node("CashierDesk")
+		_add_counter_staff(&"staff_cashier", desk.cashier_spot(), &"south")
+	for m in attendants:
+		var spot := attendant_spot(m)
+		_add_counter_staff(&"staff_attendant", spot[0], spot[1])
+
+
+func _add_counter_staff(look: StringName, at: Vector2, facing: StringName) -> void:
+	var s: StaffMember = STAFF_SCENE.instantiate()
+	s.stationary = true
+	s.position = at
+	entities.add_child(s)
+	s.sprite.sprite_frames = _frames(look)
+	s.facing = facing
+	s.sprite.play(&"idle_" + facing)
+	staff.append(s)
+
+
+## Where a food counter's attendant stands and which way they face: on the
+## serving side, looking out at the customers. Facing south they stand behind it
+## (a smaller y, drawn under the counter); facing north, in front with their back
+## to us; facing east or west, beside it on the far side.
+static func attendant_spot(m: MachineInstance) -> Array:
+	var at := FloorGeometry.machine_anchor(m)
+	match m.facing:
+		MachineInstance.Facing.N:
+			return [at + Vector2(0, 2), &"north"]
+		MachineInstance.Facing.E:
+			return [at + Vector2(-18, -1), &"east"]
+		MachineInstance.Facing.W:
+			return [at + Vector2(18, -1), &"west"]
+	return [at + Vector2(0, -12), &"south"]
 
 
 func _update_customer(c: Customer, delta: float) -> void:

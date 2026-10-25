@@ -184,3 +184,11 @@ func test_carpet_mixes_variants_in_a_fixed_pattern() -> void:
 				counts[2] += 1
 	assert_between(counts[1], 600, 1000, "about half are plain variants")
 	assert_between(counts[2], 20, 120, "about 1 in 25 are accents")
+
+
+func test_nothing_goes_on_the_cashiers_desk() -> void:
+	for t in FloorGrid.desk_tiles(ROOM):
+		assert_false(_ok(t.x, t.y - 1, S, []), "no machine base on desk tile %s" % t)
+	# A cabinet whose player would stand on the desk.
+	assert_false(_ok(0, ROOM.y - 4, S, []))
+	assert_true(_ok(2, ROOM.y - 3, S, []))

@@ -71,6 +71,12 @@ static func occupied_tiles(machines: Array[MachineInstance], ignore: MachineInst
 	return tiles
 
 
+## The cashier's desk in the front-left corner (two tiles) and the row behind it
+## where the cashier stands, as in the original. Nothing else goes there.
+static func desk_tiles(room: Vector2i) -> Array[Vector2i]:
+	return [Vector2i(0, room.y - 1), Vector2i(1, room.y - 1), Vector2i(0, room.y - 2), Vector2i(1, room.y - 2)]
+
+
 ## Other machines' stand tiles, which must stay clear.
 static func reserved_stand_tiles(machines: Array[MachineInstance], ignore: MachineInstance = null) -> Dictionary:
 	var tiles := {}
@@ -90,11 +96,12 @@ static func can_place(tile: Vector2i, size: Vector2i, facing: MachineInstance.Fa
 		return false
 	var occupied := occupied_tiles(machines, ignore)
 	var stands := reserved_stand_tiles(machines, ignore)
+	var desk := desk_tiles(room)
 	for t in bases:
-		if occupied.has(t) or stands.has(t):
+		if occupied.has(t) or stands.has(t) or desk.has(t):
 			return false
 	var stand := stand_tile(tile, size, facing)
-	if not in_bounds([stand], room) or occupied.has(stand) or stands.has(stand):
+	if not in_bounds([stand], room) or occupied.has(stand) or stands.has(stand) or desk.has(stand):
 		return false
 	# Two boxes whose bases each land inside the other's footprint are the same
 	# physical space (e.g. opposite facings dropped on one tile).

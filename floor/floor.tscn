@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://floor/floor.gd" id="1"]
 [ext_resource type="Script" path="res://floor/floor_camera.gd" id="2"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://floor/prop_layer.gd" id="7"]
 [ext_resource type="Script" path="res://floor/wall_face.gd" id="8"]
 [ext_resource type="Shader" path="res://floor/wall_tint.gdshader" id="9"]
+[ext_resource type="PackedScene" path="res://floor/cashier_desk.tscn" id="10"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wall"]
 shader = ExtResource("9")
@@ -38,6 +39,8 @@ z_index = -1
 
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="CashierDesk" parent="Entities" instance=ExtResource("10")]
 
 [node name="Crowd" type="Node" parent="." node_paths=PackedStringArray("entities")]
 script = ExtResource("5")
