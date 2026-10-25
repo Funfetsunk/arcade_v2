@@ -153,6 +153,17 @@ their counters once facilities are drawn.
 `walking-6-frames` (1 generation per direction). Each character gets a `SpriteFrames` resource
 with `idle_<dir>` and `walk_<dir>` animations at 10 fps.
 
+## Walls
+
+Seamless 32 px textures from `create_tiles_pro` (square, top-down, carpet as the style tile),
+in `assets/tiles/walls/`. The user picked design F: the 48 px back wall is purple brick (12 px),
+a pink neon rail (`neon_rail.png`, rows 11-19 of `neon_stripe.png`), brick (7 px), wood wainscot
+(`wainscot_band.png`, rows 16-31 of `wainscot.png`) and 4 px of wood trim. Side and front walls
+show navy brick at 60% brightness. `floor/wall_face.gd` draws it; `floor/wall_tint.gdshader`
+tones it toward each theme's `wall` hue by its `wall_tint_strength` (Classic Neon: 0, as drawn).
+The other textures (navy brick, two wallpapers) are spares. Review with
+`python tools/wall_sheet.py . docs/wall_sheet.png` (design F in every theme).
+
 ## Decor and facilities
 
 One-direction objects (`create_1_direction_object`, 16-candidate review pack, a crop of an
@@ -201,7 +212,7 @@ Skin tones       #f5cba7 #c8956b #8d5a3b #5c3d1e
 
 - One carpet tile repeats visibly over a big floor. Before the floor scene ships, generate 2–3
   variants of carpet 8 (tiles-pro with `carpet.png` as `style_images`) and scatter them.
-- Walls, UI frames, icons and a pixel font are still to be generated.
+- UI frames, icons and a pixel font are still to be generated.
 
 ## UI
 
