@@ -109,6 +109,29 @@ art won't leak in).
 
 ## Characters
 
+### Customers in the game
+
+Review sheet: `python tools/people_sheet.py . docs/customer_sheet.png <names...>`. Import a finished
+PixelLab character (rotations + walk) with `python tools/import_character.py <name>:<character_id>`.
+The crowd picks a look by audience (`Crowd.LOOKS`): kids, teens or adults.
+
+| Look | Audience | PixelLab character |
+|---|---|---|
+| `customer_a` | teen, adult | `9940f4d9-d7bb-4c70-ba6f-35906c6b8489` |
+| `customer_teen_jacket` | teen | `7594dda6-80eb-49cf-98bf-b714ff4bce26` (baked foot shadow removed) |
+| `customer_teen_hoodie` | teen | `477cf3c6-a53c-4fc0-bc2b-76c0dd95ef76` |
+| `customer_teen_punk` | teen | `bf3ead66-703c-4e16-a7e6-e1ece1e122e3` |
+| `customer_kid_cap` | kids | `78a65e54-87ac-4cff-9afc-6799528c61e2` |
+| `customer_kid_bunches` | kids | `f7ed6370-a814-4bce-b0cd-8d133e7520f8` |
+| `customer_adult_cardigan` | adult | `83561712-518c-4fa0-8cd4-0c00c9b32b16` |
+| `customer_adult_blazer` | adult | `0ba7890d-aee3-4fd3-83fc-bb9970e7f0f5` |
+
+The seven newer ones came from PixelLab's v3 character mode (32px canvas, 8 directions,
+2 generations) and are a few pixels shorter than customer A; walks use the
+`walking-6-frames` template (1 generation per direction).
+
+### Making characters
+
 `create_character`, standard mode, `size 32`, 4 directions, view `low top-down`, outline
 `single color outline`, shading `basic shading`. Walk: `animate_character` with template
 `walking-6-frames` (1 generation per direction). Each character gets a `SpriteFrames` resource

@@ -19,6 +19,12 @@ const SPAWN_INTERVAL := 0.75
 const FAMILY_CHANCE := 0.14
 ## Staff skills that walk the floor.
 const ROAMING_SKILLS := [StaffDef.Skill.REPAIR, StaffDef.Skill.SECURITY, StaffDef.Skill.MANAGER]
+## Which customer looks each audience can wear (folders under assets/sprites/actors/).
+const LOOKS := {
+	&"kids": [&"customer_kid_cap", &"customer_kid_bunches"],
+	&"teen": [&"customer_a", &"customer_teen_jacket", &"customer_teen_hoodie", &"customer_teen_punk"],
+	&"adult": [&"customer_a", &"customer_adult_cardigan", &"customer_adult_blazer"],
+}
 
 ## Where people are added; y-sorted with the cabinets.
 @export var entities: Node2D
@@ -28,6 +34,7 @@ var customers: Array[Customer] = []
 var technicians: Array[Technician] = []
 var staff: Array[StaffMember] = []
 
+var _looks: Dictionary[StringName, SpriteFrames] = {}
 var _spawn_timer := 0.0
 var _staff_signature := ""
 
@@ -110,6 +117,7 @@ func spawn_customer(persona := -1, kid := false) -> void:
 	if kid:
 		c.scale = Vector2(0.8, 0.8)
 	entities.add_child(c)
+	c.sprite.sprite_frames = _look_for(c.audience)
 	c.walk(walk_grid.route(c.position, _queue_point(c)))
 	customers.append(c)
 
@@ -293,6 +301,14 @@ func _machine_taken(machine_id: int) -> bool:
 
 func _queue_point(c: Customer) -> Vector2:
 	return c.stand_point + Vector2(0.0, c.queue_pos * QUEUE_STEP)
+
+
+## A random look for the audience, cached once loaded.
+func _look_for(audience: StringName) -> SpriteFrames:
+	var name: StringName = LOOKS.get(audience, LOOKS[&"teen"]).pick_random()
+	if not _looks.has(name):
+		_looks[name] = load("res://assets/sprites/actors/%s/%s_frames.tres" % [name, name])
+	return _looks[name]
 
 
 static func _roll_persona() -> Customer.Persona:
