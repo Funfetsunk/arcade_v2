@@ -62,6 +62,10 @@ jobs:
         run: |
           ~/godot/godot --headless --path . -s addons/gut/gut_cmdln.gd 2>&1 | tee test.log
           if grep -qE "SCRIPT ERROR|Parse Error|Failed to load script" test.log; then
+            # Annotations are readable without signing in, unlike the log.
+            grep -A2 -E "SCRIPT ERROR|Parse Error|Failed to load script" test.log | head -30 | while IFS= read -r line; do
+              echo "::error::$line"
+            done
             echo "::error::Script errors in the test run"; exit 1
           fi
           grep -q "All tests passed" test.log
