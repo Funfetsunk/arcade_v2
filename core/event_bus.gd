@@ -8,7 +8,8 @@ signal toast_requested(message: String, kind: Sim.LogKind)
 ## Sound cues relayed from the systems (see GameSystem).
 signal purchased
 signal refused
-signal celebrated
+## A milestone worth a fanfare, with how much confetti it deserves.
+signal celebrated(confetti: int)
 
 ## The state changed in a way the HUD and panels should redraw for.
 signal state_changed

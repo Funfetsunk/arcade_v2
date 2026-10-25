@@ -228,6 +228,15 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
      scenario, day, prestige, six stats, machine strip) in an off-screen SubViewport;
      `JavaScriptBridge.download_buffer` saves it on the web, `user://share/` elsewhere.
      Buttons on the victory and scenario-win dialogs and the leaderboard, as in the original.
+   - Confetti (done): `Confetti` overlay in the UI layer (under the panels) bursts for goals,
+     achievements, jackpots, franchises (70) and prestige (150) via `celebrated(confetti)`,
+     the empire win, scenario wins, daily completes, contracts and tournaments, with the
+     original's counts.
+   - Loading screen (done): `tools/make_splash.py` draws `assets/ui/splash.png` (title over a
+     row of cabinets), used as the boot splash and by the web loader with its progress bar.
+   - Fresh builds (done): `tools/cache_bust.py` runs after the CI export and renames the
+     engine files to `game-<commit>.*` (index.html points at them), so a deploy is never hidden
+     by Pages' 10-minute browser cache.
    - Sfx finds Game at runtime: the machine catalogs load minigame scenes that call Sfx, so
      a static `Game` reference in it would make a Data → Sfx → Game → Data load cycle.
 

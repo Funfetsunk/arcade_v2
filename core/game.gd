@@ -111,7 +111,7 @@ func prestige() -> bool:
 	save_meta()
 	new_game(&"free")
 	EventBus.logged.emit("⭐ Prestiged to level %d — spend your new perk point!" % meta.prestige_level, Sim.LogKind.GOOD)
-	EventBus.celebrated.emit()
+	EventBus.celebrated.emit(150)
 	return true
 
 

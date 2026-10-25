@@ -78,7 +78,7 @@ func _add_player(bus: StringName, stream: AudioStream = null) -> AudioStreamPlay
 func _connect_cues() -> void:
 	EventBus.purchased.connect(buy)
 	EventBus.refused.connect(error)
-	EventBus.celebrated.connect(goal)
+	EventBus.celebrated.connect(func(_confetti: int) -> void: goal())
 	EventBus.coin_spawned.connect(func(_id: int, _value: int) -> void: coin())
 	EventBus.day_ended.connect(play.bind(&"day"))
 	EventBus.machine_broke.connect(play.bind(&"broke"))

@@ -71,6 +71,8 @@ jobs:
           mkdir -p build/web
           ~/godot/godot --headless --path . --export-release Web build/web/index.html
           test -s build/web/index.pck
+          # New file names every deploy, so browsers never run a cached old build.
+          python3 tools/cache_bust.py build/web "${GITHUB_SHA::7}"
 
       - uses: actions/upload-pages-artifact@v3
         with:

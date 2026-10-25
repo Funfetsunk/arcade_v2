@@ -9,7 +9,7 @@ signal toast_requested(message: String, kind: Sim.LogKind)
 ## or a milestone deserves a fanfare.
 signal purchased
 signal refused
-signal celebrated
+signal celebrated(confetti: int)
 
 var data: GameData
 var meta: MetaProgress

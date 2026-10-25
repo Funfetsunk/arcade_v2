@@ -504,7 +504,7 @@ func open_franchise(state: GameState, town: TownDef) -> bool:
 	f.town = town
 	state.franchises.append(f)
 	_log("🏬 Opened a franchise in %s! +%s/day." % [town.display_name, GameMath.money(town.daily_income(1))], Sim.LogKind.GOOD)
-	celebrated.emit()
+	celebrated.emit(70)
 	_toast("%s %s franchise open!" % [town.emoji, town.display_name], Sim.LogKind.MONEY)
 	return true
 

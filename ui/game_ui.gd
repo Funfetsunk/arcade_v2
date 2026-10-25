@@ -92,6 +92,10 @@ func _ready() -> void:
 	_repairs.pressed.connect(_show_repairs)
 	%MenuButton.pressed.connect(toggle_panel.bind(&"menu"))
 	_add_sound_button()
+	# Confetti over the floor, behind every panel.
+	var confetti := Confetti.new()
+	$Root.add_child(confetti)
+	$Root.move_child(confetti, 0)
 	_visitor_popup.hide()
 	EventBus.visitor_selected.connect(_on_visitor_selected)
 	EventBus.customers_reset.connect(_on_visitor_selected.bind(null))
