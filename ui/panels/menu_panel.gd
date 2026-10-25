@@ -4,19 +4,20 @@ extends VBoxContainer
 var title := "MENU"
 var ui: GameUI
 
+## Label, screen id, icon.
 const ENTRIES := [
-	["❓ HOW TO PLAY", &"tutorial"],
-	["🎯 SCENARIOS", &"scenarios"],
-	["📅 DAILY CHALLENGE", &"daily"],
-	["📣 MARKETING", &"marketing"],
-	["📋 CONTRACTS", &"contracts"],
-	["🔬 RESEARCH & DEVELOPMENT", &"research"],
-	["🏬 FRANCHISES", &"franchises"],
-	["🎨 DECOR", &"decor"],
-	["📈 PROGRESS", &"progress"],
-	["🏅 ACHIEVEMENTS", &"achievements"],
-	["🏆 LEADERBOARD", &"leaderboard"],
-	["🎬 CREDITS", &"credits"],
+	["HOW TO PLAY", &"tutorial", &"help"],
+	["SCENARIOS", &"scenarios", &"scenarios"],
+	["DAILY CHALLENGE", &"daily", &"daily"],
+	["MARKETING", &"marketing", &"marketing"],
+	["CONTRACTS", &"contracts", &"contracts"],
+	["RESEARCH & DEVELOPMENT", &"research", &"research"],
+	["FRANCHISES", &"franchises", &"franchises"],
+	["DECOR", &"decor", &"decor"],
+	["PROGRESS", &"progress", &"progress"],
+	["ACHIEVEMENTS", &"achievements", &"achievements"],
+	["LEADERBOARD", &"leaderboard", &"leaderboard"],
+	["CREDITS", &"credits", &"credits"],
 ]
 
 
@@ -30,10 +31,13 @@ func refresh() -> void:
 		var b := UiKit.button(entry[0], ui.open_screen.bind(entry[1]))
 		b.size_flags_horizontal = SIZE_EXPAND_FILL
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.icon = Icons.named(entry[2])
 		grid.add_child(b)
 	add_child(grid)
 	add_child(HSeparator.new())
-	add_child(UiKit.button("🔄 RESTART GAME", func() -> void:
+	var restart := UiKit.button("RESTART GAME", func() -> void:
 		ui.modal.confirm("🔄 RESTART?", "All progress in this arcade will be lost.", "Restart", func() -> void:
 			ui.close_sheet()
-			Game.restart(), true), &"DangerButton"))
+			Game.restart(), true), &"DangerButton")
+	restart.icon = Icons.named(&"restart")
+	add_child(restart)

@@ -96,11 +96,10 @@ layout_mode = 2
 theme_type_variation = &"StatCaption"
 text = "MOOD"
 
-[node name="Mood" type="Label" parent="Root/TopBar/Row/Stats/MoodStat"]
+[node name="Mood" type="TextureRect" parent="Root/TopBar/Row/Stats/MoodStat"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "🙂"
+stretch_mode = 3
 
 [node name="DayStat" type="VBoxContainer" parent="Root/TopBar/Row/Stats"]
 layout_mode = 2
@@ -126,7 +125,7 @@ offset_top = 40.0
 offset_right = 150.0
 offset_bottom = 66.0
 theme_type_variation = &"DangerButton"
-text = "🔧 REPAIRS NEEDED"
+text = "REPAIRS NEEDED"
 
 [node name="Toasts" type="VBoxContainer" parent="Root"]
 layout_mode = 1
@@ -174,7 +173,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 9
-text = "📜 EVENT LOG"
+text = "EVENT LOG"
 
 [node name="Sheet" type="PanelContainer" parent="Root"]
 unique_name_in_owner = true
@@ -245,7 +244,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TabButton"
 toggle_mode = true
-text = "🕹 FLOOR"
+text = "FLOOR"
 
 [node name="ShopButton" type="Button" parent="Root/ActionBar/Row"]
 unique_name_in_owner = true
@@ -254,7 +253,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TabButton"
 toggle_mode = true
-text = "🛒 SHOP"
+text = "SHOP"
 
 [node name="StaffButton" type="Button" parent="Root/ActionBar/Row"]
 unique_name_in_owner = true
@@ -263,7 +262,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TabButton"
 toggle_mode = true
-text = "👤 STAFF"
+text = "STAFF"
 
 [node name="BooksButton" type="Button" parent="Root/ActionBar/Row"]
 unique_name_in_owner = true
@@ -272,7 +271,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TabButton"
 toggle_mode = true
-text = "💰 BOOKS"
+text = "BOOKS"
 
 [node name="NextDay" type="Button" parent="Root/ActionBar/Row"]
 unique_name_in_owner = true

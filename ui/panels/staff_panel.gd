@@ -27,9 +27,7 @@ func refresh() -> void:
 		info.size_flags_horizontal = SIZE_EXPAND_FILL
 		var card := PanelContainer.new()
 		card.theme_type_variation = &"CardPanel"
-		var icon := UiKit.label(member.def.emoji)
-		icon.add_theme_font_size_override(&"font_size", 18)
-		card.add_child(UiKit.hbox([icon, info]))
+		card.add_child(UiKit.hbox([UiKit.card_icon(Icons.staff(member.def)), info]))
 		add_child(card)
 
 	add_child(UiKit.section("HIRE  (needs a 3-day wage deposit on hand)"))
@@ -43,4 +41,4 @@ func refresh() -> void:
 		var action := UiKit.button(reason if reason else "HIRE", func() -> void:
 			if Game.actions.hire_staff(Game.state, role):
 				EventBus.state_changed.emit(), &"PrimaryButton" if reason.is_empty() and affordable else &"", reason.is_empty() and affordable)
-		add_child(UiKit.card(role.emoji, "%s — %s/day" % [role.display_name, GameMath.money(role.wage)], role.role, action))
+		add_child(UiKit.card(Icons.staff(role), "%s — %s/day" % [role.display_name, GameMath.money(role.wage)], role.role, action))

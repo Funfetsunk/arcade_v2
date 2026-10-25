@@ -248,3 +248,12 @@ selected tab and primary buttons, red for danger buttons. `ui/theme/arcade_theme
 as StyleBoxTextures, so every menu picks them up. Toasts, scroll bars and progress bars are still
 StyleBoxFlat (their colours are set in code). PixelLab's UI tool makes large one-off panels that
 don't 9-slice cleanly, so it wasn't used. `docs/ui_frames_sheet.png` shows them in game.
+
+Icons: 27 pixel icons (24x24) for the action bar, top bar (mood faces, sound), repairs, event log
+and menu, from two PixelLab `create_1_direction_object` batches at 24 px in the ART.md palette,
+in `assets/ui/icons/`. `python tools/icon_sheet.py . docs/icon_sheet.png` records the picks
+(`PICKS`), trims and centres each, and installs it; sound on, franchises, progress and next day
+were touched up by hand. Lists show the thing itself instead: machines by their cabinet, staff by
+their character, decor and facilities by their sprite (`ui/icons.gd`). `UiKit.icon_label` centres
+an icon beside a button's label (Godot's own button icon sits at the edge).
+`docs/icons_in_game.png` shows them in game.

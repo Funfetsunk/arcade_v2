@@ -40,8 +40,11 @@ const CREDITS := [
 	["SPECIAL THANKS", "Hadeed Khalid · Maiju Peltola"],
 ]
 
-## Action-bar tabs: panel id, icon, label.
-const TABS := [[&"floor", "🕹", "FLOOR"], [&"shop", "🛒", "SHOP"], [&"staff", "👤", "STAFF"], [&"books", "💰", "BOOKS"]]
+## Action-bar tabs: panel id (also its icon), label.
+const TABS := [[&"floor", "FLOOR"], [&"shop", "SHOP"], [&"staff", "STAFF"], [&"books", "BOOKS"]]
+## Action-bar button heights: icon beside the label, or stacked above it.
+const BAR_ROW := 34.0
+const BAR_STACKED := 44.0
 ## Below this logical width the action bar switches to its compact layout.
 const COMPACT_WIDTH := 480.0
 
@@ -53,6 +56,7 @@ const VISITOR_REFRESH := 0.1
 var panels: Dictionary[StringName, Control] = {}
 var _visitor: Customer
 var _visitor_timer := 0.0
+var _next_day_label := ""
 
 @onready var sheet: BottomSheet = %Sheet
 @onready var modal: Modal = %Modal
@@ -87,9 +91,12 @@ func _ready() -> void:
 		var b: Button = get_node("%" + String(id).capitalize() + "Button")
 		b.pressed.connect(toggle_panel.bind(id))
 	get_viewport().size_changed.connect(_fit_action_bar)
+	_action_bar.resized.connect(_on_action_bar_resized)
 	_fit_action_bar()
 	_next_day.pressed.connect(_on_next_day)
 	_repairs.pressed.connect(_show_repairs)
+	_repairs.icon = Icons.named(&"repairs")
+	%LogToggle.icon = Icons.named(&"event_log")
 	%MenuButton.pressed.connect(toggle_panel.bind(&"menu"))
 	_add_sound_button()
 	# Confetti over the floor, behind every panel.
@@ -111,15 +118,16 @@ func _ready() -> void:
 	_refresh()
 
 
-## The 🔊 / 🔇 toggle at the right of the top bar.
+## The sound on / off toggle at the right of the top bar.
 func _add_sound_button() -> void:
 	var menu: Button = %MenuButton
 	var sound := Button.new()
 	sound.name = "SoundButton"
 	sound.custom_minimum_size = menu.custom_minimum_size
 	sound.tooltip_text = "Toggle sound"
-	sound.text = "🔇" if Sfx.muted else "🔊"
-	sound.pressed.connect(func() -> void: sound.text = "🔇" if Sfx.toggle_mute() else "🔊")
+	sound.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sound.icon = Icons.named(&"sound_off" if Sfx.muted else &"sound_on")
+	sound.pressed.connect(func() -> void: sound.icon = Icons.named(&"sound_off" if Sfx.toggle_mute() else &"sound_on"))
 	menu.get_parent().add_child(sound)
 
 
@@ -249,28 +257,43 @@ func _refresh() -> void:
 	%Cash.add_theme_color_override(&"font_color", Color("ff4f7b") if s.cash < 0.0 else Color("ffd866"))
 	%Rep.text = str(GameMath.js_round(s.rep))
 	%Visitors.text = str(s.last_day_customers)
-	%Mood.text = UiKit.mood_face(s.satisfaction)
+	%Mood.texture = Icons.mood(s.satisfaction)
 	%Day.text = "%d %s" % [s.day, Data.db.weekday_name(maxi(1, s.day)).to_upper()]
-	var compact := get_viewport().get_visible_rect().size.x < COMPACT_WIDTH
 	var label := "OPEN ARCADE" if s.day == 0 else "NEXT DAY"
-	_next_day.text = label.replace(" ", "\n") if compact else label
+	if label != _next_day_label:
+		_next_day_label = label
+		UiKit.icon_label(_next_day, Icons.named(&"next_day"), label, _compact())
 	_next_day.disabled = Game.pending_decision != null
 	var broken := s.machines.filter(func(m: MachineInstance) -> bool: return m.is_broken()).size()
 	_repairs.visible = broken > 0
-	_repairs.text = "🔧 %d REPAIR%s NEEDED" % [broken, "S" if broken > 1 else ""]
+	_repairs.text = "%d REPAIR%s NEEDED" % [broken, "S" if broken > 1 else ""]
 
 
-## On narrow (portrait phone) screens the tab buttons stack their icon over a
-## small label so all five buttons fit.
+## Each tab shows its icon beside its label, centred. On narrow (portrait phone)
+## screens the icon sits above a smaller label so all five buttons fit.
 func _fit_action_bar() -> void:
-	var compact := get_viewport().get_visible_rect().size.x < COMPACT_WIDTH
+	var compact := _compact()
 	for tab: Array in TABS:
 		var b: Button = get_node("%" + String(tab[0]).capitalize() + "Button")
-		b.text = "%s\n%s" % [tab[1], tab[2]] if compact else "%s %s" % [tab[1], tab[2]]
 		b.add_theme_font_size_override(&"font_size", 9 if compact else 11)
-		b.clip_text = compact
+		b.custom_minimum_size.y = BAR_STACKED if compact else BAR_ROW
+		UiKit.icon_label(b, Icons.named(tab[0]), tab[1], compact)
+	_next_day.custom_minimum_size.y = BAR_STACKED if compact else BAR_ROW
 	_next_day.add_theme_font_size_override(&"font_size", 12 if compact else 16)
+	_next_day_label = ""      # rebuilt at the new size by _refresh
 	_refresh()
+
+
+## Keeps the sheet and the floor's camera clear of the action bar, whose height
+## changes with the layout.
+func _on_action_bar_resized() -> void:
+	var clearance := _action_bar.size.y + 2.0
+	sheet.offset_bottom = -clearance
+	arcade_floor.camera.hud_bottom = clearance
+
+
+func _compact() -> bool:
+	return get_viewport().get_visible_rect().size.x < COMPACT_WIDTH
 
 
 func _on_next_day() -> void:

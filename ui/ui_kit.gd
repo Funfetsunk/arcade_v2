@@ -3,6 +3,9 @@ extends RefCounted
 ## Small builders for the widgets the panels repeat (cards, rows, buttons),
 ## styled by the project theme's type variations.
 
+## Largest card thumbnail, in UI pixels.
+const THUMB := Vector2(32, 40)
+
 const LOG_COLORS := {
 	Sim.LogKind.MONEY: Color("ffd866"),
 	Sim.LogKind.GOOD: Color("7cff6b"),
@@ -54,22 +57,99 @@ static func spacer() -> Control:
 	return s
 
 
-## A card: icon, title + description, and an optional action on the right.
-static func card(icon: String, title: String, description: String, action: Control = null) -> PanelContainer:
+## A card: icon (an emoji, or a texture such as Icons.machine()), title +
+## description, and an optional action on the right.
+static func card(icon: Variant, title: String, description: String, action: Control = null) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.theme_type_variation = &"CardPanel"
-	var icon_label := label(icon)
-	icon_label.add_theme_font_size_override(&"font_size", 18)
-	icon_label.custom_minimum_size.x = 24
-	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var text := vbox([label(title), label(description, &"DimLabel", true)], 1)
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var row := hbox([icon_label, text])
+	var row := hbox([card_icon(icon), text])
 	if action:
 		action.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(action)
 	panel.add_child(row)
 	return panel
+
+
+## Puts an icon and a label side by side in the middle of a button (Godot's own
+## button icon sits at the edge, away from centred text), or the icon above the
+## label when `stacked`. The label keeps the button's font, and its colour follows
+## the button's state (normal, hover, pressed, disabled) like the button's own text.
+static func icon_label(b: Button, icon: Texture2D, text: String, stacked := false) -> void:
+	b.text = ""
+	b.icon = null
+	var old := b.get_node_or_null(^"Content")
+	if old:
+		b.remove_child(old)
+		old.queue_free()
+	var centre := CenterContainer.new()
+	centre.name = "Content"
+	centre.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var box: BoxContainer
+	if stacked:
+		box = VBoxContainer.new()
+	else:
+		box = HBoxContainer.new()
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_theme_constant_override(&"separation", 0 if stacked else 4)
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	var pic := TextureRect.new()
+	pic.texture = icon
+	pic.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var words := Label.new()
+	words.text = text
+	words.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	words.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	words.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	words.add_theme_font_override(&"font", b.get_theme_font(&"font"))
+	words.add_theme_font_size_override(&"font_size", b.get_theme_font_size(&"font_size"))
+	box.add_child(pic)
+	box.add_child(words)
+	centre.add_child(box)
+	b.add_child(centre)
+	var recolour := func() -> void:
+		var state := &"font_color"
+		match b.get_draw_mode():
+			BaseButton.DRAW_PRESSED, BaseButton.DRAW_HOVER_PRESSED:
+				state = &"font_pressed_color"
+			BaseButton.DRAW_HOVER:
+				state = &"font_hover_color"
+			BaseButton.DRAW_DISABLED:
+				state = &"font_disabled_color"
+		words.add_theme_color_override(&"font_color", b.get_theme_color(state))
+	# Rebuilding replaces the label, so drop the hook that coloured the old one.
+	if b.has_meta(&"icon_label_recolour"):
+		var previous: Callable = b.get_meta(&"icon_label_recolour")
+		if b.draw.is_connected(previous):
+			b.draw.disconnect(previous)
+	b.set_meta(&"icon_label_recolour", recolour)
+	b.draw.connect(recolour)
+	recolour.call()
+
+
+## A card's picture: an emoji label, or a texture scaled down to fit a thumbnail
+## (never up, so pixel art stays crisp at its own size).
+static func card_icon(icon: Variant) -> Control:
+	if icon is Texture2D:
+		var pic := TextureRect.new()
+		pic.texture = icon
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		var size: Vector2 = icon.get_size()
+		# A fixed-width column, so card text lines up whatever the sprite's width.
+		pic.custom_minimum_size = THUMB
+		if size.x <= THUMB.x and size.y <= THUMB.y:
+			pic.custom_minimum_size.y = size.y
+		pic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		return pic
+	var glyph := label(str(icon))
+	glyph.add_theme_font_size_override(&"font_size", 18)
+	glyph.custom_minimum_size.x = 24
+	glyph.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	return glyph
 
 
 ## "Caption ............ value" row.

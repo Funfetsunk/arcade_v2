@@ -49,14 +49,14 @@ func refresh() -> void:
 	add_child(header)
 	for p in Data.db.decor_props:
 		var owned := s.decor.count(p)
-		add_child(UiKit.card(p.emoji, p.display_name + ("  ×%d" % owned if owned else ""), "%s +%d mood" % [p.blurb, p.satisfaction],
+		add_child(UiKit.card(Icons.trimmed(p.sprite), p.display_name + ("  ×%d" % owned if owned else ""), "%s +%d mood" % [p.blurb, p.satisfaction],
 			UiKit.button(GameMath.money(p.cost), _do.bind(actions.buy_decor.bind(s, p)), &"", s.decor.size() < max_decor and s.cash >= p.cost)))
 
 	add_child(UiKit.section("FACILITIES"))
 	for f in Data.db.facilities:
 		var owned := s.facilities.has(f)
 		var needed := not owned and s.last_day_customers > f.need_at
-		add_child(UiKit.card(f.emoji, f.display_name + ("  ✓ installed" if owned else "  ⚠ needed" if needed else ""), f.blurb,
+		add_child(UiKit.card(Icons.trimmed(f.sprite), f.display_name + ("  ✓ installed" if owned else "  ⚠ needed" if needed else ""), f.blurb,
 			UiKit.button("✓" if owned else GameMath.money(f.cost), _do.bind(actions.buy_facility.bind(s, f)), &"", not owned and s.cash >= f.cost)))
 
 
