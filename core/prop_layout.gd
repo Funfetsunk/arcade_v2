@@ -9,13 +9,21 @@ extends RefCounted
 ## the side columns, then the front row either side of the door. A spot must not
 ## touch a machine's footprint or stand tile, the door lane, or another prop, and
 ## must not cut anyone off from a machine they could reach before. Rugs lie inside
-## the door and never block. Wall props hang along the back wall.
+## the door and never block. Wall props hang along the back wall, either side of
+## the arcade's name: the first Neon Sign lights that name in the middle of the
+## wall (as in the original); any more hang as PLAY signs.
+
+## Rough width of one letter of the sign, and the board's padding, in pixels.
+const SIGN_LETTER := 13.0
+const SIGN_PADDING := 12.0
 
 
 class Spot:
 	var def: FloorPropDef
 	## The leftmost tile it covers; y is -1 for the back wall.
 	var tile: Vector2i
+	## The arcade name sign, centred on the wall rather than at `tile`.
+	var name_sign := false
 
 	func _init(d: FloorPropDef, t: Vector2i) -> void:
 		def = d
@@ -44,7 +52,20 @@ static func layout(state: GameState) -> Array[Spot]:
 	var wall_taken := {}
 	var reachable := _reached_stands(room, solid, stands, lane)
 	var spots: Array[Spot] = []
+	var signed := false
 	for def in props:
+		if def.id == &"neon" and not signed:
+			signed = true
+			var name_spot := Spot.new(def, Vector2i(room.x / 2, -1))
+			name_spot.name_sign = true
+			for x in sign_tiles(room, state.arcade_name):
+				wall_taken[x] = true
+			spots.append(name_spot)
+	var sign_placed := false
+	for def in props:
+		if def.id == &"neon" and not sign_placed:
+			sign_placed = true   # this one is the name sign, already placed
+			continue
 		var spot: Spot = null
 		if def.on_wall:
 			spot = _wall_spot(def, room, wall_taken)
@@ -72,6 +93,15 @@ static func layout(state: GameState) -> Array[Spot]:
 		if spot:
 			spots.append(spot)
 	return spots
+
+
+## Back-wall tile columns the name sign covers.
+static func sign_tiles(room: Vector2i, arcade_name: String) -> Array[int]:
+	var half := ceili((mini(arcade_name.length(), 20) * SIGN_LETTER + SIGN_PADDING) / 2.0 / FloorGeometry.TILE)
+	var out: Array[int] = []
+	for x in range(room.x / 2 - half, room.x / 2 + half):
+		out.append(x)
+	return out
 
 
 ## Floor tiles people can't walk through.

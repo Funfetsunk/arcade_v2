@@ -13,6 +13,8 @@ signal celebrated(confetti: int)
 
 ## The state changed in a way the HUD and panels should redraw for.
 signal state_changed
+## The arcade name changed (the neon sign redraws without a full refresh).
+signal arcade_renamed
 signal game_started
 signal game_loaded
 signal day_ended

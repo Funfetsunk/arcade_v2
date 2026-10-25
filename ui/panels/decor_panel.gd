@@ -13,7 +13,9 @@ func refresh() -> void:
 	var name_edit := LineEdit.new()
 	name_edit.text = s.arcade_name
 	name_edit.max_length = 20
-	name_edit.text_changed.connect(func(text: String) -> void: actions.set_arcade_name(Game.state, text))
+	name_edit.text_changed.connect(func(text: String) -> void:
+		actions.set_arcade_name(Game.state, text)
+		EventBus.arcade_renamed.emit())
 	name_edit.focus_exited.connect(Game.save_game)
 	add_child(name_edit)
 	add_child(UiKit.label("Shown on the neon sign over your back wall.", &"DimLabel", true))

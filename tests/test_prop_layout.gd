@@ -93,8 +93,30 @@ func test_rug_lies_inside_the_door_without_blocking() -> void:
 
 func test_wall_props_hang_on_the_back_wall() -> void:
 	state.decor.append(H.DATA.decor_prop(&"poster"))
-	state.decor.append(H.DATA.decor_prop(&"neon"))
+	state.decor.append(H.DATA.decor_prop(&"poster"))
 	var spots := PropLayout.layout(state)
 	assert_eq(spots[0].tile, Vector2i(1, -1))
-	assert_eq(spots[1].tile, Vector2i(13, -1))
+	assert_eq(spots[1].tile, Vector2i(14, -1))
 	assert_true(PropLayout.blocked_tiles(spots).is_empty())
+
+
+func test_first_neon_lights_the_name_and_more_hang_as_play_signs() -> void:
+	state.decor.append(H.DATA.decor_prop(&"neon"))
+	state.decor.append(H.DATA.decor_prop(&"neon"))
+	var spots := PropLayout.layout(state)
+	assert_eq(spots.size(), 2)
+	assert_true(spots[0].name_sign)
+	assert_eq(spots[0].tile, Vector2i(8, -1))
+	assert_false(spots[1].name_sign)
+	assert_eq(spots[1].tile, Vector2i(1, -1))
+
+
+func test_wall_props_keep_clear_of_the_name_sign() -> void:
+	state.arcade_name = "WWWWWWWWWWWWWWWWWWWW"
+	state.decor.append(H.DATA.decor_prop(&"neon"))
+	for i in 11:
+		state.decor.append(H.DATA.decor_prop(&"poster"))
+	var covered := PropLayout.sign_tiles(ROOM, state.arcade_name)
+	for s in PropLayout.layout(state):
+		if not s.name_sign:
+			assert_false(covered.has(s.tile.x), "poster at %s clear of the sign" % s.tile)

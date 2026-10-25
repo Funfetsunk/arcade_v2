@@ -5,18 +5,26 @@ extends Node
 ## on the backdrop, under everyone.
 
 const PROP_SCENE := preload("res://floor/floor_prop.tscn")
+const SIGN_SCRIPT := preload("res://floor/neon_sign.gd")
 
 @export var entities: Node2D
 @export var backdrop: Node2D
 
-var _props: Array[FloorProp] = []
+var _props: Array[Node2D] = []
 
 
-func show_spots(spots: Array[PropLayout.Spot]) -> void:
+func show_spots(spots: Array[PropLayout.Spot], arcade_name: String, sign_colour: Color) -> void:
 	for p in _props:
 		p.queue_free()
 	_props.clear()
 	for spot in spots:
+		if spot.name_sign:
+			var neon: NeonSign = SIGN_SCRIPT.new()
+			neon.position.x = spot.tile.x * FloorGeometry.TILE
+			backdrop.add_child(neon)
+			neon.show_sign(arcade_name, sign_colour)
+			_props.append(neon)
+			continue
 		var prop: FloorProp = PROP_SCENE.instantiate()
 		(backdrop if spot.def.on_wall or spot.def.flat else entities).add_child(prop)
 		prop.show_spot(spot)

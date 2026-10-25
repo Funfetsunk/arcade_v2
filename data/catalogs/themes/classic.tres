@@ -9,4 +9,4 @@ display_name = "Classic Neon"
 emoji = "🌃"
 wall = Color(0.2, 0.2, 0.30196078431372547, 1)
 floor_tint = Color(0.0, 0.0, 0.0, 0.0)
-sign_color = Color(0.0, 0.9607843137254902, 0.8313725490196079, 1)
+sign_color = Color(0.9254902, 0.39607844, 0.81960785, 1)

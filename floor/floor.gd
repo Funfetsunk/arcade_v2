@@ -49,6 +49,7 @@ func _ready() -> void:
 	EventBus.game_loaded.connect(rebuild)
 	EventBus.state_changed.connect(_on_state_changed)
 	EventBus.machines_changed.connect(_sync_machines)
+	EventBus.arcade_renamed.connect(_sync_props)
 	EventBus.coin_spawned.connect(_on_coin_spawned)
 	EventBus.tip_received.connect(func(at: Vector2, amount: int) -> void: pop_text(at, "+$%d" % amount))
 	get_viewport().size_changed.connect(_fit_camera)
@@ -349,12 +350,13 @@ func _sync_machines() -> void:
 ## Lays out decor and facilities again; true when anything moved.
 func _sync_props() -> bool:
 	var spots := PropLayout.layout(Game.state)
-	var key := "%s|%s" % [Game.state.room, PropLayer.key_of(spots)]
+	var theme := Data.db.theme(Game.state.theme)
+	var key := "%s|%s|%s|%s" % [Game.state.room, Game.state.arcade_name, theme.id, PropLayer.key_of(spots)]
 	if key == _prop_key:
 		return false
 	_prop_key = key
 	_prop_blocked = PropLayout.blocked_tiles(spots)
-	props.show_spots(spots)
+	props.show_spots(spots, Game.state.arcade_name, theme.sign_color)
 	return true
 
 

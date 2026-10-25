@@ -164,6 +164,13 @@ tones it toward each theme's `wall` hue by its `wall_tint_strength` (Classic Neo
 The other textures (navy brick, two wallpapers) are spares. Review with
 `python tools/wall_sheet.py . docs/wall_sheet.png` (design F in every theme).
 
+### Neon name sign
+
+Not a sprite: `floor/neon_sign.gd` draws the arcade's name in the pixel font on a dark board
+with a 1 px neon frame, in the theme's `sign_color`, with a soft glow and a flicker. The first
+Neon Sign bought lights it, centred on the back wall over the neon rail; more Neon Signs hang as
+the PLAY sprite. `docs/sign_sheet.png` shows it in every theme (in-game captures).
+
 ## Decor and facilities
 
 One-direction objects (`create_1_direction_object`, 16-candidate review pack, a crop of an
