@@ -130,6 +130,22 @@ The seven newer ones came from PixelLab's v3 character mode (32px canvas, 8 dire
 2 generations) and are a few pixels shorter than customer A; walks use the
 `walking-6-frames` template (1 generation per direction).
 
+### Staff in the game
+
+Review sheet: `docs/staff_sheet.png`. Repair techs called by the sim wear the junior or senior
+tech; roaming staff (techs, security, manager) wear `staff_<role id>`. The cashier and counter
+attendant have art ready but don't walk the floor (as in the original); they'll stand at
+their counters once facilities are drawn.
+
+| Look | PixelLab character |
+|---|---|
+| `staff_tech_junior` | `767a2801-fd99-4863-824e-9c46dd6aa5c3` (coloured outline recoloured to the dark outline; tool tips kept grey) |
+| `staff_tech_senior` | `0d9b4b12-4e22-4e25-8bf9-95ca9673c8e5` |
+| `staff_manager` | `50583e52-23c2-4bb6-a5ac-0c8bc5b92a67` |
+| `staff_security` | `67e5eef9-679f-448f-9245-d0fc73b9b7c1` |
+| `staff_cashier` | `d32db941-8781-41be-ab79-e6b01443bb9c` |
+| `staff_attendant` | `a5a21c4b-0913-490a-bfa4-e89972e43aeb` (redone with a low paper cap; a chef's hat overflowed the 32 px canvas) |
+
 ### Making characters
 
 `create_character`, standard mode, `size 32`, 4 directions, view `low top-down`, outline

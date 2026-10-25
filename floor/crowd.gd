@@ -131,10 +131,9 @@ func spawn_technician(machine_id: int, senior: bool) -> void:
 	t.senior = senior
 	t.speed = randf_range(36.0, 54.0)
 	t.work_time = randf_range(3.7, 4.7)
-	if senior:
-		t.sprite_modulate(Color(0.6, 0.75, 1.0))
 	t.position = FloorGeometry.outside_door(Game.state.room)
 	entities.add_child(t)
+	t.sprite.sprite_frames = _frames(&"staff_tech_senior" if senior else &"staff_tech_junior")
 	var stand := FloorGeometry.stand_point(m)
 	var route := walk_grid.route(t.position, stand)
 	route.append(Vector2(FloorGeometry.machine_anchor(m).x, stand.y))
@@ -175,6 +174,7 @@ func sync_staff() -> void:
 		s.speed = randf_range(19.0, 34.0)
 		s.position = Vector2(area.position.x + (i + 0.5) * area.size.x / roaming.size(), front - 4.0)
 		entities.add_child(s)
+		s.sprite.sprite_frames = _frames(StringName("staff_" + roaming[i].def.id))
 		staff.append(s)
 
 
@@ -303,9 +303,13 @@ func _queue_point(c: Customer) -> Vector2:
 	return c.stand_point + Vector2(0.0, c.queue_pos * QUEUE_STEP)
 
 
-## A random look for the audience, cached once loaded.
+## A random look for the audience.
 func _look_for(audience: StringName) -> SpriteFrames:
-	var name: StringName = LOOKS.get(audience, LOOKS[&"teen"]).pick_random()
+	return _frames(LOOKS.get(audience, LOOKS[&"teen"]).pick_random())
+
+
+## A character's SpriteFrames (assets/sprites/actors/<name>/), cached once loaded.
+func _frames(name: StringName) -> SpriteFrames:
 	if not _looks.has(name):
 		_looks[name] = load("res://assets/sprites/actors/%s/%s_frames.tres" % [name, name])
 	return _looks[name]
