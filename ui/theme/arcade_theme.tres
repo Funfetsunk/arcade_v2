@@ -1,99 +1,75 @@
-[gd_resource type="Theme" load_steps=29 format=3]
+[gd_resource type="Theme" load_steps=43 format=3]
 
 [ext_resource type="FontFile" path="res://assets/fonts/arcade_empire_pixel.ttf" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/bar.png" id="f0"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button.png" id="f1"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button_disabled.png" id="f2"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button_hover.png" id="f3"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button_pressed.png" id="f4"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button_selected.png" id="f5"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/card.png" id="f6"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/danger.png" id="f7"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/danger_hover.png" id="f8"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/danger_pressed.png" id="f9"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/panel.png" id="f10"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/primary_disabled.png" id="f11"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/primary_hover.png" id="f12"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/neon/primary_pressed.png" id="f13"]
 
-[sub_resource type="StyleBoxFlat" id="panel"]
+[sub_resource type="StyleBoxTexture" id="panel"]
 content_margin_left = 8.0
 content_margin_top = 6.0
 content_margin_right = 8.0
 content_margin_bottom = 6.0
-bg_color = Color(0.1686, 0.2118, 0.3020, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.4353, 0.5255, 0.6392, 1.0)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 2
-anti_aliasing = false
-shadow_color = Color(0, 0, 0, 0.35)
-shadow_size = 4
-shadow_offset = Vector2(0, 2)
+texture = ExtResource("f10")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="btn"]
+[sub_resource type="StyleBoxTexture" id="btn"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(0.2314, 0.2902, 0.4000, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.4353, 0.5255, 0.6392, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f1")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="btn_hover"]
+[sub_resource type="StyleBoxTexture" id="btn_hover"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(0.2902, 0.3608, 0.4902, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.6235, 0.7020, 0.8000, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f3")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="btn_pressed"]
+[sub_resource type="StyleBoxTexture" id="btn_pressed"]
 content_margin_left = 8.0
 content_margin_top = 6.0
 content_margin_right = 8.0
 content_margin_bottom = 6.0
-bg_color = Color(0.1255, 0.1569, 0.2275, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.4353, 0.5255, 0.6392, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f4")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="btn_disabled"]
+[sub_resource type="StyleBoxTexture" id="btn_disabled"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(0.1255, 0.1569, 0.2275, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.2392, 0.2902, 0.3765, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f2")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxFlat" id="btn_focus"]
 content_margin_left = 8.0
@@ -221,242 +197,148 @@ corner_radius_bottom_left = 2
 corner_detail = 2
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="edit"]
+[sub_resource type="StyleBoxTexture" id="edit"]
 content_margin_left = 6.0
 content_margin_top = 4.0
 content_margin_right = 6.0
 content_margin_bottom = 4.0
-bg_color = Color(0.1255, 0.1569, 0.2275, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.4353, 0.5255, 0.6392, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f6")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="tip"]
+[sub_resource type="StyleBoxTexture" id="tip"]
 content_margin_left = 6.0
 content_margin_top = 4.0
 content_margin_right = 6.0
 content_margin_bottom = 4.0
-bg_color = Color(0.0588, 0.0745, 0.1294, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.4353, 0.5255, 0.6392, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f6")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="pbtn"]
+[sub_resource type="StyleBoxTexture" id="pbtn"]
 content_margin_left = 10.0
 content_margin_top = 6.0
 content_margin_right = 10.0
 content_margin_bottom = 6.0
-bg_color = Color(1.0000, 0.7176, 0.0118, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.7804, 0.4706, 0.0000, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f5")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="pbtn_hover"]
+[sub_resource type="StyleBoxTexture" id="pbtn_hover"]
 content_margin_left = 10.0
 content_margin_top = 6.0
 content_margin_right = 10.0
 content_margin_bottom = 6.0
-bg_color = Color(1.0000, 0.8471, 0.4000, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.7804, 0.4706, 0.0000, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f12")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="pbtn_pressed"]
+[sub_resource type="StyleBoxTexture" id="pbtn_pressed"]
 content_margin_left = 10.0
 content_margin_top = 7.0
 content_margin_right = 10.0
 content_margin_bottom = 7.0
-bg_color = Color(0.7804, 0.4706, 0.0000, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.3529, 0.2275, 0.0000, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f13")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="pbtn_disabled"]
+[sub_resource type="StyleBoxTexture" id="pbtn_disabled"]
 content_margin_left = 10.0
 content_margin_top = 6.0
 content_margin_right = 10.0
 content_margin_bottom = 6.0
-bg_color = Color(0.4196, 0.3529, 0.2000, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.3529, 0.2275, 0.0000, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f11")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="dbtn"]
+[sub_resource type="StyleBoxTexture" id="dbtn"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(0.4784, 0.1333, 0.2196, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(1.0000, 0.3098, 0.4824, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f7")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="dbtn_hover"]
+[sub_resource type="StyleBoxTexture" id="dbtn_hover"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(0.6039, 0.1725, 0.2824, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(1.0000, 0.3098, 0.4824, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f8")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="dbtn_pressed"]
+[sub_resource type="StyleBoxTexture" id="dbtn_pressed"]
 content_margin_left = 8.0
 content_margin_top = 6.0
 content_margin_right = 8.0
 content_margin_bottom = 6.0
-bg_color = Color(0.3529, 0.1020, 0.1647, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(1.0000, 0.3098, 0.4824, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f9")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="tab"]
+[sub_resource type="StyleBoxTexture" id="tab"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(0.1255, 0.1569, 0.2275, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.2392, 0.2902, 0.3765, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f1")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="tab_on"]
+[sub_resource type="StyleBoxTexture" id="tab_on"]
 content_margin_left = 8.0
 content_margin_top = 5.0
 content_margin_right = 8.0
 content_margin_bottom = 5.0
-bg_color = Color(1.0000, 0.7176, 0.0118, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.7804, 0.4706, 0.0000, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f5")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="card"]
+[sub_resource type="StyleBoxTexture" id="card"]
 content_margin_left = 6.0
 content_margin_top = 5.0
 content_margin_right = 6.0
 content_margin_bottom = 5.0
-bg_color = Color(0.1451, 0.1882, 0.2902, 1.0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.2745, 0.3451, 0.4784, 1.0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f6")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxFlat" id="sheet"]
+[sub_resource type="StyleBoxTexture" id="sheet"]
 content_margin_left = 10.0
 content_margin_top = 8.0
 content_margin_right = 10.0
 content_margin_bottom = 8.0
-bg_color = Color(0.1686, 0.2118, 0.3020, 1.0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 3
-border_color = Color(0.4353, 0.5255, 0.6392, 1.0)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-corner_detail = 2
-anti_aliasing = false
-shadow_color = Color(0, 0, 0, 0.35)
-shadow_size = 8
-shadow_offset = Vector2(0, 2)
+texture = ExtResource("f10")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxFlat" id="toast"]
 content_margin_left = 10.0
@@ -479,23 +361,16 @@ shadow_color = Color(0, 0, 0, 0.35)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="bar"]
+[sub_resource type="StyleBoxTexture" id="bar"]
 content_margin_left = 4.0
 content_margin_top = 3.0
 content_margin_right = 4.0
 content_margin_bottom = 3.0
-bg_color = Color(0.1020, 0.1294, 0.2000, 0.94)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.2392, 0.2902, 0.3765, 1.0)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
-corner_detail = 2
-anti_aliasing = false
+texture = ExtResource("f0")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
 [resource]
 default_font_size = 11

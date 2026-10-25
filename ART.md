@@ -241,5 +241,10 @@ Skin tones       #f5cba7 #c8956b #8d5a3b #5c3d1e
 
 ## UI
 
-Rounded slate-blue panels with a 1px light border, cream text, amber highlight for the selected
-tab (as in ref A). A pixel font, possibly generated with PixelLab `create_font`.
+Frames are hand-drawn 12x12 9-slice textures (4 px corners) in `assets/ui/frames/neon/`, made by
+`python tools/ui_frames.py .`: the neon bezel style the user picked over slate and wood trim.
+Pink trim like the wall rail around dark glass panels, cyan-edged buttons, amber for the
+selected tab and primary buttons, red for danger buttons. `ui/theme/arcade_theme.tres` uses them
+as StyleBoxTextures, so every menu picks them up. Toasts, scroll bars and progress bars are still
+StyleBoxFlat (their colours are set in code). PixelLab's UI tool makes large one-off panels that
+don't 9-slice cleanly, so it wasn't used. `docs/ui_frames_sheet.png` shows them in game.
