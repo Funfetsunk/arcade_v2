@@ -153,6 +153,30 @@ their counters once facilities are drawn.
 `walking-6-frames` (1 generation per direction). Each character gets a `SpriteFrames` resource
 with `idle_<dir>` and `walk_<dir>` animations at 10 fps.
 
+## Decor and facilities
+
+One-direction objects (`create_1_direction_object`, 16-candidate review pack, a crop of an
+approved cabinet as the style image). The canvas sets the size: 68 px gave cabinet-sized props,
+so the smaller ones were made on a 44 px canvas. Review with
+`python tools/decor_sheet.py . docs/decor_sheet.png`.
+
+| Item | File | Tiles | PixelLab object |
+|---|---|---|---|
+| Potted plant (a in game; b-d kept for variety) | `decor/plant/{a,b,c,d}.png` | 1 | `a63740b2`, `db557796`, `68ae46ef`, `16c49b5d` |
+| Arcade rug (flat) | `decor/rug/a.png` | 2 | `2d4408bc` |
+| Bench (backrest moved 1 px right by hand) | `decor/bench/a.png` | 2 | `49586a95` |
+| Wall poster (wall) | `decor/poster/a.png` | 1 | `83b2ddb2` |
+| Neon sign (wall) | `decor/neon/a.png` | 2 | `68459a4f` |
+| Trophy case | `decor/trophy/a.png` | 2 | `232fe8c4` |
+| ATM | `decor/atm/a.png` | 1 | `d9ba0a08` |
+| Seating area | `decor/seating/a.png` | 2 | `4960d8fe` |
+| Restrooms | `decor/toilet/a.png` | 1 | `048e0f27` |
+| Water fountain | `decor/water/a.png` | 1 | `6c724a20` |
+
+Each prop's sprite, width, `on_wall` and `flat` live on its `.tres` (`FloorPropDef`). Nothing
+about placement is saved: `PropLayout` lays props out along the walls each time the machines
+change, and they step aside for machines and the people playing them.
+
 ## Palette
 
 Sampled from the references; generate roughly in this family. Neon accents are approximate.
@@ -177,7 +201,7 @@ Skin tones       #f5cba7 #c8956b #8d5a3b #5c3d1e
 
 - One carpet tile repeats visibly over a big floor. Before the floor scene ships, generate 2–3
   variants of carpet 8 (tiles-pro with `carpet.png` as `style_images`) and scatter them.
-- Walls, decor, facilities, UI frames, icons and a pixel font are still to be generated.
+- Walls, UI frames, icons and a pixel font are still to be generated.
 
 ## UI
 

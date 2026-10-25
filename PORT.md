@@ -152,7 +152,8 @@ Clone it fresh to a scratch dir to read: `git clone --depth 1 https://github.com
    - `sandbox/debug_hud.tscn` is a TEMPORARY HUD (next day, buy, move, sell, decisions) until
      phase 3's real UI replaces it.
    - Not done yet: customer emotes and the visitor popup (need UI/icon art), floor staff and
-     tech art (tinted customer sprite for now), decor/facility props on the floor, theme sign.
+     tech art (tinted customer sprite for now), theme sign. (Decor and facility props on the
+     floor and back wall came later: `PropLayout` + `floor/prop_layer.gd`.)
    - The MCP plugin adds its three autoloads to `project.godot` when the editor starts and
      removes them on exit or plugin reload; if a game run from the editor stops answering the
      MCP, reload the plugin.

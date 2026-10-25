@@ -17,14 +17,17 @@ func _init() -> void:
 
 
 ## Every tile of every machine's full footprint is solid (customers walk round
-## the whole body, unlike placement which only cares about bases).
-func rebuild(room: Vector2i, machines: Array[MachineInstance]) -> void:
+## the whole body, unlike placement which only cares about bases). `blocked`
+## adds more solid tiles (floor props).
+func rebuild(room: Vector2i, machines: Array[MachineInstance], blocked: Array[Vector2i] = []) -> void:
 	_astar.region = Rect2i(Vector2i.ZERO, room)
 	_astar.update()
+	var solid := blocked.duplicate()
 	for m in machines:
-		for t in FloorGrid.footprint_tiles(m.tile, m.def.footprint):
-			if _astar.region.has_point(t):
-				_astar.set_point_solid(t)
+		solid.append_array(FloorGrid.footprint_tiles(m.tile, m.def.footprint))
+	for t in solid:
+		if _astar.region.has_point(t):
+			_astar.set_point_solid(t)
 
 
 static func tile_of(point: Vector2) -> Vector2i:

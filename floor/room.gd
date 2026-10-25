@@ -26,10 +26,11 @@ func _draw() -> void:
 	if theme_def and theme_def.floor_tint.a > 0.0:
 		draw_rect(Rect2(0, 0, w, h), theme_def.floor_tint)
 	# Back wall: brick face with a wood trim where it meets the floor.
-	draw_rect(Rect2(-TILE, -TILE, w + 2 * TILE, TILE), wall)
-	draw_rect(Rect2(-TILE, -TILE, w + 2 * TILE, 4), wall.darkened(0.35))
-	for row in 3:
-		var y := -TILE + 6 + row * 8
+	var top := -FloorGeometry.WALL_H
+	draw_rect(Rect2(-TILE, top, w + 2 * TILE, -top), wall)
+	draw_rect(Rect2(-TILE, top, w + 2 * TILE, 4), wall.darkened(0.35))
+	for row in int((-top - 8.0) / 8.0):
+		var y := top + 6 + row * 8
 		var shift := 8.0 if row % 2 else 0.0
 		var x := -TILE + shift
 		while x < w + TILE:

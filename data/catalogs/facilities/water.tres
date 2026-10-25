@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="FacilityDef" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="FacilityDef" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://data/defs/facility_def.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/decor/water/a.png" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -11,3 +12,4 @@ cost = 350
 need_at = 40
 penalty = 5
 blurb = "Free refills — a nice touch as the crowd grows."
+sprite = ExtResource("2")

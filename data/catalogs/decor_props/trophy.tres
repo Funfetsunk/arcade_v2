@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="DecorPropDef" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DecorPropDef" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://data/defs/decor_prop_def.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/decor/trophy/a.png" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -10,3 +11,5 @@ emoji = "🏆"
 cost = 400
 satisfaction = 2
 blurb = "Show off your wins."
+sprite = ExtResource("2")
+width = 2

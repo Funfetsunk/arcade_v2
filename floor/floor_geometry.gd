@@ -4,6 +4,8 @@ extends RefCounted
 ## walls sit one tile outside the interior. Art is drawn at 32 px per tile.
 
 const TILE := 32.0
+## The back wall's height above the floor's top edge (tall enough for posters).
+const WALL_H := 48.0
 
 
 static func tile_rect(tile: Vector2i, size := Vector2i.ONE) -> Rect2:

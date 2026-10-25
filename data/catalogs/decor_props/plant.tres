@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="DecorPropDef" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DecorPropDef" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://data/defs/decor_prop_def.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/decor/plant/a.png" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -10,3 +11,4 @@ emoji = "🪴"
 cost = 120
 satisfaction = 1
 blurb = "A bit of greenery softens the room."
+sprite = ExtResource("2")

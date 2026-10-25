@@ -25,6 +25,9 @@ var ghost_tile := Vector2i.ZERO
 var ghost_facing := MachineInstance.Facing.S
 
 var _room_shown := Vector2i(-1, -1)
+var _prop_key := ""
+## Floor tiles taken by standing props, which people walk round.
+var _prop_blocked: Array[Vector2i] = []
 var _touches: Dictionary[int, Vector2] = {}
 var _press_pos := Vector2.ZERO
 var _dragged := false
@@ -34,6 +37,7 @@ var _dragged := false
 @onready var room: Room = $Room
 @onready var entities: Node2D = $Entities
 @onready var crowd: Crowd = $Crowd
+@onready var props: PropLayer = $Props
 @onready var ghost: Cabinet = $Ghost
 @onready var pops: Node2D = $Pops
 
@@ -55,6 +59,7 @@ func _ready() -> void:
 ## Redraws everything for a new or loaded run.
 func rebuild() -> void:
 	_room_shown = Vector2i(-1, -1)
+	_prop_key = ""
 	cancel_placing()
 	select(-1)
 	crowd.clear_customers()
@@ -304,11 +309,15 @@ func _on_state_changed() -> void:
 	var state := Game.state
 	if state == null:
 		return
+	var props_moved := _sync_props()
 	if state.room != _room_shown:
 		_room_shown = state.room
 		_build_carpet(state.room)
-		walk_grid.rebuild(state.room, state.machines)
+		walk_grid.rebuild(state.room, state.machines, _prop_blocked)
 		_fit_camera()
+	elif props_moved:
+		walk_grid.rebuild(state.room, state.machines, _prop_blocked)
+		crowd.reroute()
 	room.show_room(state.room, Data.db.theme(state.theme))
 	for c: Cabinet in cabinets.values():
 		c.refresh()
@@ -332,8 +341,21 @@ func _sync_machines() -> void:
 			cabinets.erase(id)
 	if not live.has(selected_id):
 		select(-1)
-	walk_grid.rebuild(state.room, state.machines)
+	_sync_props()
+	walk_grid.rebuild(state.room, state.machines, _prop_blocked)
 	crowd.reroute()
+
+
+## Lays out decor and facilities again; true when anything moved.
+func _sync_props() -> bool:
+	var spots := PropLayout.layout(Game.state)
+	var key := "%s|%s" % [Game.state.room, PropLayer.key_of(spots)]
+	if key == _prop_key:
+		return false
+	_prop_key = key
+	_prop_blocked = PropLayout.blocked_tiles(spots)
+	props.show_spots(spots)
+	return true
 
 
 func _build_carpet(size: Vector2i) -> void:
@@ -346,7 +368,7 @@ func _build_carpet(size: Vector2i) -> void:
 func _fit_camera() -> void:
 	if Game.state:
 		# Include the walls, plus room below the door for people walking in.
-		var r := FloorGeometry.room_rect(Game.state.room).grow_individual(TILE, TILE * 1.5, TILE, TILE)
+		var r := FloorGeometry.room_rect(Game.state.room).grow_individual(TILE, FloorGeometry.WALL_H, TILE, TILE)
 		camera.fit(r)
 
 
