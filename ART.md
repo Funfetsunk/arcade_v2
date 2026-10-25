@@ -153,6 +153,15 @@ their counters once facilities are drawn.
 `walking-6-frames` (1 generation per direction). Each character gets a `SpriteFrames` resource
 with `idle_<dir>` and `walk_<dir>` animations at 10 fps.
 
+## Carpet variants
+
+Nine 32 px variants from tiles-pro `751e14aa-2032-4c81-9d58-8fc302136bce` (`carpet.png` as the
+style tile), snapped to the carpet's own colours: five plain (`plain_a`-`e`), three accents
+(cross, spark, squiggle) and one worn tile, in `assets/tiles/carpet_variants/`.
+`python tools/carpet_atlas.py .` packs them into `carpet_variants.png`, the floor TileSet's second
+source. `FloorGeometry.carpet_cell` lays about half the floor with plain variants and 1 tile in
+25 with an accent, fixed per tile. Review with `python tools/carpet_sheet.py . docs/carpet_sheet.png`.
+
 ## Walls
 
 Seamless 32 px textures from `create_tiles_pro` (square, top-down, carpet as the style tile),
@@ -217,8 +226,6 @@ Skin tones       #f5cba7 #c8956b #8d5a3b #5c3d1e
 
 ## Known follow-ups
 
-- One carpet tile repeats visibly over a big floor. Before the floor scene ships, generate 2–3
-  variants of carpet 8 (tiles-pro with `carpet.png` as `style_images`) and scatter them.
 - UI frames, icons and a pixel font are still to be generated.
 
 ## UI

@@ -364,7 +364,8 @@ func _build_carpet(size: Vector2i) -> void:
 	carpet.clear()
 	for y in size.y:
 		for x in size.x:
-			carpet.set_cell(Vector2i(x, y), 0, Vector2i.ZERO)
+			var cell := FloorGeometry.carpet_cell(Vector2i(x, y))
+			carpet.set_cell(Vector2i(x, y), cell.x, Vector2i(cell.y, 0))
 
 
 func _fit_camera() -> void:

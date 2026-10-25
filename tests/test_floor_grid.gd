@@ -167,3 +167,20 @@ func test_buying_next_to_a_same_genre_cabinet_sets_zone_bonus() -> void:
 	var second := actions.buy_machine(s, H.DATA.machine(&"pac"), Vector2i(3, 2), S)
 	assert_almost_eq(first.zone_mul, 1.06, 1e-9)
 	assert_almost_eq(second.zone_mul, 1.06, 1e-9)
+
+
+func test_carpet_mixes_variants_in_a_fixed_pattern() -> void:
+	var counts := {0: 0, 1: 0, 2: 0}   # plain carpet, plain variant, accent
+	for y in 40:
+		for x in 40:
+			var cell := FloorGeometry.carpet_cell(Vector2i(x, y))
+			assert_eq(cell, FloorGeometry.carpet_cell(Vector2i(x, y)))
+			if cell.x == 0:
+				counts[0] += 1
+			elif cell.y < FloorGeometry.CARPET_PLAIN:
+				counts[1] += 1
+			else:
+				assert_lt(cell.y, FloorGeometry.CARPET_PLAIN + FloorGeometry.CARPET_ACCENTS)
+				counts[2] += 1
+	assert_between(counts[1], 600, 1000, "about half are plain variants")
+	assert_between(counts[2], 20, 120, "about 1 in 25 are accents")
