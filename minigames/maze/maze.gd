@@ -43,7 +43,7 @@ func _setup() -> void:
 
 
 func _reset_ghost() -> void:
-	ghost = { tile = GHOST_HOME, offset = Vector2.ZERO, dir = Vector2i.LEFT }
+	ghost = { tile = GHOST_HOME, offset = Vector2.ZERO, dir = Vector2i.LEFT, speed = 1.625 }
 
 
 func _wall(tile: Vector2i) -> bool:
@@ -132,8 +132,12 @@ func _move_player() -> void:
 
 
 ## Greedy chase (or flight while frightened), never reversing unless cornered.
+## Speed only changes at a tile centre: switching mid-tile would leave the offset
+## off the grid, so the ghost would never stop to turn and would walk through walls.
 func _move_ghost() -> void:
 	if ghost.offset == Vector2.ZERO:
+		# Both speeds divide TS exactly.
+		ghost.speed = 1.0 if _fright > 0 else 1.625
 		var open := DIRS.filter(func(d: Vector2i) -> bool: return not _wall(ghost.tile + d))
 		var ahead := open.filter(func(d: Vector2i) -> bool: return d != -ghost.dir)
 		var pool := ahead if not ahead.is_empty() else open
@@ -143,8 +147,7 @@ func _move_ghost() -> void:
 			return da > db if _fright > 0 else da < db)
 		# A small wobble so it isn't perfectly relentless.
 		ghost.dir = pool[0] if randf() < 0.85 else pool[randi() % pool.size()]
-	# Both speeds divide TS exactly.
-	_step(ghost, 1.0 if _fright > 0 else 1.625)
+	_step(ghost, ghost.speed)
 
 
 func _draw_board() -> void:

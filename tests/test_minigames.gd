@@ -46,3 +46,20 @@ func test_every_minigame_runs() -> void:
 		assert_true(results.size() <= 1, "%s finishes at most once" % def.id)
 		played += 1
 	assert_gt(played, 0)
+
+
+func test_maze_ghost_stays_on_the_grid_when_fright_starts_mid_tile() -> void:
+	# A power pellet eaten while the ghost is between tiles used to switch its
+	# speed mid-step, so it never landed on a centre again and left the maze.
+	var maze_def: MachineDef = H.DATA.machine(&"pac")
+	var game := maze_def.minigame.instantiate() as MiniGame
+	add_child_autofree(game)
+	for frame in 30 * 60:
+		if frame % 37 == 5:
+			game._fright = 0 if game._fright > 0 else 180
+		game._move_ghost()
+		var tile: Vector2i = game.ghost.tile
+		if game._wall(tile):
+			fail_test("ghost walked into a wall at %s on frame %d" % [tile, frame])
+			return
+	pass_test("ghost stayed on open tiles")
