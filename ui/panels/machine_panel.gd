@@ -144,7 +144,7 @@ func _dips(m: MachineInstance) -> void:
 			b.toggle_mode = true
 			b.button_group = group
 			b.button_pressed = i == current
-			b.add_theme_font_size_override(&"font_size", 9)
+			b.add_theme_font_size_override(&"font_size", 13)
 			b.custom_minimum_size.x = 0
 			row.add_child(b)
 		add_child(row)

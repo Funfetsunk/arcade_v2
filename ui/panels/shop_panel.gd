@@ -41,7 +41,7 @@ func _machines() -> void:
 			action = UiKit.button("REP %d" % def.rep_req, func() -> void: pass, &"", false)
 		else:
 			action = UiKit.button(GameMath.money(def.cost), _buy.bind(def), &"PrimaryButton" if s.cash >= def.cost else &"", s.cash >= def.cost)
-			action.add_theme_font_size_override(&"font_size", 11)
+			action.add_theme_font_size_override(&"font_size", 11 if s.cash >= def.cost else 16)
 		var card := UiKit.card(Icons.machine(def) if def.sprite_for(MachineInstance.Facing.S) else def.emoji, def.display_name, detail, action)
 		if locked:
 			card.modulate = Color(1, 1, 1, 0.6)

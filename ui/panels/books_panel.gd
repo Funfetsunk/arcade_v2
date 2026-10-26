@@ -159,7 +159,7 @@ func _toggle_row(labels: Array, selected: int, on_pick: Callable) -> HBoxContain
 		b.button_group = group
 		b.button_pressed = i == selected
 		b.size_flags_horizontal = SIZE_EXPAND_FILL
-		b.add_theme_font_size_override(&"font_size", 9)
+		b.add_theme_font_size_override(&"font_size", 13)
 		row.add_child(b)
 	return row
 

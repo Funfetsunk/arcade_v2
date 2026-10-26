@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=43 format=3]
+[gd_resource type="Theme" load_steps=44 format=3]
 
 [ext_resource type="FontFile" path="res://assets/fonts/arcade_empire_pixel.ttf" id="1"]
+[ext_resource type="FontVariation" path="res://assets/fonts/jersey10_body.tres" id="body"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/neon/bar.png" id="f0"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button.png" id="f1"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/neon/button_disabled.png" id="f2"]
@@ -373,7 +374,8 @@ texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
 [resource]
-default_font_size = 11
+default_font = ExtResource("body")
+default_font_size = 16
 Label/colors/font_color = Color(0.9490, 0.8941, 0.7686, 1.0)
 Button/colors/font_color = Color(0.9490, 0.8941, 0.7686, 1.0)
 CheckBox/colors/font_color = Color(0.9490, 0.8941, 0.7686, 1.0)
@@ -398,7 +400,7 @@ HSeparator/colors/color = Color(0.4353, 0.5255, 0.6392, 0.5)
 ProgressBar/styles/background = SubResource("bar_bg")
 ProgressBar/styles/fill = SubResource("bar_fill")
 ProgressBar/colors/font_color = Color(0.0588, 0.0745, 0.1294, 1.0)
-ProgressBar/font_sizes/font_size = 8
+ProgressBar/font_sizes/font_size = 12
 LineEdit/styles/normal = SubResource("edit")
 TooltipPanel/styles/panel = SubResource("tip")
 HeaderLabel/base_type = &"Label"
@@ -420,10 +422,10 @@ HeaderLabel/constants/outline_size = 4
 StatValue/font_sizes/font_size = 16
 StatValue/fonts/font = ExtResource("1")
 StatValue/colors/font_color = Color(0.9490, 0.8941, 0.7686, 1.0)
-StatCaption/font_sizes/font_size = 8
+StatCaption/font_sizes/font_size = 12
 StatCaption/colors/font_color = Color(0.6627, 0.6275, 0.5412, 1.0)
 DimLabel/colors/font_color = Color(0.6627, 0.6275, 0.5412, 1.0)
-DimLabel/font_sizes/font_size = 10
+DimLabel/font_sizes/font_size = 15
 PrimaryButton/styles/normal = SubResource("pbtn")
 PrimaryButton/styles/hover = SubResource("pbtn_hover")
 PrimaryButton/styles/pressed = SubResource("pbtn_pressed")

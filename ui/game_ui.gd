@@ -68,16 +68,17 @@ var _next_day_label := ""
 
 
 func _ready() -> void:
-	# The pixel font only has basic ASCII; anything else falls back to the
+	# The pixel fonts only have basic ASCII; anything else falls back to the
 	# default font, and emoji to a bundled emoji font (browsers give Godot no
 	# system fallback, so without it emoji would show as boxes on the web).
 	var emoji_font: FontFile = load("res://assets/fonts/noto_color_emoji_subset.ttf")
 	var default_font := ThemeDB.fallback_font
 	if not default_font.fallbacks.has(emoji_font):
 		default_font.fallbacks = default_font.fallbacks + [emoji_font]
-	var pixel_font: FontFile = load("res://assets/fonts/arcade_empire_pixel.ttf")
-	if not pixel_font.fallbacks.has(default_font):
-		pixel_font.fallbacks = [default_font, emoji_font]
+	for path: String in ["res://assets/fonts/arcade_empire_pixel.ttf", "res://assets/fonts/jersey10.ttf"]:
+		var pixel_font: FontFile = load(path)
+		if not pixel_font.fallbacks.has(default_font):
+			pixel_font.fallbacks = [default_font, emoji_font]
 	for id: StringName in PANEL_SCRIPTS:
 		var panel := VBoxContainer.new()
 		panel.set_script(PANEL_SCRIPTS[id])
@@ -275,7 +276,7 @@ func _fit_action_bar() -> void:
 	var compact := _compact()
 	for tab: Array in TABS:
 		var b: Button = get_node("%" + String(tab[0]).capitalize() + "Button")
-		b.add_theme_font_size_override(&"font_size", 9 if compact else 11)
+		b.add_theme_font_size_override(&"font_size", 13 if compact else 16)
 		b.custom_minimum_size.y = BAR_STACKED if compact else BAR_ROW
 		UiKit.icon_label(b, Icons.named(tab[0]), tab[1], compact)
 	_next_day.custom_minimum_size.y = BAR_STACKED if compact else BAR_ROW

@@ -387,7 +387,7 @@ func _on_coin_spawned(machine_id: int, value: int) -> void:
 func pop_text(at: Vector2, text: String) -> void:
 	var label := Label.new()
 	label.text = text
-	label.add_theme_font_size_override(&"font_size", 10)
+	label.add_theme_font_size_override(&"font_size", 15)
 	label.add_theme_color_override(&"font_color", Color("ffd866"))
 	label.add_theme_color_override(&"font_outline_color", Color("0f1321"))
 	label.add_theme_constant_override(&"outline_size", 3)

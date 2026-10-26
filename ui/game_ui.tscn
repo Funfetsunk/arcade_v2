@@ -164,7 +164,7 @@ theme_type_variation = &"BarPanel"
 [node name="LogText" type="RichTextLabel" parent="Root/Log/LogPanel"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 9
+theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 scroll_following = true
 
@@ -172,7 +172,7 @@ scroll_following = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 9
+theme_override_font_sizes/font_size = 13
 text = "EVENT LOG"
 
 [node name="Sheet" type="PanelContainer" parent="Root"]
@@ -294,7 +294,7 @@ theme_type_variation = &"ToastPanel"
 [node name="VisitorText" type="Label" parent="Root/VisitorPopup"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 9
+theme_override_font_sizes/font_size = 13
 
 [node name="Modal" type="Control" parent="Root"]
 unique_name_in_owner = true

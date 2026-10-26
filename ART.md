@@ -237,7 +237,6 @@ Skin tones       #f5cba7 #c8956b #8d5a3b #5c3d1e
 
 ## Known follow-ups
 
-- UI frames, icons and a pixel font are still to be generated.
 
 ## UI
 
@@ -257,3 +256,12 @@ were touched up by hand. Lists show the thing itself instead: machines by their 
 their character, decor and facilities by their sprite (`ui/icons.gd`). `UiKit.icon_label` centres
 an icon beside a button's label (Godot's own button icon sits at the edge).
 `docs/icons_in_game.png` shows them in game.
+
+Body font: Jersey 10 (Google Fonts, SIL Open Font License, licence in
+`assets/fonts/Jersey10-LICENSE.txt`), the theme's default font through `jersey10_body.tres`, a
+FontVariation that trims the line height. Imported without smoothing, at 16 for body text
+(sizes for the default font were scaled up about 1.45x to match the old sizes). Headings,
+numbers and primary buttons keep `arcade_empire_pixel.ttf`, whose 7 was redrawn by hand (fontTools,
+64 units a pixel) because PixelLab's was squat with a stray notch. Characters outside plain ASCII
+(·, —, emoji) fall back to Godot's default font and the emoji font. PixelLab's `create_font`
+was tried first and didn't read well. `docs/font_sheet.png` shows it in game.

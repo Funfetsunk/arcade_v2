@@ -163,7 +163,7 @@ static func stat_row(caption: String, value: String, value_color := Color.TRANSP
 static func section(title: String) -> Label:
 	var l := label(title)
 	l.add_theme_color_override(&"font_color", Color("ffb703"))
-	l.add_theme_font_size_override(&"font_size", 10)
+	l.add_theme_font_size_override(&"font_size", 15)
 	return l
 
 
