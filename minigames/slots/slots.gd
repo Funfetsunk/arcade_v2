@@ -9,6 +9,9 @@ const RH := 64.0
 const RY := 210.0
 const RX := [BOARD.x / 2 - RW - 10, BOARD.x / 2, BOARD.x / 2 + RW + 10]
 
+## Reel art; "7" is the jackpot symbol, drawn as the money bag.
+const SYMBOL_ART := {"🍒": preload("res://assets/sprites/minigames/slot_cherry.png"), "🍋": preload("res://assets/sprites/minigames/slot_lemon.png"), "🔔": preload("res://assets/sprites/minigames/slot_bell.png"), "⭐": preload("res://assets/sprites/minigames/prize_star.png"), "7": preload("res://assets/sprites/minigames/slot_money.png")}
+
 var reels: Array[Dictionary] = []
 var stopping := 0
 var spins := 3
@@ -84,11 +87,7 @@ func _draw_board() -> void:
 			var y := RY + (k - frac) * RH
 			if absf(y - RY) <= RH * 1.5 - 17:
 				var symbol := _symbol(reel, k)
-				if symbol == "7":
-					text(symbol, Vector2(x, y + 12), 34, Color("222222"), ThemeDB.fallback_font)
-				else:
-					# Emoji sit a little low at this size; lift them onto the payline.
-					glyph(symbol, Vector2(x, y - 7), 34)
+				sprite(SYMBOL_ART[symbol], Vector2(x, y), 1.6)
 		board.draw_rect(window, Color("06d6a0") if reel.stopped else Color("6b4a23"), false, 3.0)
 	board.draw_line(Vector2(28, RY), Vector2(BOARD.x - 28, RY), Color("ff006e"), 2.0)
 	if msg:

@@ -4,31 +4,60 @@ board's background at game scale (2 screen px a pixel) and zoomed to 4x.
 
 Candidates live in assets/sprites/minigames/candidates/<name>_<letter>.png.
 
-Usage (needs Pillow):
-    python tools/minigame_sprite_sheet.py . docs/minigame_sprites_sheet.png
+Usage (needs Pillow), with the batch number last:
+    python tools/minigame_sprite_sheet.py . docs/minigame_sprites_sheet.png 1
+    python tools/minigame_sprite_sheet.py . docs/minigame_sprites_sheet_2.png 2
 """
 import os
 import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
-# name -> (minigame, what it replaces)
-SPRITES = {
-    'alien': ('Space Defend', 'the 👾 invaders'),
-    'cannon': ('Space Defend', 'the green triangle ship'),
-    'saucer': ('Star Squad', 'the 🛸 enemies'),
-    'fighter': ('Star Squad', 'the player ship triangle'),
-    'gorilla': ('Barrel Hop', 'the 🦍 at the top'),
-    'princess': ('Barrel Hop', 'who waits at the top (the 👸)'),
-    'runner': ('Barrel Hop', 'the stick-figure runner'),
-    'barrel': ('Barrel Hop', 'the round drawn barrels'),
-    'mole': ('Whack-a-Mole', 'the brown boxes'),
-    'muncher': ('Dot Maze', 'the yellow wedge'),
-    'ghost': ('Dot Maze', 'the box ghost'),
-    'ghost_scared': ('Dot Maze', 'the box ghost when blue'),
-    'fist': ('Car Smash', 'the 👊'),
-    'boom': ('Car Smash', 'the 💥'),
-    'racecar': ('Racing', 'the amber box car'),
+# batch -> name -> (minigame, what it replaces)
+BATCHES = {
+    '1': {
+        'alien': ('Space Defend', 'the 👾 invaders'),
+        'cannon': ('Space Defend', 'the green triangle ship'),
+        'saucer': ('Star Squad', 'the 🛸 enemies'),
+        'fighter': ('Star Squad', 'the player ship triangle'),
+        'gorilla': ('Barrel Hop', 'the 🦍 at the top'),
+        'princess': ('Barrel Hop', 'who waits at the top (the 👸)'),
+        'runner': ('Barrel Hop', 'the stick-figure runner'),
+        'barrel': ('Barrel Hop', 'the round drawn barrels'),
+        'mole': ('Whack-a-Mole', 'the brown boxes'),
+        'muncher': ('Dot Maze', 'the yellow wedge'),
+        'ghost': ('Dot Maze', 'the box ghost'),
+        'ghost_scared': ('Dot Maze', 'the box ghost when blue'),
+        'fist': ('Car Smash', 'the 👊'),
+        'boom': ('Car Smash', 'the 💥'),
+        'racecar': ('Racing', 'the amber box car'),
+    },
+    '2': {
+        'prize_bunny': ('Claw', 'the 🐰 prize'),
+        'prize_bear': ('Claw', 'the 🐻 prize'),
+        'prize_teddy': ('Claw and Crane', 'the 🧸 prize'),
+        'prize_star': ('Claw and Slots', 'the ⭐'),
+        'prize_lollipop': ('Crane', 'the 🍭 prize'),
+        'prize_bow': ('Crane', 'the 🎀 prize'),
+        'prize_gift': ('Crane', 'the 🎁 prize'),
+        'prize_toycar': ('Crane', 'the 🚗 prize'),
+        'prize_unicorn': ('Crane', 'the 🦄 prize'),
+        'slot_lemon': ('Slots', 'the 🍋'),
+        'slot_cherry': ('Slots', 'the 🍒'),
+        'slot_money': ('Slots', 'the 💰'),
+        'slot_bell': ('Slots', 'the 🔔'),
+        'target': ('Light Gun', 'the 🎯 targets'),
+        'civilian': ('Light Gun', 'the ✋ civilians: a: the hand, c-k: people'),
+        'face_grin': ('Photo Booth and Social', 'the 😀'),
+        'face_cool': ('Photo Booth and Social', 'the 😎'),
+        'face_wink': ('Photo Booth', 'the 😜'),
+        'face_starstruck': ('Photo Booth', 'the 🤩'),
+        'face_party': ('Photo Booth', 'the 🥳'),
+        'social_note': ('Trend Match', 'the 🎵: c-h notes, i-k a like'),
+        'social_dancer': ('Social', 'the 💃'),
+        'social_heart': ('Trend Match', 'the 💜 (a cleaned up)'),
+        'social_fire': ('Social', 'the 🔥'),
+    },
 }
 INK = (233, 228, 255)
 DIM = (140, 130, 170)
@@ -38,6 +67,11 @@ PAGE_BG = (14, 10, 26)
 BOARD_BG = (10, 10, 22)
 
 project, out = sys.argv[1], sys.argv[2]
+batch = sys.argv[3] if len(sys.argv) > 3 else '1'
+SPRITES = BATCHES[batch]
+# Optional fourth argument: only these sprites (comma separated), for a follow-up review.
+if len(sys.argv) > 4:
+    SPRITES = {k: v for k, v in SPRITES.items() if k in sys.argv[4].split(',')}
 font = ImageFont.truetype(os.path.join(project, 'assets', 'fonts', 'arcade_empire_pixel.ttf'), 16)
 small = ImageFont.truetype(os.path.join(project, 'assets', 'fonts', 'jersey10.ttf'), 16)
 folder = os.path.join(project, 'assets', 'sprites', 'minigames', 'candidates')
@@ -57,7 +91,7 @@ rows = (len(SPRITES) + COLUMNS - 1) // COLUMNS
 row_h = [max(heights[r * COLUMNS:(r + 1) * COLUMNS]) for r in range(rows)]
 sheet = Image.new('RGB', (8 + COLUMNS * (cell_w + 8), 50 + sum(h + 8 for h in row_h)), PAGE_BG)
 draw = ImageDraw.Draw(sheet)
-draw.text((16, 16), 'MINIGAME SPRITES  batch 1, %d sprites (game scale / 4x)' % len(SPRITES), font=font, fill=GOLD)
+draw.text((16, 16), 'MINIGAME SPRITES  batch %s, %d sprites (game scale / 4x)' % (batch, len(SPRITES)), font=font, fill=GOLD)
 for i, (name, (game, replaces)) in enumerate(SPRITES.items()):
     x = 8 + (i % COLUMNS) * (cell_w + 8)
     y = 50 + sum(h + 8 for h in row_h[:i // COLUMNS])

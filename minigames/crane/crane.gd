@@ -10,6 +10,8 @@ const CELL := 64.0
 const GRID := Vector2((BOARD.x - N * CELL) / 2, 110)
 const PRIZE_EMOJI := ["🧸", "🎁", "🚗", "🦄", "🎀", "🍭"]
 
+const PRIZE_ART := {"🧸": preload("res://assets/sprites/minigames/prize_teddy.png"), "🎁": preload("res://assets/sprites/minigames/prize_gift.png"), "🚗": preload("res://assets/sprites/minigames/prize_toycar.png"), "🦄": preload("res://assets/sprites/minigames/prize_unicorn.png"), "🎀": preload("res://assets/sprites/minigames/prize_bow.png"), "🍭": preload("res://assets/sprites/minigames/prize_lollipop.png")}
+
 var prizes: Array[Dictionary] = []
 var phase := Phase.SWEEP_X
 var crane := GRID
@@ -83,7 +85,7 @@ func _draw_board() -> void:
 		board.draw_line(GRID + Vector2(i * CELL, 0), GRID + Vector2(i * CELL, span), Color("2a2a44"), 1.0)
 		board.draw_line(GRID + Vector2(0, i * CELL), GRID + Vector2(span, i * CELL), Color("2a2a44"), 1.0)
 	for p in prizes:
-		glyph(p.emoji, GRID + (Vector2(p.cell) + Vector2(0.5, 0.5)) * CELL, 26)
+		sprite(PRIZE_ART[p.emoji], GRID + (Vector2(p.cell) + Vector2(0.5, 0.5)) * CELL, 1.3)
 	board.draw_line(Vector2(crane.x, GRID.y - 18), Vector2(crane.x, GRID.y + span + 18), Color("6b4a23"), 3.0)
 	if phase != Phase.SWEEP_X:
 		board.draw_line(Vector2(GRID.x - 18, crane.y), Vector2(GRID.x + span + 18, crane.y), Color("6b4a23"), 3.0)

@@ -5,6 +5,8 @@ extends MiniGame
 const FACES := ["😀", "😜", "🤩", "😎", "🥳"]
 const SHOTS := 5
 
+const FACE_ART := {"😀": preload("res://assets/sprites/minigames/face_grin.png"), "😜": preload("res://assets/sprites/minigames/face_wink.png"), "🤩": preload("res://assets/sprites/minigames/face_starstruck.png"), "😎": preload("res://assets/sprites/minigames/face_cool.png"), "🥳": preload("res://assets/sprites/minigames/face_party.png")}
+
 var shot := 0
 var results: Array[Dictionary] = []
 var msg := ""
@@ -54,7 +56,7 @@ func _draw_board() -> void:
 	var blur := (1 - s) * 16
 	for i in 5:
 		var offset := Vector2.ZERO if i == 0 else Vector2(cos(i * 1.7 + _t * 3), sin(i * 2.3 + _t * 3)) * blur
-		glyph(face, Vector2(BOARD.x / 2, 200) + offset, 80, Color(1, 1, 1, 1.0 if i == 0 else 0.22))
+		sprite(FACE_ART[face], Vector2(BOARD.x / 2, 200) + offset, 4.0, 0.0, false, Color(1, 1, 1, 1.0 if i == 0 else 0.22))
 	# Focus meter, with the sweet spot boxed.
 	var meter := Rect2(50, 340, BOARD.x - 100, 16)
 	board.draw_rect(meter, Color("241a0e"))
@@ -77,7 +79,7 @@ func _draw_results() -> void:
 	for i in results.size():
 		var frame := Rect2(x + 8 + i * SW, y + 8, SW - 6, 48)
 		board.draw_rect(frame, Color("cfe8d8") if results[i].points >= 35 else Color("d8cdb8"))
-		glyph(results[i].face, frame.get_center(), 24)
+		sprite(FACE_ART[results[i].face], frame.get_center(), 1.2)
 
 
 func _hud_text() -> String:

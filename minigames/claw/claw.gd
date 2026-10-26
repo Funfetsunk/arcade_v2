@@ -8,6 +8,8 @@ const TOP := 70.0
 const FLOOR := 380.0
 const CHUTE := 36.0
 
+const PRIZE_ART := {"🧸": preload("res://assets/sprites/minigames/prize_teddy.png"), "🐻": preload("res://assets/sprites/minigames/prize_bear.png"), "🐰": preload("res://assets/sprites/minigames/prize_bunny.png"), "⭐": preload("res://assets/sprites/minigames/prize_star.png")}
+
 var prizes: Array[Dictionary] = []
 var claw := Vector2(BOARD.x / 2, TOP)
 var claw_open := 1.0
@@ -87,13 +89,13 @@ func _draw_board() -> void:
 	board.draw_rect(Rect2(10, FLOOR - 24, CHUTE, 54), BG)
 	text("WIN", Vector2(10 + CHUTE / 2, FLOOR + 20), 8, DIM)
 	for p in prizes:
-		glyph(p.emoji, Vector2(p.x, FLOOR - p.r), p.r * 2)
+		sprite(PRIZE_ART[p.emoji], Vector2(p.x, FLOOR - p.r), p.r / 10.0)
 	board.draw_line(Vector2(claw.x, 44), claw, Color("888888"), 2.0)
 	var spread := 6 + claw_open * 8
 	board.draw_line(claw, claw + Vector2(-spread, 16), GOLD, 4.0)
 	board.draw_line(claw, claw + Vector2(spread, 16), GOLD, 4.0)
 	if not holding.is_empty():
-		glyph(holding.emoji, claw + Vector2(0, 22), holding.r * 2)
+		sprite(PRIZE_ART[holding.emoji], claw + Vector2(0, 22), holding.r / 10.0)
 	draw_pops(0.4, 11)
 
 

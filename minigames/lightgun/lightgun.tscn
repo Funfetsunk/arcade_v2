@@ -7,4 +7,4 @@
 script = ExtResource("2")
 game_name = "Light Gun"
 title_icon = "🔫"
-hint = "Tap the targets — never the ✋ ones!"
+hint = "Tap the targets — never the people!"

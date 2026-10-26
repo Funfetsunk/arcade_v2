@@ -4,13 +4,15 @@ extends MiniGame
 
 enum Phase { SHOW, INPUT, PAUSE }
 
-const EMOJI := ["😀", "🔥", "💃", "🎵", "😎", "💜"]
+const EMOJI := ["😀", "🔥", "💃", "👍", "😎", "💜"]
 const COLS := 3
 const PAD := Vector2(100, 84)
 const GRID := Vector2((BOARD.x - COLS * 100) / 2, 250)
 const ROUNDS := 4
 ## Frames allowed per step of the trend when repeating it.
 const STEP_TIME := 150
+
+const TREND_ART := {"😀": preload("res://assets/sprites/minigames/face_grin.png"), "🔥": preload("res://assets/sprites/minigames/social_fire.png"), "💃": preload("res://assets/sprites/minigames/social_dancer.png"), "👍": preload("res://assets/sprites/minigames/social_like.png"), "😎": preload("res://assets/sprites/minigames/face_cool.png"), "💜": preload("res://assets/sprites/minigames/social_heart.png")}
 
 var trend_round := 0
 var sequence: Array[int] = []
@@ -110,7 +112,7 @@ func _draw_board() -> void:
 	match phase:
 		Phase.SHOW:
 			if _show_index < sequence.size():
-				glyph(EMOJI[sequence[_show_index]], Vector2(mid, 135), 64)
+				sprite(TREND_ART[EMOJI[sequence[_show_index]]], Vector2(mid, 135), 3.2)
 				text("%d / %d" % [_show_index + 1, sequence.size()], Vector2(mid, 199), 8, DIM)
 		Phase.INPUT:
 			text("YOUR TURN!", Vector2(mid, 124), 11, Color("06d6a0"))
@@ -125,7 +127,7 @@ func _draw_board() -> void:
 		var rect := _pad_rect(i).grow(-4)
 		board.draw_rect(rect, Color("b3324f") if i == _wrong else Color("3a3a6e") if i == _flash else Color("241a3a"))
 		board.draw_rect(rect, Color("3a3a55"), false, 1.0)
-		glyph(EMOJI[i], rect.get_center(), 34)
+		sprite(TREND_ART[EMOJI[i]], rect.get_center(), 1.7)
 
 
 func _hud_text() -> String:

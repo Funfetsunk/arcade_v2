@@ -1,11 +1,14 @@
 extends MiniGame
 ## Light Gun: targets pop up in three ranks of a fairground gallery; tap them
-## before they duck. ✋ targets cost points. 25 s, getting faster.
+## before they duck. Bystanders (the people) cost points. 25 s, getting faster.
 
 ## Ranks from the back: y, points, radius.
 const RANKS := [[150.0, 20, 14.0], [220.0, 15, 17.0], [290.0, 10, 20.0]]
 const SLOTS := [70.0, 150.0, 230.0, 310.0]
 const ROUND := 25 * 60
+
+const TARGET: Texture2D = preload("res://assets/sprites/minigames/target.png")
+const CIVILIAN: Texture2D = preload("res://assets/sprites/minigames/civilian.png")
 
 var targets: Array[Dictionary] = []
 var time := ROUND
@@ -59,9 +62,8 @@ func _draw_board() -> void:
 		var rise := minf(1.0, t.up / 14.0)
 		var at: Vector2 = t.at + Vector2(0, (1 - rise) * 18)
 		var alpha := minf(1.0, rise + 0.3)
-		var body := Color("555555") if t.hit else Color("e8d8b8") if t.civilian else Color("ff006e")
-		board.draw_circle(at, t.r, Color(body, alpha))
-		glyph("✋" if t.civilian else "🎯", at + Vector2(0, 1), int(t.r))
+		var tint := Color(0.45, 0.45, 0.5, alpha) if t.hit else Color(1, 1, 1, alpha)
+		sprite(CIVILIAN if t.civilian else TARGET, at, t.r / 10.0, 0.0, false, tint)
 	if _flash > 0:
 		board.draw_rect(Rect2(Vector2.ZERO, BOARD), Color(1, 1, 0.78, _flash * 0.04))
 	draw_pops(0.5, 11)
