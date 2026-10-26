@@ -7,6 +7,8 @@ const HORIZON := 110.0
 const BOTTOM := 400.0
 const REACH := BOARD.x * 0.36
 
+const POD: Texture2D = preload("res://assets/sprites/minigames/sim_pod.png")
+
 var lean := 0.0
 var strikes := 0
 var time := ROUND
@@ -73,11 +75,8 @@ func _draw_board() -> void:
 	var target_x := BOARD.x / 2 + _curve(_t) * REACH
 	board.draw_rect(Rect2(target_x - REACH * 0.28, 408, REACH * 0.56, 30), Color(6 / 255.0, 214 / 255.0, 160 / 255.0, 0.22))
 	board.draw_rect(Rect2(target_x - 2, 408, 4, 30), Color("06d6a0"))
-	board.draw_set_transform(shake + Vector2(BOARD.x / 2 + lean * REACH, 424), lean * 0.5)
-	board.draw_rect(Rect2(-20, -12, 40, 22), Color("ff006e"))
-	board.draw_rect(Rect2(-12, -8, 10, 7), Color.WHITE)
-	board.draw_rect(Rect2(3, -8, 10, 7), Color.WHITE)
 	board.draw_set_transform(Vector2.ZERO)
+	sprite(POD, shake + Vector2(BOARD.x / 2 + lean * REACH, 424), 2.0, lean * 0.5)
 	draw_pops(0.0, 13)
 
 

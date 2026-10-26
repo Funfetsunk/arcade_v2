@@ -6,6 +6,8 @@ const CENTRE := Vector2(BOARD.x / 2, 150)
 ## Rings from the bullseye out: radius, points, colour.
 const RINGS := [[14.0, 50, Color("ff006e")], [30.0, 30, Color("ffb703")], [48.0, 20, Color("06d6a0")], [68.0, 10, Color("3a86ff")]]
 
+const CROSSHAIR: Texture2D = preload("res://assets/sprites/minigames/crosshair.png")
+
 var balls := 6
 var _t := 0.0
 
@@ -40,9 +42,7 @@ func _draw_board() -> void:
 	draw_pops(0.6, 12)
 	if not over:
 		var g := _sight()
-		board.draw_arc(g, 7, 0, TAU, 20, Color.WHITE, 2.0)
-		board.draw_line(g - Vector2(11, 0), g + Vector2(11, 0), Color.WHITE, 2.0)
-		board.draw_line(g - Vector2(0, 11), g + Vector2(0, 11), Color.WHITE, 2.0)
+		sprite(CROSSHAIR, g, 2.0)
 
 
 func _hud_text() -> String:

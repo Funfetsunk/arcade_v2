@@ -10,6 +10,9 @@ const PUSH_MIN := 150.0
 const PUSH_MAX := 215.0
 const CR := 8.0
 
+const COIN_GOLD: Texture2D = preload("res://assets/sprites/minigames/coin_gold.png")
+const COIN_SILVER: Texture2D = preload("res://assets/sprites/minigames/coin_silver.png")
+
 var coins: Array[Dictionary] = []
 var falling: Array[Dictionary] = []
 var drop_x := BOARD.x / 2
@@ -92,9 +95,7 @@ func _draw_board() -> void:
 	board.draw_rect(Rect2(TL, front - 4, TR - TL, 4), GOLD)
 	board.draw_rect(Rect2(TL - 14, LEDGE, TR - TL + 28, 8), BG)
 	for c in coins + falling:
-		var at := Vector2(c.x, c.y)
-		board.draw_circle(at, CR, Color("ffd166") if c.gold else Color("c0c0d8"))
-		board.draw_arc(at, CR - 2.5, 0, TAU, 16, Color(0, 0, 0, 0.35), 1.0)
+		sprite(COIN_GOLD if c.gold else COIN_SILVER, Vector2(c.x, c.y))
 	# The dropper.
 	board.draw_rect(Rect2(drop_x - 12, 70, 24, 14), Color("ff006e"))
 	board.draw_rect(Rect2(drop_x - 2, 84, 4, 8), Color.WHITE)

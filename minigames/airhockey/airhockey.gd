@@ -6,6 +6,10 @@ const GOAL := 50.0
 const MALLET_R := 21.0
 const PUCK_R := 9.0
 
+const MALLET_ME: Texture2D = preload("res://assets/sprites/minigames/mallet_gold.png")
+const MALLET_AI: Texture2D = preload("res://assets/sprites/minigames/mallet_pink.png")
+const PUCK: Texture2D = preload("res://assets/sprites/minigames/puck.png")
+
 var me := Vector2(BOARD.x / 2, BOARD.y - 70)
 var me_prev := me
 var ai := Vector2(BOARD.x / 2, 70)
@@ -106,11 +110,9 @@ func _draw_board() -> void:
 	board.draw_arc(BOARD / 2, 40, 0, TAU, 32, Color("24365a"), 2.0)
 	board.draw_line(Vector2(BOARD.x / 2 - GOAL, 2), Vector2(BOARD.x / 2 + GOAL, 2), Color("ff006e"), 2.0)
 	board.draw_line(Vector2(BOARD.x / 2 - GOAL, BOARD.y - 2), Vector2(BOARD.x / 2 + GOAL, BOARD.y - 2), GOLD, 2.0)
-	board.draw_circle(ai, MALLET_R, Color("ff006e"))
-	board.draw_circle(me, MALLET_R, GOLD)
-	board.draw_circle(ai, 8, Color("102018"))
-	board.draw_circle(me, 8, Color("102018"))
-	board.draw_circle(puck, PUCK_R, Color.WHITE)
+	sprite(MALLET_AI, ai, 2.0)
+	sprite(MALLET_ME, me, 2.0)
+	sprite(PUCK, puck)
 
 
 func _hud_text() -> String:

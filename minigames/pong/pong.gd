@@ -3,9 +3,13 @@ extends MiniGame
 ## the ball up; a point resets the pace. First to 5.
 
 const PW := 70.0
-const PH := 10.0
+const PH := 11.0
 const BASE_SPEED := 4.0
 const MAX_SPEED := 8.5
+
+const PADDLE_ME: StyleBoxTexture = preload("res://assets/sprites/minigames/paddle_gold.tres")
+const PADDLE_AI: StyleBoxTexture = preload("res://assets/sprites/minigames/paddle_pink.tres")
+const BALL: Texture2D = preload("res://assets/sprites/minigames/ball_small.png")
 
 var me := Vector2(BOARD.x / 2 - PW / 2, BOARD.y - 34)
 var ai := Vector2(BOARD.x / 2 - PW / 2, 24)
@@ -80,9 +84,9 @@ func _tick() -> void:
 
 func _draw_board() -> void:
 	board.draw_dashed_line(Vector2(0, BOARD.y / 2), Vector2(BOARD.x, BOARD.y / 2), Color("2a2a44"), 1.0, 6.0)
-	board.draw_rect(Rect2(ai, Vector2(PW, PH)), Color("ff006e"))
-	board.draw_rect(Rect2(me, Vector2(PW, PH)), GOLD)
-	board.draw_circle(ball.pos, ball.r, Color.WHITE)
+	stretched(PADDLE_AI, Rect2(ai, Vector2(PW, PH)))
+	stretched(PADDLE_ME, Rect2(me, Vector2(PW, PH)))
+	sprite(BALL, ball.pos)
 	text(str(theirs), Vector2(BOARD.x / 2, BOARD.y / 2 - 14), 14, DIM)
 	text(str(mine), Vector2(BOARD.x / 2, BOARD.y / 2 + 26), 14, DIM)
 

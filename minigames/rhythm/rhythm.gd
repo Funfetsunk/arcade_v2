@@ -9,6 +9,9 @@ const TW := BOARD.x / TRACKS
 const ROUND := 25 * 60
 const NOTES := [330.0, 440.0]
 
+const GEMS: Array[Texture2D] = [preload("res://assets/sprites/minigames/note_gem_blue.png"),
+	preload("res://assets/sprites/minigames/note_gem.png")]
+
 var notes: Array[Dictionary] = []
 var combo := 0
 var time := ROUND
@@ -96,8 +99,7 @@ func _draw_board() -> void:
 			tail.a = 0.5
 			board.draw_rect(Rect2(x - 7, n.y, 14, n.tail), tail)
 		if not n.hit or (n.tail > 0 and held):
-			board.draw_circle(Vector2(x, n.y), 13, color)
-			board.draw_circle(Vector2(x, n.y), 5, Color.WHITE)
+			sprite(GEMS[n.track], Vector2(x, n.y))
 	if combo >= 3:
 		text("%d COMBO" % combo, Vector2(BOARD.x / 2, 60), 12, Color("ffd166"))
 	draw_pops(0.0, 9)

@@ -5,10 +5,13 @@ extends MiniGame
 const LANES := 4
 const LW := BOARD.x / LANES
 const HIT_Y := 80.0
-const GLYPHS := ["←", "↓", "↑", "→"]
 const COLORS := [Color("ff006e"), Color("3a86ff"), Color("06d6a0"), Color("ffb703")]
 const KEYS := { KEY_LEFT: 0, KEY_DOWN: 1, KEY_UP: 2, KEY_RIGHT: 3 }
 const ROUND := 25 * 60
+
+## The arrow art points up; the lanes turn it left, down, up and right.
+const ARROW: Texture2D = preload("res://assets/sprites/minigames/arrow.png")
+const TURNS := [-PI / 2, PI, 0.0, PI / 2]
 
 var arrows: Array[Dictionary] = []
 var combo := 0
@@ -82,10 +85,10 @@ func _draw_board() -> void:
 		if _glow[i] > 0:
 			board.draw_rect(lane, Color(1, 183 / 255.0, 3 / 255.0, _glow[i] * 0.04))
 		board.draw_rect(Rect2(i * LW + 8, HIT_Y - 22, LW - 16, 44), DIM, false, 2.0)
-		text(GLYPHS[i], Vector2(_lane_x(i), HIT_Y + 10), 22, Color("3a3a55"))
+		sprite(ARROW, Vector2(_lane_x(i), HIT_Y), 1.0, TURNS[i], false, Color("3a3a55"))
 	for a in arrows:
 		if not a.hit:
-			text(GLYPHS[a.lane], Vector2(_lane_x(a.lane), a.y + 8), 22, COLORS[a.lane])
+			sprite(ARROW, Vector2(_lane_x(a.lane), a.y), 1.0, TURNS[a.lane], false, COLORS[a.lane])
 	if combo >= 3:
 		text("%d COMBO" % combo, Vector2(BOARD.x / 2, 410), 12, Color("ffd166"))
 	draw_pops(0.0, 9)

@@ -9,6 +9,10 @@ const BH := 18.0
 const TOP := 36.0
 const COLORS := [Color("ff006e"), Color("ff8c42"), Color("ffb703"), Color("06d6a0"), Color("3a86ff")]
 
+const BRICK: StyleBoxTexture = preload("res://assets/sprites/minigames/brick.tres")
+const PADDLE: StyleBoxTexture = preload("res://assets/sprites/minigames/paddle_gold.tres")
+const BALL: Texture2D = preload("res://assets/sprites/minigames/ball_small.png")
+
 var bricks: Array[Dictionary] = []
 var paddle := Rect2(BOARD.x / 2 - 33, BOARD.y - 26, 66, 11)
 var ball := {}
@@ -93,11 +97,9 @@ func _tick() -> void:
 func _draw_board() -> void:
 	for b in bricks:
 		if b.alive:
-			var rect: Rect2 = b.rect
-			board.draw_rect(rect, b.color)
-			board.draw_rect(Rect2(rect.position, Vector2(rect.size.x, 2)), Color(1, 1, 1, 0.18))
-	board.draw_rect(paddle, GOLD)
-	board.draw_circle(ball.pos, ball.r, Color.WHITE)
+			stretched(BRICK, b.rect, b.color)
+	stretched(PADDLE, paddle)
+	sprite(BALL, ball.pos)
 	if not started:
 		text("move to launch", Vector2(BOARD.x / 2, BOARD.y - 72), 10, DIM)
 

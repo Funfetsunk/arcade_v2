@@ -9,6 +9,8 @@ const GAP := 1.15
 const Z_POD := (ORBIT - 10) / 160
 const ROUND := 30 * 60
 
+const POD: Texture2D = preload("res://assets/sprites/minigames/vr_pod.png")
+
 var theta := PI / 2
 var rings: Array[Dictionary] = []
 var hits := 0
@@ -67,7 +69,7 @@ func _draw_board() -> void:
 		color.a = minf(1.0, r.z * 2 + 0.15)
 		board.draw_arc(CENTER, 10 + r.z * 160, r.gap + GAP / 2, r.gap - GAP / 2 + TAU, 48, color, 3 + r.z * 5)
 	var pod := CENTER + Vector2.from_angle(theta) * ORBIT
-	board.draw_circle(pod, 9, Color("ff006e") if _hurt > 0 and (_hurt & 4) != 0 else GOLD)
+	sprite(POD, pod, 1.0, 0.0, false, Color("ff006e") if _hurt > 0 and (_hurt & 4) != 0 else Color.WHITE)
 	if _hurt > 12:
 		board.draw_rect(Rect2(Vector2.ZERO, BOARD), Color(1, 0, 110 / 255.0, (_hurt - 12) * 0.05))
 	draw_pops(0.0, 12)

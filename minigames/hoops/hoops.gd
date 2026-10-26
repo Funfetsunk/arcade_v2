@@ -10,6 +10,9 @@ const HOME := Vector2(BOARD.x / 2, BOARD.y - 56)
 const AIM_FRAMES := 40.0
 const METER := Rect2(BOARD.x - 34, 150, 16, 220)
 
+const HOOP: Texture2D = preload("res://assets/sprites/minigames/hoop.png")
+const BALL: Texture2D = preload("res://assets/sprites/minigames/basketball.png")
+
 var hoop := Vector2(BOARD.x / 2, 130)
 var hoop_dir := 1.0
 var hoop_speed := 1.1
@@ -91,11 +94,8 @@ func _tick() -> void:
 
 
 func _draw_board() -> void:
-	board.draw_rect(Rect2(hoop.x - 34, hoop.y - 58, 68, 46), Color("1c1430"))
-	board.draw_rect(Rect2(hoop.x - 18, hoop.y - 40, 36, 24), Color.WHITE, false, 1.0)
-	board.draw_line(hoop - Vector2(RIM / 2, 0), hoop + Vector2(RIM / 2, 0), Color("ff006e"), 4.0)
-	for i in range(-2, 3):
-		board.draw_line(hoop + Vector2(i * 9, 0), hoop + Vector2(i * 5, 22), DIM, 1.0)
+	# At 4x the art's 10 px rim spans the 44 px scoring rim; its rim row sits on hoop.y.
+	sprite(HOOP, hoop - Vector2(0, 6), 4.0)
 	# Power meter, with the sweet zone (~0.66–0.82) marked.
 	board.draw_rect(METER, Color("241a0e"))
 	board.draw_rect(Rect2(METER.position.x, METER.position.y + METER.size.y * (1 - 0.82), METER.size.x, METER.size.y * 0.16), Color(Color("06d6a0"), 0.35))
@@ -104,9 +104,7 @@ func _draw_board() -> void:
 		board.draw_rect(Rect2(METER.position.x, METER.position.y + METER.size.y * (1 - charge), METER.size.x, METER.size.y * charge), fill)
 	board.draw_rect(METER, Color("6b4a23"), false, 1.0)
 	text("PWR", Vector2(METER.get_center().x, METER.end.y + 16), 8, DIM)
-	board.draw_circle(ball, BALL_R, Color("ff8c42"))
-	board.draw_arc(ball, BALL_R, 0, TAU, 24, Color("7a3a10"), 1.0)
-	board.draw_line(ball - Vector2(BALL_R, 0), ball + Vector2(BALL_R, 0), Color("7a3a10"), 1.0)
+	sprite(BALL, ball)
 	if not ball_live and not charging and not over:
 		text("hold to charge", Vector2(BOARD.x / 2, BOARD.y - 24), 9, DIM)
 	draw_pops(0.5, 13)

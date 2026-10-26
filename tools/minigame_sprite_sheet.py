@@ -58,6 +58,37 @@ BATCHES = {
         'social_heart': ('Trend Match', 'the 💜 (a cleaned up)'),
         'social_fire': ('Social', 'the 🔥'),
     },
+    '3': {
+        'ball': ('Pong, Breakout, Pinball', 'the white circle ball'),
+        'paddle': ('Pong and Breakout', 'the flat paddles'),
+        'brick': ('Breakout', 'the coloured bricks (tinted per row)'),
+        'mallet_pink': ('Air Hockey', "the opponent's mallet"),
+        'mallet_gold': ('Air Hockey', 'your mallet'),
+        'puck': ('Air Hockey', 'the white puck'),
+        'bumper': ('Pinball', 'the round bumpers'),
+        'basketball': ('Hoops', 'the orange ball'),
+        'hoop': ('Hoops', 'the backboard, rim and net'),
+        'coin_gold': ('Coin Cascade', 'the gold coins'),
+        'coin_silver': ('Coin Cascade', 'the silver coins'),
+        'dropper': ('Coin Cascade', 'the pink coin dropper'),
+        'note_gem': ('Rhythm', 'the round notes (tinted per lane)'),
+        'arrow': ('Dance', 'the arrows (turned per lane)'),
+        'crosshair': ('Aim Trainer', 'the drawn crosshair'),
+        'vr_pod': ('VR Pod', 'the gold dot'),
+        'sim_pod': ('Motion Sim', 'the pink box pod'),
+        'smash_car': ('Car Crusher', 'the drawn car (128 px art, shown at 2x)'),
+    },
+    # Batch 3 clean-ups and builds.
+    '3b': {
+        'paddle_built': ('Pong and Breakout', 'g: yours, p: the AI (stretches)'),
+        'mallet_pink': ('Air Hockey', 'c: a with the colouring cleaned'),
+        'bumper': ('Pinball', 'd: c in one teal ramp'),
+        'coin_gold': ('Coin Cascade', 'c: a with the clean star'),
+        'coin_silver': ('Coin Cascade', 'd: c with a clean star'),
+        'arrow': ('Dance', 'c: a with the gaps and red fixed'),
+        'crosshair': ('Aim Trainer', 'c: even arms, redrawn'),
+        'car_state': ('Car Crusher', '1 intact, 2 dented, 3 smashed, 4 wrecked'),
+    },
 }
 INK = (233, 228, 255)
 DIM = (140, 130, 170)
@@ -72,14 +103,17 @@ SPRITES = BATCHES[batch]
 # Optional fourth argument: only these sprites (comma separated), for a follow-up review.
 if len(sys.argv) > 4:
     SPRITES = {k: v for k, v in SPRITES.items() if k in sys.argv[4].split(',')}
+ONLY = sys.argv[5].split(',') if len(sys.argv) > 5 else None
 font = ImageFont.truetype(os.path.join(project, 'assets', 'fonts', 'arcade_empire_pixel.ttf'), 16)
 small = ImageFont.truetype(os.path.join(project, 'assets', 'fonts', 'jersey10.ttf'), 16)
 folder = os.path.join(project, 'assets', 'sprites', 'minigames', 'candidates')
 
 
 def letters(name):
-    return sorted(f[len(name) + 1:-4] for f in os.listdir(folder)
+    found = sorted(f[len(name) + 1:-4] for f in os.listdir(folder)
                   if f.startswith(name + '_') and f.endswith('.png') and len(f) == len(name) + 6)
+    # Optional fifth argument: only these letters, to show just the fixed candidates.
+    return [x for x in found if ONLY is None or x in ONLY or name in ('paddle_built', 'car_state')]
 
 
 PER_ROW = 3
@@ -102,11 +136,16 @@ for i, (name, (game, replaces)) in enumerate(SPRITES.items()):
         sprite = Image.open(os.path.join(folder, '%s_%s.png' % (name, letter))).convert('RGBA')
         cx = x + 8 + (j % PER_ROW) * (56 + 8 + 96 + 16)
         y_off = (j // PER_ROW) * 100
-        tile = Image.new('RGBA', (28, 28), BOARD_BG + (255,))
-        tile.alpha_composite(sprite, ((28 - sprite.width) // 2, (28 - sprite.height) // 2))
+        side = max(28, sprite.width)
+        tile = Image.new('RGBA', (side, side), BOARD_BG + (255,))
+        tile.alpha_composite(sprite, ((side - sprite.width) // 2, (side - sprite.height) // 2))
         sheet.paste(tile.resize((56, 56), Image.NEAREST), (cx, y + 56 + y_off))
-        zoom = sprite.resize((96, 96), Image.NEAREST)
-        sheet.paste(zoom, (cx + 64, y + 52 + y_off), zoom)
+        # Big art is shown whole at 96 px rather than blown up.
+        # Wide art keeps its shape, centred in the 96 px box.
+        k = 96 / max(sprite.size)
+        zoom = sprite.resize((round(sprite.width * k), round(sprite.height * k)),
+                             Image.NEAREST if max(sprite.size) <= 32 else Image.LANCZOS)
+        sheet.paste(zoom, (cx + 64 + (96 - zoom.width) // 2, y + 52 + y_off + (96 - zoom.height) // 2), zoom)
         draw.text((cx + 2, y + 118 + y_off), letter, font=font, fill=DIM)
 sheet.save(out)
 print('wrote %s' % out)

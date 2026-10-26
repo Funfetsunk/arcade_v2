@@ -8,6 +8,9 @@ const FLIP_FRAMES := 12
 const LEFT_PIVOT := Vector2(104, 414)
 const RIGHT_PIVOT := Vector2(256, 414)
 const BALL_R := 6.0
+
+const BUMPER: Texture2D = preload("res://assets/sprites/minigames/bumper.png")
+const BALL: Texture2D = preload("res://assets/sprites/minigames/ball_small.png")
 ## Side funnels sealed right up to the flipper pivots.
 const WALLS := [[Vector2(0, 320), LEFT_PIVOT], [Vector2(BOARD.x, 320), RIGHT_PIVOT]]
 
@@ -133,10 +136,8 @@ func _draw_board() -> void:
 	for t in targets:
 		board.draw_circle(t.at, t.r, Color("3a2a55") if t.cooldown > 0 else Color("06d6a0"))
 	for b in bumpers:
-		var lit := Color("ffd166") if b.glow > 0 else Color("ff006e")
-		board.draw_circle(b.at, b.r, lit)
-		board.draw_circle(b.at, b.r - 6, BG)
-		board.draw_circle(b.at, 5, lit)
+		# Flashes bright when hit.
+		sprite(BUMPER, b.at, 2.0, 0.0, false, Color(1.8, 1.8, 1.8) if b.glow > 0 else Color.WHITE)
 	for wall in WALLS:
 		board.draw_line(wall[0], wall[1], Color("6b4a23"), 4.0)
 	for flipper in [[LEFT_PIVOT, true, _left_flip], [RIGHT_PIVOT, false, _right_flip]]:
@@ -144,7 +145,7 @@ func _draw_board() -> void:
 		board.draw_line(flipper[0], tip, GOLD, 9.0)
 		board.draw_circle(flipper[0], 4.5, GOLD)
 		board.draw_circle(tip, 4.5, GOLD)
-	board.draw_circle(ball, BALL_R, Color.WHITE)
+	sprite(BALL, ball)
 
 
 func _hud_text() -> String:

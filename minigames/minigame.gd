@@ -188,6 +188,13 @@ func sprite(texture: Texture2D, at: Vector2, zoom := 1.0, angle := 0.0, flip := 
 	board.draw_set_transform(Vector2.ZERO)
 
 
+## A sliced sprite (paddles, bricks) stretched to fill a rect: its end caps keep
+## their size and only the middle stretches. Tinted by color.
+func stretched(box: StyleBoxTexture, rect: Rect2, color := Color.WHITE) -> void:
+	box.modulate_color = color
+	board.draw_style_box(box, rect)
+
+
 ## Floating "+10" style pops: call add_pop() while playing, draw_pops() each frame.
 func add_pop(at: Vector2, value: String, frames := 30, color := Color("ffd166")) -> void:
 	_pops.append({ at = at, text = value, t = frames, life = frames, color = color })
