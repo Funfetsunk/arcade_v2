@@ -4,10 +4,10 @@
 [ext_resource type="Script" path="res://minigames/aim/aim.gd" id="2"]
 [ext_resource type="Resource" path="res://assets/sprites/minigames/housings/aim.tres" id="housing"]
 
-[node name="RollScore" instance=ExtResource("1")]
+[node name="SkeeRoll" instance=ExtResource("1")]
 script = ExtResource("2")
-game_name = "Roll & Score"
-star_scores = PackedInt32Array(100, 180, 250)
+game_name = "Skee Roll"
+star_scores = PackedInt32Array(150, 250, 350)
 housing = ExtResource("housing")
 title_icon = "🎳"
-hint = "Tap to fire when the sight is on the bullseye!"
+hint = "Swipe up to roll — land it in the rings!"

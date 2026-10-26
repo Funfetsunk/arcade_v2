@@ -69,6 +69,15 @@ func test_rounds_wait_for_a_tap_then_count_down() -> void:
 	assert_eq(game.stars_for(game.star_scores[1]), 2)
 
 
+func test_skee_rings_score_from_the_edge_in() -> void:
+	var game := (load("res://minigames/aim/aim.tscn") as PackedScene).instantiate() as MiniGame
+	add_child_autofree(game)
+	assert_eq(game.points_at(game.CENTRE), 50, "bullseye")
+	assert_eq(game.points_at(game.CENTRE + Vector2(0, 100)), 10, "outer ring")
+	assert_eq(game.points_at(game.POCKETS[0]), 100, "corner pocket")
+	assert_eq(game.points_at(Vector2(180, 300)), 0, "short of the rings")
+
+
 func test_every_minigame_runs() -> void:
 	var played := 0
 	for def in H.DATA.machines:
