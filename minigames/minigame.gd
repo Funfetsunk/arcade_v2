@@ -179,6 +179,15 @@ func glyph(value: String, at: Vector2, font_size: int, color := Color.WHITE) -> 
 	board.draw_string(font, at + Vector2(-extent.x / 2.0, font.get_ascent(font_size) - extent.y / 2.0), value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
 
+## A sprite centred on a point, optionally scaled, turned (radians) and mirrored.
+## Resets the board's transform afterwards, so call it outside a game's own
+## draw_set_transform blocks.
+func sprite(texture: Texture2D, at: Vector2, zoom := 1.0, angle := 0.0, flip := false, color := Color.WHITE) -> void:
+	board.draw_set_transform(at, angle, Vector2(-zoom if flip else zoom, zoom))
+	board.draw_texture(texture, -texture.get_size() / 2.0, color)
+	board.draw_set_transform(Vector2.ZERO)
+
+
 ## Floating "+10" style pops: call add_pop() while playing, draw_pops() each frame.
 func add_pop(at: Vector2, value: String, frames := 30, color := Color("ffd166")) -> void:
 	_pops.append({ at = at, text = value, t = frames, life = frames, color = color })

@@ -11,6 +11,10 @@ const GIRDERS := [Vector2(398, 386), Vector2(296, 308), Vector2(218, 206)]
 const TOP_Y := 128.0
 const LADDER_FRAMES := 34
 const JUMP_CLEAR := -22.0
+const GORILLA: Texture2D = preload("res://assets/sprites/minigames/gorilla.png")
+const FRIEND: Texture2D = preload("res://assets/sprites/minigames/princess.png")
+const RUNNER: Texture2D = preload("res://assets/sprites/minigames/runner.png")
+const BARREL: Texture2D = preload("res://assets/sprites/minigames/barrel.png")
 
 var lives := 3
 var rescues := 0
@@ -150,8 +154,8 @@ func _draw_board() -> void:
 			x += 24
 	# The top platform and its cast; the gorilla bobs as it throws.
 	board.draw_line(Vector2(BOARD.x / 2 - 70, TOP_Y), Vector2(BOARD.x / 2 + 90, TOP_Y), Color("b3324f"), 8.0)
-	glyph("🦍", Vector2(BOARD.x / 2 + 36, TOP_Y - 18 - (3 if _throw > 10 else 0)), 26)
-	glyph("👸", Vector2(BOARD.x / 2 - 44, TOP_Y - 16), 20)
+	sprite(GORILLA, Vector2(BOARD.x / 2 + 36, TOP_Y - 17 - (3 if _throw > 10 else 0)), 1.25)
+	sprite(FRIEND, Vector2(BOARD.x / 2 - 44, TOP_Y - 15))
 	# Ladders at the climbing ends.
 	var ladder := Color("3ea0c9")
 	for g in 3:
@@ -166,18 +170,14 @@ func _draw_board() -> void:
 			y += 9
 	# Barrels: rolling slatted drums.
 	for b in barrels:
-		board.draw_set_transform(Vector2(b.x, _gy(b.g, b.x) - 11), b.rot)
-		board.draw_circle(Vector2.ZERO, 9, Color("8a5a2a"))
-		board.draw_arc(Vector2.ZERO, 9, 0, TAU, 20, Color("5a3a16"), 2.0)
-		board.draw_line(Vector2(-9, 0), Vector2(9, 0), Color("5a3a16"), 2.0)
-		board.draw_line(Vector2(0, -9), Vector2(0, 9), Color("5a3a16"), 2.0)
-	board.draw_set_transform(Vector2.ZERO)
+		sprite(BARREL, Vector2(b.x, _gy(b.g, b.x) - 11), 1.0, b.rot)
 	if not (_invincible > 0 and (_invincible & 4) != 0):
 		_draw_runner()
 	draw_pops(0.4, 10)
 
 
-## A little runner with pumping legs (or a climbing pose on a ladder).
+## The runner: faces the way it runs, bobs as it goes, and shuffles side to
+## side on a ladder.
 func _draw_runner() -> void:
 	var climbing := _climb > 0
 	var at := Vector2(runner_x, _gy(girder, runner_x) + jump_y) if girder < 3 or not climbing else Vector2.ZERO
@@ -186,19 +186,9 @@ func _draw_runner() -> void:
 		var from := _gy(girder - 1, x)
 		var to := TOP_Y if girder >= 3 else _gy(girder, x)
 		at = Vector2(x, from + (to - from) * (1 - float(_climb) / LADDER_FRAMES))
-	var flip := -1.0 if not climbing and _run_dir(girder) < 0 else 1.0
-	board.draw_set_transform(at, 0.0, Vector2(flip, 1))
-	board.draw_rect(Rect2(-5, -22, 10, 13), Color("3a86ff"))
-	board.draw_circle(Vector2(0, -27), 5, Color("f2c49a"))
-	var leg := Color("1d4f9c")
-	if _airborne:
-		board.draw_line(Vector2(-3, -9), Vector2(-7, -3), leg, 3.0)
-		board.draw_line(Vector2(3, -9), Vector2(7, -3), leg, 3.0)
-	else:
-		var phase := sin((float(_climb) if climbing else runner_x) * 0.45)
-		board.draw_line(Vector2(-2, -9), Vector2(-2 - phase * 5, 0), leg, 3.0)
-		board.draw_line(Vector2(2, -9), Vector2(2 + phase * 5, 0), leg, 3.0)
-	board.draw_set_transform(Vector2.ZERO)
+	var flip := int(_climb / 6.0) % 2 == 1 if climbing else _run_dir(girder) < 0
+	var bob := 0.0 if _airborne or climbing else absf(sin(runner_x * 0.45)) * 1.5
+	sprite(RUNNER, at - Vector2(0, 11 + bob), 1.0, 0.0, flip)
 
 
 func _hud_text() -> String:

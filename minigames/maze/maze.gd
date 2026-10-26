@@ -21,6 +21,9 @@ const DIRS := [Vector2i.RIGHT, Vector2i.LEFT, Vector2i.DOWN, Vector2i.UP]
 const KEYS := { KEY_RIGHT: 0, KEY_LEFT: 1, KEY_DOWN: 2, KEY_UP: 3 }
 const GHOST_HOME := Vector2i(11, 5)
 const SWIPE_MIN := 14.0
+const MUNCHER: Texture2D = preload("res://assets/sprites/minigames/muncher.png")
+const GHOST: Texture2D = preload("res://assets/sprites/minigames/ghost.png")
+const GHOST_SCARED: Texture2D = preload("res://assets/sprites/minigames/ghost_scared.png")
 
 var grid: Array[Array] = []
 var dots_left := 0
@@ -161,23 +164,12 @@ func _draw_board() -> void:
 					board.draw_rect(Rect2(cell + Vector2(TS / 2 - 2, TS / 2 - 2), Vector2(4, 4)), CREAM)
 				"o":
 					board.draw_circle(cell + Vector2(TS, TS) / 2, 6, Color("ffd166"))
-	# The muncher: a chomping wedge.
-	var p := _screen(player)
-	var facing := Vector2(player.dir).angle() if player.dir != Vector2i.ZERO else 0.0
-	var mouth := (sin(_mouth) * 0.5 + 0.5) * 0.7 + 0.05
-	var wedge := PackedVector2Array([p])
-	for i in 21:
-		wedge.append(p + Vector2.from_angle(facing + mouth + (TAU - 2 * mouth) * i / 20.0) * 11)
-	board.draw_colored_polygon(wedge, Color("ffd166"))
-	# The ghost: blue while frightened, flashing as that wears off.
-	var g := _screen(ghost)
-	var color := Color("ff006e")
-	if _fright > 0:
-		color = CREAM if _fright < 60 and (_fright & 8) != 0 else Color("3a86ff")
-	half_disc(g - Vector2(0, 2), 10, color)
-	board.draw_rect(Rect2(g + Vector2(-10, -2), Vector2(20, 10)), color)
-	board.draw_rect(Rect2(g + Vector2(-6, -6), Vector2(4, 4)), Color.WHITE)
-	board.draw_rect(Rect2(g + Vector2(2, -6), Vector2(4, 4)), Color.WHITE)
+	# The muncher: faces left or right as it goes, and bobs as it chomps.
+	var bob := absf(sin(_mouth)) * 1.5
+	sprite(MUNCHER, _screen(player) - Vector2(0, bob), 1.0, 0.0, player.dir == Vector2i.LEFT)
+	# The ghost: scared while frightened, flickering back as that wears off.
+	var scared := _fright > 0 and not (_fright < 60 and (_fright & 8) != 0)
+	sprite(GHOST_SCARED if scared else GHOST, _screen(ghost))
 	draw_pops(0.4, 10)
 
 

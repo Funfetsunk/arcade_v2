@@ -5,6 +5,11 @@ const COLS := 3
 const ROWS := 3
 const SPACING := 70.0
 const GRID_TOP := 150.0
+## Two moles; each pop picks one at random.
+const MOLES: Array[Texture2D] = [preload("res://assets/sprites/minigames/mole_a.png"), preload("res://assets/sprites/minigames/mole_b.png")]
+const MOLE_SCALE := 1.5
+## Sprite rows down to the bottom of the mole's mound.
+const MOLE_ROWS := 22
 
 var holes: Array[Dictionary] = []
 var time := 20 * 60
@@ -15,7 +20,7 @@ func _setup() -> void:
 	var left := (BOARD.x - COLS * SPACING) / 2 + SPACING / 2
 	for r in ROWS:
 		for c in COLS:
-			holes.append({ at = Vector2(left + c * SPACING, GRID_TOP + r * SPACING), up = 0.0, hit = false, pop = 0 })
+			holes.append({ at = Vector2(left + c * SPACING, GRID_TOP + r * SPACING), up = 0.0, hit = false, pop = 0, mole = 0 })
 
 
 func _pointer_pressed(at: Vector2) -> void:
@@ -40,6 +45,7 @@ func _tick() -> void:
 			var h: Dictionary = free.pick_random()
 			h.up = 40 + randf() * 35
 			h.hit = false
+			h.mole = randi() % MOLES.size()
 	for h in holes:
 		if h.up > 0:
 			h.up -= 1
@@ -53,12 +59,13 @@ func _draw_board() -> void:
 		ellipse(at + Vector2(0, 14), Vector2(26, 11), Color("1c1430"))
 		var rise := 0.0
 		if h.up > 0:
-			rise = minf(1.0, h.up / 30.0) * 18.0
-			var body := Color("ff6b6b") if h.hit else Color("a0d468")
-			half_disc(at + Vector2(0, 14 - rise), 16, body)
-			board.draw_rect(Rect2(at.x - 16, at.y + 14 - rise, 32, rise), body)
-			board.draw_rect(Rect2(at.x - 7, at.y + 8 - rise, 3, 3), Color("102018"))
-			board.draw_rect(Rect2(at.x + 4, at.y + 8 - rise, 3, 3), Color("102018"))
+			# Only the part above the hole shows, so the mole rises out of it.
+			rise = minf(1.0, h.up / 30.0)
+			var tex: Texture2D = MOLES[h.mole]
+			var rows := ceilf(MOLE_ROWS * rise)
+			var shown := Vector2(tex.get_width(), rows) * MOLE_SCALE
+			board.draw_texture_rect_region(tex, Rect2(at + Vector2(-shown.x / 2, 16 - shown.y), shown),
+				Rect2(0, 0, tex.get_width(), rows), Color(1, 0.55, 0.55) if h.hit else Color.WHITE)
 		if h.pop > 0:
 			text("+10", Vector2(at.x, at.y - (6 + (12 - h.pop))), 18, Color(Color("ffd166"), h.pop / 12.0))
 

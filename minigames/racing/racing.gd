@@ -8,6 +8,8 @@ const R_IN := 78.0
 const R_MID := (R_OUT + R_IN) / 2
 
 ## Starts at the top of the loop heading clockwise.
+const RACECAR: Texture2D = preload("res://assets/sprites/minigames/racecar.png")
+
 var car := CENTER - Vector2(0, R_MID)
 var heading := 0.0
 var speed := 0.0
@@ -102,13 +104,7 @@ func _draw_board() -> void:
 	for s in skids:
 		board.draw_rect(Rect2(s.at - Vector2(2, 2), Vector2(4, 4)), Color(40 / 255.0, 30 / 255.0, 16 / 255.0, 0.5))
 	# The car.
-	board.draw_set_transform(car, heading)
-	var tyre := Color("16161e")
-	for at in [Vector2(-10, -8), Vector2(-10, 4), Vector2(5, -8), Vector2(5, 4)]:
-		board.draw_rect(Rect2(at, Vector2(6, 4)), tyre)
-	board.draw_rect(Rect2(-12, -5, 24, 10), GOLD)
-	board.draw_rect(Rect2(2, -4, 7, 8), Color("1c1430"))
-	board.draw_set_transform(Vector2.ZERO)
+	sprite(RACECAR, car, 1.0, heading)
 	draw_pops(0.0, 13)
 
 

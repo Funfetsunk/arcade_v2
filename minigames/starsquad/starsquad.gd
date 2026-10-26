@@ -3,6 +3,8 @@ extends MiniGame
 ## waves. Drag to fly, the ship fires on its own; get clipped and it's over. 30 s.
 
 const SHIP_Y := BOARD.y - 36
+const SAUCER: Texture2D = preload("res://assets/sprites/minigames/saucer.png")
+const FIGHTER: Texture2D = preload("res://assets/sprites/minigames/fighter.png")
 
 var ship_x := BOARD.x / 2
 var enemies: Array[Dictionary] = []
@@ -96,9 +98,8 @@ func _draw_board() -> void:
 		board.draw_rect(Rect2(s.x, s.y, s.s, s.s), Color("39395a"))
 	for e in enemies:
 		if e.alive:
-			glyph("🛸", Vector2(e.x, e.y), 18)
-	board.draw_colored_polygon(PackedVector2Array([Vector2(ship_x, SHIP_Y - 13), Vector2(ship_x - 12, SHIP_Y + 8),
-		Vector2(ship_x, SHIP_Y + 3), Vector2(ship_x + 12, SHIP_Y + 8)]), Color("3a86ff"))
+			sprite(SAUCER, Vector2(e.x, e.y))
+	sprite(FIGHTER, Vector2(ship_x, SHIP_Y - 2))
 	for b in bullets:
 		board.draw_rect(Rect2(b.x - 1.5, b.y - 6, 3, 10), Color("ffd166"))
 	draw_pops(0.4, 10)

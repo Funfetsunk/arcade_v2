@@ -9,6 +9,9 @@ const BODY := [Vector2(-120, 26), Vector2(-120, -8), Vector2(-70, -14), Vector2(
 	Vector2(52, -44), Vector2(78, -14), Vector2(120, -8), Vector2(120, 26)]
 const STEEL := Color("9aa0a8")
 
+const FIST: Texture2D = preload("res://assets/sprites/minigames/fist.png")
+const BOOM: Texture2D = preload("res://assets/sprites/minigames/boom.png")
+
 var wrecks := 0
 var time := 20 * 60
 var car := {}
@@ -111,7 +114,7 @@ func _draw_board() -> void:
 		else:
 			board.draw_rect(Rect2(p.at - Vector2(5, 3), Vector2(10, 6)), STEEL)
 	if not _fist.is_empty():
-		glyph("💥" if _fist.t > 4 else "👊", _fist.at, 34)
+		sprite(BOOM if _fist.t > 4 else FIST, _fist.at, 1.5)
 	# The car's health bar.
 	board.draw_rect(Rect2(50, 60, BOARD.x - 100, 14), Color("241a0e"))
 	var fill := Color("06d6a0") if f > 0.5 else GOLD if f > 0.25 else Color("ff006e")

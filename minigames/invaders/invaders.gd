@@ -7,6 +7,8 @@ const ROWS := 4
 const AW := 36.0
 const AH := 30.0
 const SHIP_Y := BOARD.y - 36
+const ALIEN: Texture2D = preload("res://assets/sprites/minigames/alien.png")
+const CANNON: Texture2D = preload("res://assets/sprites/minigames/cannon.png")
 
 var aliens: Array[Dictionary] = []
 var direction := 1.0
@@ -89,9 +91,8 @@ func _draw_board() -> void:
 		board.draw_rect(Rect2(s.x, s.y, s.z, s.z), Color("39395a"))
 	for a in aliens:
 		if a.alive:
-			glyph("👾", a.at, 20)
-	var ship := PackedVector2Array([Vector2(ship_x, SHIP_Y - 12), Vector2(ship_x - 13, SHIP_Y + 8), Vector2(ship_x + 13, SHIP_Y + 8)])
-	board.draw_colored_polygon(ship, Color("06d6a0"))
+			sprite(ALIEN, a.at)
+	sprite(CANNON, Vector2(ship_x, SHIP_Y - 1))
 	for b in bullets:
 		board.draw_rect(Rect2(b.x - 1.5, b.y - 6, 3, 10), Color("ffd166"))
 	draw_pops()
