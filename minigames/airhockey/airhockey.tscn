@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/airhockey/airhockey.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/airhockey.tres" id="housing"]
 
 [node name="AirHockey" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Air Hockey"
+star_scores = PackedInt32Array(80, 160, 240)
+housing = ExtResource("housing")
 title_icon = "🏒"
 hint = "Drag your mallet. First to 5!"

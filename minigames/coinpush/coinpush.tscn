@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/coinpush/coinpush.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/coinpush.tres" id="housing"]
 
 [node name="CoinCascade" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Coin Cascade"
+star_scores = PackedInt32Array(100, 250, 500)
+housing = ExtResource("housing")
 title_icon = "🪙"
 hint = "Tap to drop coins — quit banks your score!"

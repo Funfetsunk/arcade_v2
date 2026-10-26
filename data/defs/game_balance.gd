@@ -66,6 +66,16 @@ extends Resource
 @export var aging_floor: float = 40.0
 @export var refurbish_cost_rate: float = 0.25
 
+@export_group("Minigames")
+## Paid plays per cabinet per day; after that a play is practice (no payout).
+@export var minigame_free_plays: int = 3
+## Payout bonus per Tune-Up level of the cabinet.
+@export var minigame_level_bonus: float = 0.25
+## Paid once ever, the first time a minigame earns three stars.
+@export var minigame_three_star_bonus: int = 250
+## Extra daily plays per star of your best on that cabinet (it draws a crowd).
+@export var minigame_star_popularity: float = 0.05
+
 @export_group("Tickets")
 @export var tickets_per_play: int = 4
 ## Average tickets one redeemed prize represents.

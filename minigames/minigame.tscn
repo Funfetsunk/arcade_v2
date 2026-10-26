@@ -48,6 +48,23 @@ clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="SideLeft" type="TextureRect" parent="Layout/BoardFrame"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SideRight" type="TextureRect" parent="Layout/BoardFrame"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+flip_h = true
+
 [node name="Board" type="Control" parent="Layout/BoardFrame"]
 unique_name_in_owner = true
 clip_contents = true
@@ -55,6 +72,23 @@ layout_mode = 0
 offset_right = 360.0
 offset_bottom = 460.0
 mouse_default_cursor_shape = 3
+
+[node name="Housing" type="TextureRect" parent="Layout/BoardFrame"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Marquee" type="Label" parent="Layout/BoardFrame"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+theme_type_variation = &"HeaderLabel"
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
 
 [node name="Hint" type="Label" parent="Layout"]
 unique_name_in_owner = true
@@ -69,3 +103,13 @@ custom_minimum_size = Vector2(110, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "✕ QUIT"
+
+[node name="Score" type="Label" parent="Layout/BoardFrame"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+theme_type_variation = &"HeaderLabel"
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true

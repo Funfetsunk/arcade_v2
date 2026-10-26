@@ -15,6 +15,60 @@ func test_bonus_rule() -> void:
 	assert_eq(actions.award_minigame(s, "Test", 0), 0)
 
 
+func test_bests_and_stars_are_kept() -> void:
+	var meta := MetaProgress.new()
+	var actions := Actions.new(H.DATA, meta, Rng.new(1), null)
+	assert_true(actions.record_minigame(&"pong", 120, 1), "first score is a best")
+	assert_false(actions.record_minigame(&"pong", 90, 2), "lower score is not")
+	assert_eq(meta.minigame_bests[&"pong"], 120)
+	assert_eq(meta.minigame_stars[&"pong"], 2, "stars keep the most ever earned")
+
+
+func test_three_paid_plays_a_day_then_practice() -> void:
+	var s := H.make_state({ cash = 0.0 })
+	var actions := Actions.new(H.DATA, MetaProgress.new(), Rng.new(1), null)
+	var m := MachineInstance.new()
+	m.def = H.DATA.machine(&"pac")
+	for i in 3:
+		assert_true(actions.start_minigame_play(s, m), "paid play %d" % (i + 1))
+	assert_false(actions.start_minigame_play(s, m), "fourth is practice")
+	var result := actions.finish_minigame(s, m, &"maze", "Dot Maze", 100, 1, false)
+	assert_eq(result.bonus, 0, "practice pays nothing")
+	assert_eq(m.best_score, 100, "but the cabinet keeps your best")
+	s.day += 1
+	assert_eq(actions.minigame_plays_left(s, m), 3, "plays come back the next day")
+
+
+func test_tuned_up_cabinets_pay_more_and_first_three_stars_pay_once() -> void:
+	var s := H.make_state({ cash = 0.0 })
+	var actions := Actions.new(H.DATA, MetaProgress.new(), Rng.new(1), null)
+	assert_eq(actions.award_minigame(s, "Test", 100, 2), 60, "+25% per Tune-Up level")
+	var m := MachineInstance.new()
+	m.def = H.DATA.machine(&"pac")
+	var first := actions.finish_minigame(s, m, &"maze", "Dot Maze", 500, 3, true)
+	assert_eq(first.star_bonus, H.DATA.balance.minigame_three_star_bonus)
+	var again := actions.finish_minigame(s, m, &"maze", "Dot Maze", 500, 3, true)
+	assert_eq(again.star_bonus, 0, "only the first time")
+	assert_eq(m.best_stars, 3)
+
+
+func test_rounds_wait_for_a_tap_then_count_down() -> void:
+	var game := (H.DATA.machine(&"pac").minigame.instantiate() as MiniGame)
+	add_child_autofree(game)
+	for i in 30:
+		game._physics_process(1.0 / 60.0)
+	assert_eq(game.stage, MiniGame.Stage.READY, "nothing starts until a tap")
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.pressed = true
+	game._on_board_input(press)
+	assert_eq(game.stage, MiniGame.Stage.COUNTDOWN)
+	for i in MiniGame.COUNT_STEP * 3:
+		game._physics_process(1.0 / 60.0)
+	assert_eq(game.stage, MiniGame.Stage.PLAYING)
+	assert_eq(game.stars_for(game.star_scores[1]), 2)
+
+
 func test_every_minigame_runs() -> void:
 	var played := 0
 	for def in H.DATA.machines:

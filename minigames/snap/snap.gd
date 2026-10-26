@@ -74,7 +74,7 @@ func _draw_board() -> void:
 func _draw_results() -> void:
 	const SW := 50.0
 	var x := BOARD.x / 2 - (SHOTS * SW + 16) / 2
-	var y := BOARD.y / 2 + 52
+	var y := BOARD.y / 2 + 84
 	board.draw_rect(Rect2(x, y, SHOTS * SW + 16, 64), CREAM)
 	for i in results.size():
 		var frame := Rect2(x + 8 + i * SW, y + 8, SW - 6, 48)

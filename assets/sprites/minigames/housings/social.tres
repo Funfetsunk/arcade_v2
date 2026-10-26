@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MinigameHousing" format=3]
+
+[ext_resource type="Script" path="res://minigames/minigame_housing.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/minigames/housings/social.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+texture = ExtResource("2")
+screen = Rect2i(46, 32, 360, 460)

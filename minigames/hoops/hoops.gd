@@ -87,7 +87,7 @@ func _tick() -> void:
 	if ball.y > BOARD.y + 30:
 		if not ball_scored:
 			streak = 0
-			add_pop(Vector2(HOME.x, BOARD.y - 120), "MISS", 24, Color("888888"))
+			miss(Vector2(HOME.x, BOARD.y - 120), 24)
 		ball = HOME
 		ball_vel = Vector2.ZERO
 		ball_live = false

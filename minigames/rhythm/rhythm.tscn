@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/rhythm/rhythm.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/neon.tres" id="housing"]
 
 [node name="RiffMaster" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Riff Master"
+star_scores = PackedInt32Array(150, 300, 450)
+housing = ExtResource("housing")
 title_icon = "🎸"
 hint = "Tap notes on the line — hold the long ones!"

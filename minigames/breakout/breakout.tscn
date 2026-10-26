@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/breakout/breakout.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/classic.tres" id="housing"]
 
 [node name="BrickSmash" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Brick Smash"
+star_scores = PackedInt32Array(120, 250, 450)
+housing = ExtResource("housing")
 title_icon = "🧱"
 hint = "Move the paddle: drag · mouse · ← →"

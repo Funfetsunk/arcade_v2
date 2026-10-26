@@ -1,10 +1,17 @@
 class_name Cabinet
 extends Node2D
-## A machine on the floor: its sprite for the current facing, dimmed when broken.
+## A machine on the floor: its sprite for the current facing, dimmed when broken,
+## with your best minigame score on a little badge above it once you've set one.
 
 ## Machines without art yet borrow this one's sprites, tinted by genre.
 const PLACEHOLDER: MachineDef = preload("res://data/catalogs/machines/space_inv.tres")
 const BROKEN_TINT := Color(0.55, 0.4, 0.45)
+const BADGE_FONT: Font = preload("res://assets/fonts/jersey10.ttf")
+const BADGE_STAR: Texture2D = preload("res://assets/sprites/minigames/prize_star.png")
+const BADGE_SIZE := 10
+
+## Each texture's visible top edge (its art has transparent padding), cached.
+static var _tops: Dictionary[Texture2D, int] = {}
 
 var machine: MachineInstance
 var selected := false:
@@ -49,3 +56,23 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, width * 0.5, Color(0, 0, 0, 0.35))
 	if selected:
 		draw_arc(Vector2.ZERO, width * 0.62, 0.0, TAU, 32, Color("ffb703"), 3.0)
+	draw_set_transform(Vector2.ZERO)
+	if machine and machine.best_score > 0 and sprite.texture:
+		_draw_badge(Vector2(0, sprite.offset.y - sprite.texture.get_height() / 2.0 + _visible_top(sprite.texture) - 7))
+
+
+func _visible_top(texture: Texture2D) -> int:
+	if not _tops.has(texture):
+		_tops[texture] = texture.get_image().get_used_rect().position.y
+	return _tops[texture]
+
+
+## Your best score with a star, on a dark pill centred on `at`.
+func _draw_badge(at: Vector2) -> void:
+	var label := str(machine.best_score)
+	var text_w := BADGE_FONT.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, BADGE_SIZE).x
+	var w := text_w + 14
+	draw_rect(Rect2(at - Vector2(w / 2, 6), Vector2(w, 11)), Color(0.04, 0.03, 0.08, 0.85))
+	draw_texture_rect(BADGE_STAR, Rect2(at - Vector2(w / 2 - 1, 5), Vector2(9, 9)), false,
+			Color.WHITE if machine.best_stars > 0 else Color(0.5, 0.5, 0.6))
+	draw_string(BADGE_FONT, at + Vector2(-w / 2 + 11, 3), label, HORIZONTAL_ALIGNMENT_LEFT, -1, BADGE_SIZE, Color("ffd166"))

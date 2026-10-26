@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MinigameHousing" format=3]
+
+[ext_resource type="Script" path="res://minigames/minigame_housing.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/minigames/housings/pinball.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+texture = ExtResource("2")
+screen = Rect2i(43, 32, 360, 460)
+title_rect = Rect2i(52, 0, 349, 12)
+title_color = Color(0.300, 0.120, 0.050, 1)

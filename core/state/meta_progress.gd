@@ -12,6 +12,9 @@ const MAX_LEADERBOARD := 25
 @export var leaderboard: Array[ScoreEntry] = []
 ## Daily challenge date ("YYYY-MM-DD") -> best takings that day.
 @export var daily_bests: Dictionary[String, int] = {}
+## Each minigame's best score and most stars (0-3), keyed by its scene name.
+@export var minigame_bests: Dictionary[StringName, int] = {}
+@export var minigame_stars: Dictionary[StringName, int] = {}
 @export var tutorial_done: bool
 ## Sound settings (the original kept these in localStorage).
 @export var sound_muted: bool

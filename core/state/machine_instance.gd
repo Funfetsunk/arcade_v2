@@ -30,10 +30,29 @@ const MAX_DAY_STATS := 60
 @export var zone_mul: float = 1.0
 ## Progressive jackpot pot (jackpot machines only).
 @export var jackpot_pot: float
+## Your best minigame score on this cabinet this run, and its stars; shown above
+## the cabinet, and the stars make it more popular.
+@export var best_score: int
+@export var best_stars: int
+## Paid minigame plays used, and the day they were used on.
+@export var plays_used: int
+@export var plays_day: int = -1
 
 
 func is_broken() -> bool:
 	return hp <= 0.0
+
+
+## Paid minigame plays left today, out of `free_plays`.
+func plays_left(day: int, free_plays: int) -> int:
+	return maxi(0, free_plays - (plays_used if plays_day == day else 0))
+
+
+func use_play(day: int) -> void:
+	if plays_day != day:
+		plays_day = day
+		plays_used = 0
+	plays_used += 1
 
 
 func record_day(day: int, earn: int, plays: int) -> void:

@@ -106,7 +106,9 @@ func run_day(state: GameState) -> void:
 			continue
 
 		var utilisation := minf(1.0, visitors / (cat.popularity * 4.0))
-		var plays_today := GameMath.js_round(cat.popularity * utilisation)
+		# A cabinet with your starred best on it draws extra players.
+		var champ_mul := 1.0 + data.balance.minigame_star_popularity * m.best_stars
+		var plays_today := GameMath.js_round(cat.popularity * utilisation * champ_mul)
 
 		var earn := 0.0
 		var vend_uses := 0.0

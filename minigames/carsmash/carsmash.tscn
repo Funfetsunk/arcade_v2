@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/carsmash/carsmash.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/steel.tres" id="housing"]
 
 [node name="CarCrusher" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Car Crusher"
+star_scores = PackedInt32Array(200, 400, 600)
+housing = ExtResource("housing")
 title_icon = "🥊"
 hint = "Mash-tap to wreck the car!"

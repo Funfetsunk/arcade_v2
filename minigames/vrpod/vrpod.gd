@@ -52,6 +52,7 @@ func _tick() -> void:
 			else:
 				hits += 1
 				_hurt = 18
+				play_miss()
 				add_pop(CENTER - Vector2(0, 30), "HIT!", 30, Color("ff006e"))
 	rings = rings.filter(func(r: Dictionary) -> bool: return r.z < 1.3)
 	if hits >= 3:

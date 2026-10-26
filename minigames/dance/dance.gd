@@ -54,7 +54,7 @@ func _tap(lane: int) -> void:
 		add_pop(Vector2(_lane_x(lane), HIT_Y + 44), "GOOD", 26, GOLD)
 	else:
 		combo = 0
-		add_pop(Vector2(_lane_x(lane), HIT_Y + 44), "MISS", 20, Color("888888"))
+		miss(Vector2(_lane_x(lane), HIT_Y + 44), 20)
 	best_combo = maxi(best_combo, combo)
 
 
@@ -72,7 +72,7 @@ func _tick() -> void:
 		if not a.hit and a.y < HIT_Y - 28:
 			a.hit = true
 			combo = 0
-			add_pop(Vector2(_lane_x(a.lane), HIT_Y + 44), "MISS", 20, Color("888888"))
+			miss(Vector2(_lane_x(a.lane), HIT_Y + 44), 20)
 	arrows = arrows.filter(func(a: Dictionary) -> bool: return a.y > 40)
 	for i in LANES:
 		_glow[i] = maxi(0, _glow[i] - 1)

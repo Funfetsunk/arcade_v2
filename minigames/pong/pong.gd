@@ -1,11 +1,14 @@
 extends MiniGame
 ## Paddle Blip: drag the bottom paddle and beat the AI. Every paddle hit speeds
-## the ball up; a point resets the pace. First to 5.
+## the ball up; a point resets the pace. Every fifth return grows your paddle.
+## First to 5.
 
 const PW := 70.0
 const PH := 11.0
 const BASE_SPEED := 4.0
 const MAX_SPEED := 8.5
+const GROW := 10.0
+const MAX_PW := 110.0
 
 const PADDLE_ME: StyleBoxTexture = preload("res://assets/sprites/minigames/paddle_gold.tres")
 const PADDLE_AI: StyleBoxTexture = preload("res://assets/sprites/minigames/paddle_pink.tres")
@@ -13,6 +16,8 @@ const BALL: Texture2D = preload("res://assets/sprites/minigames/ball_small.png")
 
 var me := Vector2(BOARD.x / 2 - PW / 2, BOARD.y - 34)
 var ai := Vector2(BOARD.x / 2 - PW / 2, 24)
+var me_w := PW
+var returns := 0
 var speed := BASE_SPEED
 var ball := {}
 var mine := 0
@@ -42,7 +47,15 @@ func _rescale() -> void:
 
 
 func _pointer_moved(at: Vector2) -> void:
-	me.x = clampf(at.x - PW / 2, 0, BOARD.x - PW)
+	me.x = clampf(at.x - me_w / 2, 0, BOARD.x - me_w)
+
+
+## Widens your paddle about its centre.
+func _grow() -> void:
+	var grown := minf(MAX_PW, me_w + GROW)
+	me.x = clampf(me.x - (grown - me_w) / 2, 0, BOARD.x - grown)
+	me_w = grown
+	add_pop(Vector2(me.x + me_w / 2, me.y - 16), "WIDER!", 40)
 
 
 func _tick() -> void:
@@ -59,11 +72,14 @@ func _tick() -> void:
 		v.x *= -1
 	ball.pos = p
 	ball.vel = v
-	if ball.vel.y > 0 and p.y + r >= me.y and p.y + r <= me.y + PH + 8 and p.x >= me.x - 4 and p.x <= me.x + PW + 4:
-		ball.vel = Vector2((p.x - (me.x + PW / 2)) / (PW / 2) * speed, -absf(ball.vel.y))
+	if ball.vel.y > 0 and p.y + r >= me.y and p.y + r <= me.y + PH + 8 and p.x >= me.x - 4 and p.x <= me.x + me_w + 4:
+		ball.vel = Vector2((p.x - (me.x + me_w / 2)) / (me_w / 2) * speed, -absf(ball.vel.y))
 		speed = minf(MAX_SPEED, speed + 0.3)
 		_rescale()
 		score += 2
+		returns += 1
+		if returns % 5 == 0 and me_w < MAX_PW:
+			_grow()
 	if ball.vel.y < 0 and p.y - r <= ai.y + PH and p.y - r >= ai.y - 8 and p.x >= ai.x - 4 and p.x <= ai.x + PW + 4:
 		ball.vel = Vector2((p.x - (ai.x + PW / 2)) / (PW / 2) * speed, absf(ball.vel.y))
 		speed = minf(MAX_SPEED, speed + 0.3)
@@ -74,6 +90,7 @@ func _tick() -> void:
 		ball = _serve(1)
 	elif p.y > BOARD.y + 10:
 		theirs += 1
+		play_miss()
 		score = maxi(0, score - 10)
 		ball = _serve(-1)
 	if mine >= 5 or theirs >= 5:
@@ -85,8 +102,9 @@ func _tick() -> void:
 func _draw_board() -> void:
 	board.draw_dashed_line(Vector2(0, BOARD.y / 2), Vector2(BOARD.x, BOARD.y / 2), Color("2a2a44"), 1.0, 6.0)
 	stretched(PADDLE_AI, Rect2(ai, Vector2(PW, PH)))
-	stretched(PADDLE_ME, Rect2(me, Vector2(PW, PH)))
+	stretched(PADDLE_ME, Rect2(me, Vector2(me_w, PH)))
 	sprite(BALL, ball.pos)
+	draw_pops(0.4, 10)
 	text(str(theirs), Vector2(BOARD.x / 2, BOARD.y / 2 - 14), 14, DIM)
 	text(str(mine), Vector2(BOARD.x / 2, BOARD.y / 2 + 26), 14, DIM)
 

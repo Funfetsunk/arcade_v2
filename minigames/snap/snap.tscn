@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/snap/snap.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/snap.tres" id="housing"]
 
 [node name="SnapBooth" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Snap Booth"
+star_scores = PackedInt32Array(100, 175, 225)
+housing = ExtResource("housing")
 title_icon = "📸"
 hint = "Tap when the photo is sharp!"

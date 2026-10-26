@@ -165,14 +165,55 @@ func reinforce_machine(state: GameState, m: MachineInstance) -> bool:
 	return true
 
 
-## Playing a cabinet's minigame pays a bonus and a little buzz. Returns the bonus.
-func award_minigame(state: GameState, game_name: String, score: int) -> int:
-	var bonus := mini(180, GameMath.js_round(score * 0.4))
+## Paid minigame plays this cabinet has left today.
+func minigame_plays_left(state: GameState, m: MachineInstance) -> int:
+	return m.plays_left(state.day, data.balance.minigame_free_plays)
+
+
+## A round is starting: uses one of today's paid plays. False means it's practice.
+func start_minigame_play(state: GameState, m: MachineInstance) -> bool:
+	if minigame_plays_left(state, m) <= 0:
+		return false
+	m.use_play(state.day)
+	return true
+
+
+## A round on a cabinet ended. Pays the bonus (paid plays only), the one-off
+## three-star bonus, and keeps the bests. Returns { bonus, star_bonus }.
+func finish_minigame(state: GameState, m: MachineInstance, key: StringName, game_name: String, score: int, stars: int, paid: bool) -> Dictionary:
+	var bonus := award_minigame(state, game_name, score, m.tune_up_level) if paid else 0
+	if not paid:
+		_log("🎮 Practice on %s — scored %d (no plays left today)." % [game_name, score], Sim.LogKind.INFO)
+	var star_bonus := 0
+	if stars >= 3 and meta.minigame_stars.get(key, 0) < 3:
+		star_bonus = data.balance.minigame_three_star_bonus
+		state.cash += star_bonus
+		_log("⭐ First three stars on %s! +%s" % [game_name, GameMath.money(star_bonus)], Sim.LogKind.GOOD)
+	record_minigame(key, score, stars)
+	if score > m.best_score:
+		m.best_score = score
+	m.best_stars = maxi(m.best_stars, stars)
+	return { bonus = bonus, star_bonus = star_bonus }
+
+
+## Playing a cabinet's minigame pays a bonus and a little buzz, more on a tuned-up
+## cabinet. Returns the bonus.
+func award_minigame(state: GameState, game_name: String, score: int, level := 0) -> int:
+	var bonus := GameMath.js_round(mini(180, GameMath.js_round(score * 0.4)) * (1.0 + data.balance.minigame_level_bonus * level))
 	if bonus > 0:
 		state.cash += bonus
 		state.buzz += GameMath.js_round(score / 20.0)
 	_log("🎮 You played %s — scored %d, earned %s!" % [game_name, score, GameMath.money(bonus)], Sim.LogKind.GOOD)
 	return bonus
+
+
+## Keeps a minigame's best score and most stars across runs. True on a new best.
+func record_minigame(key: StringName, score: int, stars: int) -> bool:
+	meta.minigame_stars[key] = maxi(stars, meta.minigame_stars.get(key, 0))
+	if score <= meta.minigame_bests.get(key, 0):
+		return false
+	meta.minigame_bests[key] = score
+	return true
 
 
 # ── Stock ──

@@ -134,6 +134,7 @@ func _move_barrels() -> void:
 		var dx := absf(b.x - runner_x)
 		if dx < 12 and jump_y > JUMP_CLEAR and _invincible <= 0:
 			lives -= 1
+			play_miss()
 			add_pop(Vector2(runner_x, _gy(girder, runner_x) - 56), "OUCH!", 44, Color("ff006e"))
 			if lives > 0:
 				_respawn()

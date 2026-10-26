@@ -119,6 +119,7 @@ func _tick() -> void:
 	ball_v = ball_v.limit_length(9)
 	if ball.y - BALL_R > BOARD.y:
 		balls -= 1
+		play_miss()
 		if balls <= 0:
 			end_round("DRAINED!", score >= 150)
 		else:

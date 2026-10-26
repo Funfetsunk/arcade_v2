@@ -28,7 +28,7 @@ func _pointer_pressed(at: Vector2) -> void:
 			score = maxi(0, score + points)
 			add_pop(t.at, ("+" if points > 0 else "") + str(points), 30, Color("ff006e") if t.civilian else Color("ffd166"))
 			return
-	add_pop(at, "MISS", 18, Color("888888"))
+	miss(at, 18)
 
 
 func _tick() -> void:

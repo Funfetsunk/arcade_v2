@@ -80,7 +80,7 @@ func _grab() -> void:
 	elif not best.is_empty():
 		add_pop(Vector2(claw.x, FLOOR - 40), "SLIPPED!", 36, Color("888888"))
 	else:
-		add_pop(Vector2(claw.x, FLOOR - 40), "MISS", 30, Color("888888"))
+		miss(Vector2(claw.x, FLOOR - 40))
 
 
 func _draw_board() -> void:

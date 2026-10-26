@@ -48,6 +48,7 @@ func _tick() -> void:
 		if _out > 50:
 			_out = 0
 			strikes += 1
+			play_miss()
 			add_pop(Vector2(BOARD.x / 2, 200), "STRIKE!", 40, Color("ff006e"))
 			if strikes >= 3:
 				end_round("EJECTED!", false)

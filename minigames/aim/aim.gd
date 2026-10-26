@@ -26,6 +26,8 @@ func _pointer_pressed(_at: Vector2) -> void:
 			break
 	score += points
 	add_pop(at, "+%d" % points if points else "MISS", 30, Color("ffd166") if points else Color("888888"))
+	if not points:
+		play_miss()
 	balls -= 1
 	if balls <= 0:
 		end_round("FINISHED!", true)

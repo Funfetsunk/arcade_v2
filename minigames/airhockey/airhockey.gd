@@ -83,6 +83,7 @@ func _tick() -> void:
 		if puck.y + PUCK_R > BOARD.y:
 			if in_goal:
 				theirs += 1
+				play_miss()
 				score = maxi(0, score - 10)
 				_serve()
 			else:
@@ -105,11 +106,7 @@ func _finish() -> void:
 
 
 func _draw_board() -> void:
-	board.draw_rect(Rect2(Vector2.ZERO, BOARD), Color("0e1626"))
-	board.draw_line(Vector2(0, BOARD.y / 2), Vector2(BOARD.x, BOARD.y / 2), Color("24365a"), 2.0)
-	board.draw_arc(BOARD / 2, 40, 0, TAU, 32, Color("24365a"), 2.0)
-	board.draw_line(Vector2(BOARD.x / 2 - GOAL, 2), Vector2(BOARD.x / 2 + GOAL, 2), Color("ff006e"), 2.0)
-	board.draw_line(Vector2(BOARD.x / 2 - GOAL, BOARD.y - 2), Vector2(BOARD.x / 2 + GOAL, BOARD.y - 2), GOLD, 2.0)
+	# The table, its markings and the goals are the housing's art.
 	sprite(MALLET_AI, ai, 2.0)
 	sprite(MALLET_ME, me, 2.0)
 	sprite(PUCK, puck)

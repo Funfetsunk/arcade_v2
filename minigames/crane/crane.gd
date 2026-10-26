@@ -68,7 +68,7 @@ func _land() -> void:
 		score += 10
 		add_pop(crane, "+10", 36)
 	else:
-		add_pop(crane, "MISS", 30, Color("888888"))
+		miss(crane)
 	drops -= 1
 	if drops <= 0 or prizes.is_empty():
 		end_round("PRIZES WON!" if score > 0 else "NO LUCK", score > 0)

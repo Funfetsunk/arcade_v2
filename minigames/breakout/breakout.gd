@@ -1,6 +1,7 @@
 extends MiniGame
 ## Brick Smash: knock out every brick with the ball. Drag (or hover) to move the
 ## paddle, or use ← →. Three lives; clearing the wall adds 50 per life left.
+## Every fifth paddle hit grows the paddle.
 
 const COLS := 8
 const ROWS := 5
@@ -12,11 +13,14 @@ const COLORS := [Color("ff006e"), Color("ff8c42"), Color("ffb703"), Color("06d6a
 const BRICK: StyleBoxTexture = preload("res://assets/sprites/minigames/brick.tres")
 const PADDLE: StyleBoxTexture = preload("res://assets/sprites/minigames/paddle_gold.tres")
 const BALL: Texture2D = preload("res://assets/sprites/minigames/ball_small.png")
+const GROW := 10.0
+const MAX_PADDLE := 110.0
 
 var bricks: Array[Dictionary] = []
 var paddle := Rect2(BOARD.x / 2 - 33, BOARD.y - 26, 66, 11)
 var ball := {}
 var lives := 3
+var hits := 0
 var started := false
 var _left := false
 var _right := false
@@ -49,6 +53,14 @@ func _key(event: InputEventKey) -> void:
 				started = true
 
 
+## Widens the paddle about its centre.
+func _grow() -> void:
+	var grown := minf(MAX_PADDLE, paddle.size.x + GROW)
+	paddle.position.x = clampf(paddle.position.x - (grown - paddle.size.x) / 2, 0, BOARD.x - grown)
+	paddle.size.x = grown
+	add_pop(Vector2(paddle.get_center().x, paddle.position.y - 16), "WIDER!", 40)
+
+
 func _tick() -> void:
 	if _left:
 		paddle.position.x = maxf(0, paddle.position.x - 6)
@@ -72,7 +84,11 @@ func _tick() -> void:
 	# Paddle bounce, angled by where it hits.
 	if v.y > 0 and p.y + r >= paddle.position.y and p.y + r <= paddle.end.y + 8 and p.x >= paddle.position.x - 4 and p.x <= paddle.end.x + 4:
 		v.y = -absf(v.y)
+		play_hit()
 		v.x = (p.x - paddle.get_center().x) / (paddle.size.x / 2) * 4.2
+		hits += 1
+		if hits % 5 == 0 and paddle.size.x < MAX_PADDLE:
+			_grow()
 	for b in bricks:
 		var rect: Rect2 = b.rect
 		if b.alive and p.x + r > rect.position.x and p.x - r < rect.end.x and p.y + r > rect.position.y and p.y - r < rect.end.y:
@@ -84,6 +100,7 @@ func _tick() -> void:
 	ball.vel = v
 	if p.y - r > BOARD.y:
 		lives -= 1
+		play_miss()
 		if lives <= 0:
 			end_round("GAME OVER", false)
 			return
@@ -100,6 +117,7 @@ func _draw_board() -> void:
 			stretched(BRICK, b.rect, b.color)
 	stretched(PADDLE, paddle)
 	sprite(BALL, ball.pos)
+	draw_pops(0.4, 10)
 	if not started:
 		text("move to launch", Vector2(BOARD.x / 2, BOARD.y - 72), 10, DIM)
 

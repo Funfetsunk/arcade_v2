@@ -155,11 +155,25 @@ func play_minigame(m: MachineInstance) -> void:
 	sheet.close()
 	var game := m.def.minigame.instantiate() as MiniGame
 	game.name = "MiniGame"
+	var key := StringName(m.def.minigame.resource_path.get_file().get_basename())
+	game.best = Game.meta.minigame_bests.get(key, 0)
+	game.best_stars = Game.meta.minigame_stars.get(key, 0)
+	game.plays_left = Game.actions.minigame_plays_left(Game.state, m)
+	var paid := [false]
+	game.round_started.connect(func() -> void:
+		paid[0] = Game.actions.start_minigame_play(Game.state, m)
+		game.practice = not paid[0])
 	game.finished.connect(func(score: int) -> void:
-		game.bonus = Game.actions.award_minigame(Game.state, game.game_name, score)
-		Sfx.goal()
+		var result := Game.actions.finish_minigame(Game.state, m, key, game.game_name, score, game.stars_earned, paid[0])
+		game.bonus = result.bonus
+		game.star_bonus = result.star_bonus
 		Game.save_game()
+		EventBus.machines_changed.emit()
 		EventBus.state_changed.emit())
+	# The arcade holds still while you play: the crowd and floor animations pause.
+	arcade_floor.process_mode = Node.PROCESS_MODE_DISABLED
+	Sfx.set_crowd(0)
+	game.tree_exited.connect(func() -> void: arcade_floor.process_mode = Node.PROCESS_MODE_INHERIT)
 	$Root.add_child(game)
 
 

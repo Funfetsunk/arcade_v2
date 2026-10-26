@@ -23,9 +23,13 @@ func refresh() -> void:
 	var actions := Game.actions
 	title = def.display_name
 	if def.minigame:
-		var play := UiKit.button("🎮 PLAY", func() -> void: ui.play_minigame(m), &"PrimaryButton")
+		var left := actions.minigame_plays_left(s, m)
+		var label := "🎮 PLAY (%d/%d today)" % [left, Data.db.balance.minigame_free_plays] if left > 0 else "🎮 PRACTICE (no plays left today)"
+		var play := UiKit.button(label, func() -> void: ui.play_minigame(m), &"PrimaryButton")
 		play.size_flags_horizontal = SIZE_EXPAND_FILL
 		add_child(play)
+		if m.best_score > 0:
+			add_child(UiKit.stat_row("Your best", "%d %s" % [m.best_score, "⭐".repeat(m.best_stars)]))
 	add_child(UiKit.stat_row("Status", "⛔ NOT WORKING" if m.is_broken() else "✅ WORKING", Color("ff4f7b") if m.is_broken() else Color("7cff6b")))
 	var condition := UiKit.hbox([UiKit.label("Condition", &"DimLabel"), UiKit.bar(m.hp, 100.0, UiKit.condition_color(m.hp)),
 		UiKit.label("%d%%%s" % [GameMath.js_round(m.hp), " / max %d%%" % GameMath.js_round(m.max_hp) if m.max_hp < 99.0 else ""])])
@@ -34,7 +38,8 @@ func refresh() -> void:
 	if m.max_hp < 99.0:
 		add_child(UiKit.button("🔧 Refurbish %s → mint" % GameMath.money(actions.refurbish_cost(m)), _do.bind(actions.refurbish_machine.bind(s, m))))
 	add_child(UiKit.stat_row("Avg daily earn", GameMath.money(m.total_earned / m.days_active) if m.days_active > 0 else "—"))
-	add_child(UiKit.stat_row("Popularity", "⭐ %d" % def.popularity))
+	var champ := GameMath.js_round(Data.db.balance.minigame_star_popularity * m.best_stars * 100)
+	add_child(UiKit.stat_row("Popularity", "⭐ %d%s" % [def.popularity, " (+%d%% your best)" % champ if champ > 0 else ""]))
 	add_child(UiKit.stat_row("Sell value", GameMath.money(actions.sell_value(m)) + (" 📈 vintage" if m.days_active > 60 else "")))
 	if def.genre:
 		var n := FloorGrid.same_genre_nearby(s.machines, m, Data.db.balance.zone_radius)

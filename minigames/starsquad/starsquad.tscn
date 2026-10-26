@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/starsquad/starsquad.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/neon.tres" id="housing"]
 
 [node name="StarSquad" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Star Squad"
+star_scores = PackedInt32Array(150, 300, 500)
+housing = ExtResource("housing")
 title_icon = "🛸"
 hint = "Drag to fly — dodge the divers!"

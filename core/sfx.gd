@@ -14,6 +14,16 @@ const SOUNDS := {
 	click = preload("res://assets/audio/click.wav"),
 	error = preload("res://assets/audio/error.wav"),
 	goal = preload("res://assets/audio/goal.wav"),
+	# The minigames' shared set (tools/render_minigame_sfx.py).
+	mg_count = preload("res://assets/audio/mg_count.wav"),
+	mg_go = preload("res://assets/audio/mg_go.wav"),
+	mg_score = preload("res://assets/audio/mg_score.wav"),
+	mg_hit = preload("res://assets/audio/mg_hit.wav"),
+	mg_miss = preload("res://assets/audio/mg_miss.wav"),
+	mg_win = preload("res://assets/audio/mg_win.wav"),
+	mg_lose = preload("res://assets/audio/mg_lose.wav"),
+	mg_star = preload("res://assets/audio/mg_star.wav"),
+	mg_best = preload("res://assets/audio/mg_best.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]

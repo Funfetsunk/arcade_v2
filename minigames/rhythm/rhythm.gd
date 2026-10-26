@@ -45,7 +45,7 @@ func _pointer_pressed(at: Vector2) -> void:
 			best.hold_ticks = 0
 	else:
 		combo = 0
-		add_pop(Vector2(x, HIT_Y + 34), "MISS", 20, Color("888888"))
+		miss(Vector2(x, HIT_Y + 34), 20)
 
 
 func _pointer_released(at: Vector2) -> void:

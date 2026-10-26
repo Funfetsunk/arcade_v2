@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://minigames/minigame.tscn" id="1"]
 [ext_resource type="Script" path="res://minigames/quiz/quiz.gd" id="2"]
+[ext_resource type="Resource" path="res://assets/sprites/minigames/housings/classic.tres" id="housing"]
 
 [node name="QuizKing" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Quiz King"
+star_scores = PackedInt32Array(100, 180, 250)
+housing = ExtResource("housing")
 title_icon = "❓"
 hint = "Answer fast for more points!"

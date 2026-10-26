@@ -12,6 +12,7 @@ const CR := 8.0
 
 const COIN_GOLD: Texture2D = preload("res://assets/sprites/minigames/coin_gold.png")
 const COIN_SILVER: Texture2D = preload("res://assets/sprites/minigames/coin_silver.png")
+const DROPPER: Texture2D = preload("res://assets/sprites/minigames/dropper.png")
 
 var coins: Array[Dictionary] = []
 var falling: Array[Dictionary] = []
@@ -37,7 +38,7 @@ func _pointer_pressed(_at: Vector2) -> void:
 
 ## Quitting is the normal way out of this endless game, so it banks the score.
 func close() -> void:
-	if not over:
+	if stage == Stage.PLAYING:
 		end_round("CASHED OUT", score > 0)
 	super()
 
@@ -97,8 +98,7 @@ func _draw_board() -> void:
 	for c in coins + falling:
 		sprite(COIN_GOLD if c.gold else COIN_SILVER, Vector2(c.x, c.y))
 	# The dropper.
-	board.draw_rect(Rect2(drop_x - 12, 70, 24, 14), Color("ff006e"))
-	board.draw_rect(Rect2(drop_x - 2, 84, 4, 8), Color.WHITE)
+	sprite(DROPPER, Vector2(drop_x, 66), 2.0)
 	draw_pops(-0.5, 11)
 
 
