@@ -27,22 +27,22 @@ func _track_at(at: Vector2) -> int:
 func _pointer_pressed(at: Vector2) -> void:
 	var track := _track_at(at)
 	_glow[track] = 8
-	var best: Dictionary = {}
-	var best_d := INF
+	var nearest: Dictionary = {}
+	var nearest_d := INF
 	for n in notes:
-		if n.track == track and not n.hit and absf(n.y - HIT_Y) < best_d:
-			best_d = absf(n.y - HIT_Y)
-			best = n
+		if n.track == track and not n.hit and absf(n.y - HIT_Y) < nearest_d:
+			nearest_d = absf(n.y - HIT_Y)
+			nearest = n
 	var x := track * TW + TW / 2
-	if not best.is_empty() and best_d < 16:
-		best.hit = true
+	if not nearest.is_empty() and nearest_d < 16:
+		nearest.hit = true
 		combo += 1
 		score += 12
 		Sfx.beep(NOTES[track] * (1.5 if combo >= 6 else 1.0))
 		add_pop(Vector2(x, HIT_Y + 34), "+12", 26, Color("06d6a0"))
-		if best.tail > 0:
-			_holding[track] = best
-			best.hold_ticks = 0
+		if nearest.tail > 0:
+			_holding[track] = nearest
+			nearest.hold_ticks = 0
 	else:
 		combo = 0
 		miss(Vector2(x, HIT_Y + 34), 20)

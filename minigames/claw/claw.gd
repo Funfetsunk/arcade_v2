@@ -67,17 +67,17 @@ func _tick() -> void:
 
 ## Grab roll on the nearest prize: centred-ness × grip (gold is slippery).
 func _grab() -> void:
-	var best := {}
-	var best_d := 1e9
+	var nearest := {}
+	var nearest_d := 1e9
 	for p in prizes:
 		var d := absf(claw.x - p.x)
-		if d < 20 and d < best_d:
-			best_d = d
-			best = p
-	if not best.is_empty() and randf() < (1 - best_d / 22) * (0.5 if best.value >= 80 else 0.9):
-		holding = best
-		prizes.erase(best)
-	elif not best.is_empty():
+		if d < 20 and d < nearest_d:
+			nearest_d = d
+			nearest = p
+	if not nearest.is_empty() and randf() < (1 - nearest_d / 22) * (0.5 if nearest.value >= 80 else 0.9):
+		holding = nearest
+		prizes.erase(nearest)
+	elif not nearest.is_empty():
 		add_pop(Vector2(claw.x, FLOOR - 40), "SLIPPED!", 36, Color("888888"))
 	else:
 		miss(Vector2(claw.x, FLOOR - 40))

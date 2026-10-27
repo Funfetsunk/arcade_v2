@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PinballTable" format=3]
+
+[ext_resource type="Script" path="res://minigames/pinball/pinball_table.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/minigames/pinball_table_planets.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+playfield = ExtResource("2")
+bounds = Rect2(20, 2, 334, 470)
+walls = Array[PackedVector2Array]([PackedVector2Array(306, 74, 306, 246), PackedVector2Array(20, 214, 62, 242), PackedVector2Array(54, 246, 54, 356, 108, 377), PackedVector2Array(306, 246, 306, 356, 252, 377), PackedVector2Array(76, 286, 76, 336, 110, 362), PackedVector2Array(284, 286, 284, 336, 250, 362), PackedVector2Array(38, 30, 38, 142), PackedVector2Array(58, 10, 58, 126)])
+bumpers = PackedVector2Array(90, 86, 266, 86, 50, 196, 310, 196)
+bumper_r = 18
+posts = PackedVector2Array(70, 146, 288, 146)
+lanes = PackedVector2Array(90, 130, 128, 80, 226, 80, 266, 130)
+drops = PackedVector2Array(156, 286, 180, 286, 204, 286)
+deflector = Rect2(310, 4, 44, 38)
+deflect_dir = Vector2(-0.95, 0.3)

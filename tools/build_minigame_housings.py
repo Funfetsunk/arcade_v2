@@ -42,7 +42,8 @@ GAMES = {
                       cols=[(100, 60), (62, 60), (138, 60)], rows=[(100, 230)]),
     'whack': dict(pick='whack_b', wipe=[((78, 19, 44, 12), True, (100, 25))], tolerance=20,
                   score=((77, 18, 46, 14), (1.0, 0.85, 0.2))),
-    'pinball': dict(pick='pinball_a', wipe=[((52, 0, 96, 12), True, (56, 9))],
+    # Its backdrop is speckled, so it needs a looser match to clear.
+    'pinball': dict(pick='pinball_a', bg_tolerance=110, wipe=[((52, 0, 96, 12), True, (56, 9))],
                     title=((52, 0, 96, 12), (0.3, 0.12, 0.05))),
     'claw': dict(pick='claw_a', screen=(57, 53, 84, 97), title=((48, 14, 104, 19), (0.75, 0.2, 0.45))),
     'crane': dict(pick='crane_b', title=((44, 20, 104, 18), (1.0, 1.0, 1.0))),
@@ -167,7 +168,7 @@ for game, cfg in GAMES.items():
         for p in area:
             px[p] = (0, 0, 0, 0)
     if cfg.get('clear', True):
-        im = cab.clear_background(im)
+        im = cab.clear_background(im, cfg.get('bg_tolerance', 40))
     if cfg.get('period'):
         # Whole pattern steps from the middle, both ways (bulbs down the sides too).
         cols = [((l + r) // 2, W - (r - l + 1))]

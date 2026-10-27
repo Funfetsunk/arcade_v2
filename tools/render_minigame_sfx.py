@@ -1,5 +1,6 @@
 """Renders the minigames' shared retro sound set to WAV files: the countdown, GO,
-score blip, hit, miss, win, lose, star and new-best cues every cabinet uses.
+score blip, hit, miss, win, lose, star and new-best cues every cabinet uses, plus
+pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -59,3 +60,11 @@ save('mg_win', seq(*(tone('square', f, f, 0.09, 0.22, 2.5) for f in (523, 659, 7
 save('mg_lose', seq(*(tone('triangle', f, f * 0.97, 0.13, 0.3, 2.5) for f in (392, 330, 262)), tone('triangle', 196, 180, 0.35, 0.3, 3.0)))
 save('mg_star', tone('triangle', 1568, 1568, 0.22, 0.25, 4.0) + tone('triangle', 2093, 2093, 0.22, 0.12, 5.0))
 save('mg_best', seq(*(tone('square', f, f, 0.07, 0.2, 2.0) for f in (784, 988, 1175)), tone('square', 1568, 1568, 0.4, 0.22, 2.5)))
+
+# Pinball: mechanical knocks and pops rather than blips.
+save('pb_flip', tone('noise', 0, 0, 0.03, 0.16, 8.0) + tone('square', 140, 90, 0.03, 0.18, 6.0))
+save('pb_bump', tone('square', 520, 260, 0.07, 0.2, 5.0) + tone('noise', 0, 0, 0.07, 0.08, 9.0))
+save('pb_drop', tone('triangle', 220, 110, 0.09, 0.35, 4.0) + tone('noise', 0, 0, 0.09, 0.06, 10.0))
+save('pb_lane', tone('triangle', 1320, 1320, 0.14, 0.18, 4.0))
+save('pb_launch', tone('noise', 0, 0, 0.25, 0.1, 2.5) + tone('triangle', 180, 520, 0.25, 0.22, 2.0))
+save('pb_drain', tone('triangle', 330, 70, 0.45, 0.3, 2.5))

@@ -41,6 +41,8 @@ const PAY_FRAMES := 40
 @export_multiline var hint := ""
 ## The machine it's played in; none draws the bare board under a title.
 @export var housing: MinigameHousing
+## Blip on every score gain; games with their own scoring sounds turn it off.
+@export var score_blip := true
 ## Scores for one, two and three stars.
 @export var star_scores := PackedInt32Array([100, 200, 300])
 
@@ -205,7 +207,7 @@ func _physics_process(_delta: float) -> void:
 			if _go > 0:
 				_go -= 1
 			# Any score gain gets a blip, so every game has some feedback for free.
-			if score > before and not over:
+			if score_blip and score > before and not over:
 				Sfx.play(&"mg_score")
 			_update_hud()
 			board.queue_redraw()
@@ -354,9 +356,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _fit_board() -> void:
 	var frame: Control = %BoardFrame
 	if housing == null:
-		var s := minf(frame.size.x / BOARD.x, frame.size.y / BOARD.y)
-		board.scale = Vector2(s, s)
-		board.position = (frame.size - BOARD * s) / 2.0
+		var fit := minf(frame.size.x / BOARD.x, frame.size.y / BOARD.y)
+		board.scale = Vector2(fit, fit)
+		board.position = (frame.size - BOARD * fit) / 2.0
 		return
 	# The whole machine fits the frame; the board sits in its screen.
 	var art := Vector2(housing.texture.get_size())

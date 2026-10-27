@@ -36,19 +36,19 @@ func _lane_x(lane: int) -> float:
 
 func _tap(lane: int) -> void:
 	_glow[lane] = 8
-	var best: Dictionary = {}
-	var best_d := INF
+	var nearest: Dictionary = {}
+	var nearest_d := INF
 	for a in arrows:
-		if a.lane == lane and not a.hit and absf(a.y - HIT_Y) < best_d:
-			best_d = absf(a.y - HIT_Y)
-			best = a
-	if not best.is_empty() and best_d < 12:
-		best.hit = true
+		if a.lane == lane and not a.hit and absf(a.y - HIT_Y) < nearest_d:
+			nearest_d = absf(a.y - HIT_Y)
+			nearest = a
+	if not nearest.is_empty() and nearest_d < 12:
+		nearest.hit = true
 		combo += 1
 		score += 15
 		add_pop(Vector2(_lane_x(lane), HIT_Y + 44), "PERFECT", 26, Color("06d6a0"))
-	elif not best.is_empty() and best_d < 26:
-		best.hit = true
+	elif not nearest.is_empty() and nearest_d < 26:
+		nearest.hit = true
 		combo += 1
 		score += 8
 		add_pop(Vector2(_lane_x(lane), HIT_Y + 44), "GOOD", 26, GOLD)

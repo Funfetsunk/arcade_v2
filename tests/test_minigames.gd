@@ -78,6 +78,22 @@ func test_skee_rings_score_from_the_edge_in() -> void:
 	assert_eq(game.points_at(Vector2(180, 300)), 0, "short of the rings")
 
 
+func test_every_pinball_table_launches_into_play() -> void:
+	for path in ["res://minigames/pinball/table_stars.tres", "res://minigames/pinball/table_planets.tres"]:
+		var game := (load("res://minigames/pinball/pinball.tscn") as PackedScene).instantiate() as MiniGame
+		add_child_autofree(game)
+		game.use_table(load(path))
+		game.stage = MiniGame.Stage.PLAYING
+		game.state = game.State.CHARGING
+		game._launch()
+		var lowest := 999.0
+		for i in 90:
+			game._tick()
+			lowest = minf(lowest, game.ball.y)
+		assert_lt(lowest, 140.0, "%s: the launch reaches the top of the table" % path)
+		assert_lt(game.ball.x, 320.0, "%s: and is turned into play" % path)
+
+
 func test_every_minigame_runs() -> void:
 	var played := 0
 	for def in H.DATA.machines:

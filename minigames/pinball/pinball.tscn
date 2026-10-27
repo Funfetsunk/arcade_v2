@@ -7,7 +7,8 @@
 [node name="Pinball" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Pinball"
-star_scores = PackedInt32Array(100, 250, 450)
+star_scores = PackedInt32Array(1500, 4000, 8000)
 housing = ExtResource("housing")
+score_blip = false
 title_icon = "🎯"
-hint = "Tap left / right side (or ← →) to flip!"
+hint = "Hold and release to launch, then tap left / right (or ← →) to flip!"

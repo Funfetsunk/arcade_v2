@@ -24,6 +24,13 @@ const SOUNDS := {
 	mg_lose = preload("res://assets/audio/mg_lose.wav"),
 	mg_star = preload("res://assets/audio/mg_star.wav"),
 	mg_best = preload("res://assets/audio/mg_best.wav"),
+	# Pinball's table sounds.
+	pb_flip = preload("res://assets/audio/pb_flip.wav"),
+	pb_bump = preload("res://assets/audio/pb_bump.wav"),
+	pb_drop = preload("res://assets/audio/pb_drop.wav"),
+	pb_lane = preload("res://assets/audio/pb_lane.wav"),
+	pb_launch = preload("res://assets/audio/pb_launch.wav"),
+	pb_drain = preload("res://assets/audio/pb_drain.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]
