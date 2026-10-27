@@ -7,7 +7,7 @@
 [node name="ClawGrab" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Claw Grab"
-star_scores = PackedInt32Array(30, 80, 140)
+star_scores = PackedInt32Array(30, 80, 150)
 housing = ExtResource("housing")
 title_icon = "🦀"
-hint = "Tap to drop the claw on a prize!"
+hint = "Drag to steer the claw, let go to drop it!"
