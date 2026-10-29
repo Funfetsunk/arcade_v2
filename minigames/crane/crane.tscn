@@ -7,7 +7,8 @@
 [node name="PrizeCrane" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Prize Crane"
-star_scores = PackedInt32Array(40, 90, 140)
+star_scores = PackedInt32Array(60, 130, 200)
 housing = ExtResource("housing")
+score_blip = false
 title_icon = "🎁"
-hint = "Tap to lock X, tap again to lock Y!"
+hint = "Hold to move right, then hold to move back — let go to drop!"

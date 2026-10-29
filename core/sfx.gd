@@ -54,6 +54,10 @@ const SOUNDS := {
 	wk_clang = preload("res://assets/audio/wk_clang.wav"),
 	wk_squeak = preload("res://assets/audio/wk_squeak.wav"),
 	wk_gold = preload("res://assets/audio/wk_gold.wav"),
+	cr_motor = preload("res://assets/audio/cr_motor.wav"),
+	cr_drop = preload("res://assets/audio/cr_drop.wav"),
+	cr_clack = preload("res://assets/audio/cr_clack.wav"),
+	cr_prize = preload("res://assets/audio/cr_prize.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]

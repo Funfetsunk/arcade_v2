@@ -4,7 +4,7 @@ pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain) a
 the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
 hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
 pusher's (clink, spill, bonus, prize) and whack-it's (bonk, whiff, pop, clang,
-squeak, gold).
+squeak, gold) and the prize crane's (motor, drop, clack, prize).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -105,3 +105,10 @@ save('wk_pop', tone('triangle', 300, 700, 0.06, 0.18, 4.0))
 save('wk_clang', tone('square', 1175, 1150, 0.25, 0.14, 3.5) + tone('square', 1760, 1720, 0.25, 0.08, 4.0))
 save('wk_squeak', tone('triangle', 1400, 1900, 0.12, 0.2, 3.0))
 save('wk_gold', seq(*(tone('triangle', f, f, 0.06, 0.2, 2.5) for f in (1319, 1568, 2093, 2637))))
+
+# Prize Crane: the gantry motor, the claw dropping and clacking shut, and a
+# prize thumping down the chute.
+save('cr_motor', tone('square', 110, 110, 0.08, 0.06, 1.0) + tone('square', 220, 220, 0.08, 0.03, 1.0))
+save('cr_drop', tone('triangle', 600, 240, 0.4, 0.12, 1.5))
+save('cr_clack', tone('noise', 0, 0, 0.05, 0.2, 7.0) + tone('square', 330, 180, 0.05, 0.14, 5.0))
+save('cr_prize', seq(tone('triangle', 196, 98, 0.12, 0.35, 3.0), *(tone('square', f, f, 0.08, 0.2, 2.5) for f in (659, 784, 988)), tone('square', 1319, 1319, 0.3, 0.22, 3.0)))

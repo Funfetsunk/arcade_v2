@@ -183,7 +183,7 @@ func _tick() -> void:
 
 
 func _pop_up(pace: float) -> void:
-	var free := holes.filter(func(h: Dictionary) -> bool: return h.kind < 0)
+	var free := holes.filter(func(hole: Dictionary) -> bool: return hole.kind < 0)
 	if free.is_empty():
 		return
 	var h: Dictionary = free.pick_random()
@@ -223,8 +223,8 @@ func _draw_mole(h: Dictionary) -> void:
 	var k: float = h.zoom * MOLE_ZOOM
 	var rows: float = ceilf(MOLE_ROWS * h.up)
 	var anchor := _anchor(h)
-	var size := Vector2(art.get_width(), rows) * k
-	board.draw_texture_rect_region(art, Rect2(anchor + Vector2(-size.x / 2, -size.y), size), Rect2(0, 0, art.get_width(), rows))
+	var shown := Vector2(art.get_width(), rows) * k
+	board.draw_texture_rect_region(art, Rect2(anchor + Vector2(-shown.x / 2, -shown.y), shown), Rect2(0, 0, art.get_width(), rows))
 	if h.hit > 0 and h.kind != Kind.BUNNY:
 		sprite(STARS, anchor - Vector2(0, MOLE_ROWS * k * h.up + 2), 0.9 * h.zoom, h.hit * 0.3)
 
