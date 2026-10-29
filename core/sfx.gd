@@ -31,6 +31,13 @@ const SOUNDS := {
 	pb_lane = preload("res://assets/audio/pb_lane.wav"),
 	pb_launch = preload("res://assets/audio/pb_launch.wav"),
 	pb_drain = preload("res://assets/audio/pb_drain.wav"),
+	# The slot machine's.
+	sl_pull = preload("res://assets/audio/sl_pull.wav"),
+	sl_tick = preload("res://assets/audio/sl_tick.wav"),
+	sl_stop = preload("res://assets/audio/sl_stop.wav"),
+	sl_nudge = preload("res://assets/audio/sl_nudge.wav"),
+	sl_win = preload("res://assets/audio/sl_win.wav"),
+	sl_jackpot = preload("res://assets/audio/sl_jackpot.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]

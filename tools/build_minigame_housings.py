@@ -35,7 +35,8 @@ W, H = cab.SCREEN
 # game -> settings. screen: a fixed (x, y, w, h) play area, else it's found by
 # flood-filling from the centre. cols / rows: [(at, count)] stretch points, else
 # the plainest one. wipe: [(rect, light_text?, fill colour from (x, y))].
-# title / score: (rect, colour) in the source art's pixels.
+# title / score: (rect, colour) in the source art's pixels. erase: rects of the
+# source art to clear (a part the game draws itself).
 GAMES = {
     'airhockey': dict(pick='airhockey_a', mode='under', screen=(10, 13, 180, 230),
                       # Through the goals so they widen to the game's 100 px, the rest beside them.
@@ -51,7 +52,8 @@ GAMES = {
     'coinpush': dict(pick='coinpush_a', period=True),
     # The JACKPOT sign is wider than the reel window, so it's lifted off and
     # put back centred, unstretched.
-    'slots': dict(pick='slots_b', screen=(59, 69, 81, 50), keep_top=55),
+    # Its lever is erased: the game has its own, inside the screen, to pull.
+    'slots': dict(pick='slots_b', screen=(59, 69, 81, 50), keep_top=55, erase=[(159, 60, 21, 100)]),
     'hoops': dict(pick='hoops_b', title=((56, 17, 90, 22), (0.6, 0.12, 0.15))),
     # The wooden lane is the playing surface; the (wiped) score panel stretches.
     'aim': dict(pick='aim_a', mode='under', wipe=[((70, 1, 68, 10), False, (72, 3))], cols=[(105, None)],
@@ -151,6 +153,8 @@ def tres(game, size, screen, mode, title, score):
 
 for game, cfg in GAMES.items():
     im = Image.open(os.path.join(src, cfg['pick'] + '.png')).convert('RGBA')
+    for x0, y0, w, h in cfg.get('erase', []):
+        im.paste((0, 0, 0, 0), (x0, y0, x0 + w, y0 + h))
     sign = im.crop((0, 0, im.width, cfg['keep_top'])) if 'keep_top' in cfg else None
     for rect, light, at in cfg.get('wipe', []):
         wipe(im, rect, light, at)

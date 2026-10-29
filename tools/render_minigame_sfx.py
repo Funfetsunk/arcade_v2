@@ -1,6 +1,7 @@
 """Renders the minigames' shared retro sound set to WAV files: the countdown, GO,
 score blip, hit, miss, win, lose, star and new-best cues every cabinet uses, plus
-pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain).
+pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain) and
+the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -68,3 +69,11 @@ save('pb_drop', tone('triangle', 220, 110, 0.09, 0.35, 4.0) + tone('noise', 0, 0
 save('pb_lane', tone('triangle', 1320, 1320, 0.14, 0.18, 4.0))
 save('pb_launch', tone('noise', 0, 0, 0.25, 0.1, 2.5) + tone('triangle', 180, 520, 0.25, 0.22, 2.0))
 save('pb_drain', tone('triangle', 330, 70, 0.45, 0.3, 2.5))
+
+# Slot machine: a ratchety lever, clicking reels, a clunk as each stops, bells for wins.
+save('sl_pull', tone('noise', 0, 0, 0.18, 0.12, 3.0) + tone('square', 90, 60, 0.18, 0.15, 3.0))
+save('sl_tick', tone('noise', 0, 0, 0.02, 0.08, 10.0))
+save('sl_stop', tone('square', 160, 110, 0.06, 0.2, 5.0) + tone('noise', 0, 0, 0.06, 0.08, 8.0))
+save('sl_nudge', seq(tone('triangle', 660, 660, 0.06, 0.2, 3.0), tone('triangle', 880, 880, 0.08, 0.2, 3.0)))
+save('sl_win', seq(*(tone('triangle', f, f, 0.07, 0.22, 2.5) for f in (1047, 1319, 1568, 1319, 1568)), tone('triangle', 2093, 2093, 0.25, 0.22, 3.0)))
+save('sl_jackpot', seq(*(tone('square', f, f, 0.08, 0.2, 2.0) for f in (523, 659, 784, 1047, 784, 1047, 1319, 1568)), tone('square', 2093, 2093, 0.5, 0.22, 2.0)))
