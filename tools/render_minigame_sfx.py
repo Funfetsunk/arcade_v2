@@ -1,7 +1,8 @@
 """Renders the minigames' shared retro sound set to WAV files: the countdown, GO,
 score blip, hit, miss, win, lose, star and new-best cues every cabinet uses, plus
 pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain) and
-the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot).
+the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
+hoops' (swish, rim, backboard, bounce, buzzer, on fire).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -77,3 +78,12 @@ save('sl_stop', tone('square', 160, 110, 0.06, 0.2, 5.0) + tone('noise', 0, 0, 0
 save('sl_nudge', seq(tone('triangle', 660, 660, 0.06, 0.2, 3.0), tone('triangle', 880, 880, 0.08, 0.2, 3.0)))
 save('sl_win', seq(*(tone('triangle', f, f, 0.07, 0.22, 2.5) for f in (1047, 1319, 1568, 1319, 1568)), tone('triangle', 2093, 2093, 0.25, 0.22, 3.0)))
 save('sl_jackpot', seq(*(tone('square', f, f, 0.08, 0.2, 2.0) for f in (523, 659, 784, 1047, 784, 1047, 1319, 1568)), tone('square', 2093, 2093, 0.5, 0.22, 2.0)))
+
+# Hoops: the swish of the net, the clank of the rim, a thud off the backboard,
+# the ball bouncing back down the ramp, the end buzzer and catching fire.
+save('hp_swish', tone('noise', 0, 0, 0.22, 0.14, 2.5) * np.linspace(0.4, 1, int(RATE * 0.22)) + tone('triangle', 1760, 2349, 0.22, 0.08, 3.0))
+save('hp_rim', tone('square', 880, 860, 0.16, 0.14, 4.0) + tone('square', 1320, 1290, 0.16, 0.08, 5.0))
+save('hp_board', tone('triangle', 150, 90, 0.1, 0.35, 4.0) + tone('noise', 0, 0, 0.1, 0.1, 9.0))
+save('hp_bounce', tone('triangle', 120, 70, 0.07, 0.3, 5.0))
+save('hp_buzzer', tone('square', 196, 196, 0.7, 0.2, 0.6) + tone('square', 233, 233, 0.7, 0.12, 0.6))
+save('hp_fire', tone('noise', 0, 0, 0.35, 0.12, 2.0) + tone('triangle', 330, 990, 0.35, 0.2, 2.0))

@@ -7,7 +7,8 @@
 [node name="ProHoops" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Pro Hoops"
-star_scores = PackedInt32Array(80, 180, 300)
+star_scores = PackedInt32Array(40, 80, 130)
 housing = ExtResource("housing")
+score_blip = false
 title_icon = "🏀"
-hint = "HOLD to charge — release to shoot!"
+hint = "Grab the ball and flick it up at the hoop!"

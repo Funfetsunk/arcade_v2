@@ -38,6 +38,12 @@ const SOUNDS := {
 	sl_nudge = preload("res://assets/audio/sl_nudge.wav"),
 	sl_win = preload("res://assets/audio/sl_win.wav"),
 	sl_jackpot = preload("res://assets/audio/sl_jackpot.wav"),
+	hp_swish = preload("res://assets/audio/hp_swish.wav"),
+	hp_rim = preload("res://assets/audio/hp_rim.wav"),
+	hp_board = preload("res://assets/audio/hp_board.wav"),
+	hp_bounce = preload("res://assets/audio/hp_bounce.wav"),
+	hp_buzzer = preload("res://assets/audio/hp_buzzer.wav"),
+	hp_fire = preload("res://assets/audio/hp_fire.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]
