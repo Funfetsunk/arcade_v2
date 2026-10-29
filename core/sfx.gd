@@ -48,6 +48,12 @@ const SOUNDS := {
 	cp_spill = preload("res://assets/audio/cp_spill.wav"),
 	cp_bonus = preload("res://assets/audio/cp_bonus.wav"),
 	cp_prize = preload("res://assets/audio/cp_prize.wav"),
+	wk_bonk = preload("res://assets/audio/wk_bonk.wav"),
+	wk_whiff = preload("res://assets/audio/wk_whiff.wav"),
+	wk_pop = preload("res://assets/audio/wk_pop.wav"),
+	wk_clang = preload("res://assets/audio/wk_clang.wav"),
+	wk_squeak = preload("res://assets/audio/wk_squeak.wav"),
+	wk_gold = preload("res://assets/audio/wk_gold.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]

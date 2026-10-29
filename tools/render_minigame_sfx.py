@@ -3,7 +3,8 @@ score blip, hit, miss, win, lose, star and new-best cues every cabinet uses, plu
 pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain) and
 the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
 hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
-pusher's (clink, spill, bonus, prize).
+pusher's (clink, spill, bonus, prize) and whack-it's (bonk, whiff, pop, clang,
+squeak, gold).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -95,3 +96,12 @@ save('cp_clink', tone('triangle', 2637, 2637, 0.08, 0.16, 5.0) + tone('triangle'
 save('cp_spill', seq(*(tone('triangle', f, f, 0.04, 0.12, 4.0) for f in (2349, 2794, 2637, 3136))))
 save('cp_bonus', seq(*(tone('square', f, f, 0.06, 0.18, 2.5) for f in (784, 988, 1175, 1568, 1175, 1568)), tone('square', 2093, 2093, 0.3, 0.2, 2.5)))
 save('cp_prize', seq(tone('triangle', 523, 523, 0.1, 0.25, 2.5), tone('triangle', 784, 784, 0.1, 0.25, 2.5), tone('triangle', 1047, 1047, 0.3, 0.25, 3.0)))
+
+# Whack-It: a rubbery bonk, a whiff of air, a mole popping up, the clang of a
+# hard hat, a bunny's squeak and a golden mole's chime.
+save('wk_bonk', tone('square', 220, 90, 0.09, 0.28, 4.0) + tone('noise', 0, 0, 0.09, 0.1, 12.0))
+save('wk_whiff', tone('noise', 0, 0, 0.12, 0.08, 3.0) * np.linspace(0.3, 1, int(RATE * 0.12)))
+save('wk_pop', tone('triangle', 300, 700, 0.06, 0.18, 4.0))
+save('wk_clang', tone('square', 1175, 1150, 0.25, 0.14, 3.5) + tone('square', 1760, 1720, 0.25, 0.08, 4.0))
+save('wk_squeak', tone('triangle', 1400, 1900, 0.12, 0.2, 3.0))
+save('wk_gold', seq(*(tone('triangle', f, f, 0.06, 0.2, 2.5) for f in (1319, 1568, 2093, 2637))))
