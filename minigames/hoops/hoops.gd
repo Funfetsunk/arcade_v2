@@ -277,13 +277,13 @@ func _draw_board() -> void:
 			_draw_ball(b)
 	for i in balls.filter(func(b: Dictionary) -> bool: return b.where == Where.RACK).size():
 		sprite(BALL, RACK_AT[i], 1.0)
-	var b := held()
-	if not b.is_empty() and not over:
+	var next_ball := held()
+	if not next_ball.is_empty() and not over:
 		var at := _held_at if _grab else HAND
-		_draw_ball_at(b, at, 2.0 * BALL_R / BALL_ART)
+		_draw_ball_at(next_ball, at, 2.0 * BALL_R / BALL_ART)
 		if not _grab and stage == Stage.PLAYING and shots == 0:
 			text("flick the ball up!", Vector2(BOARD.x / 2, 452), 10, CREAM)
-	if time <= DOUBLE_LAST and not over and (time / 15) % 2 == 0:
+	if time <= DOUBLE_LAST and not over and posmod(time, 30) < 15:
 		text("DOUBLE POINTS!", Vector2(BOARD.x / 2, 300), 16, GOLD)
 	draw_pops(0.5, 16)
 

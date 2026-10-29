@@ -2,7 +2,8 @@
 score blip, hit, miss, win, lose, star and new-best cues every cabinet uses, plus
 pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain) and
 the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
-hoops' (swish, rim, backboard, bounce, buzzer, on fire).
+hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
+pusher's (clink, spill, bonus, prize).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -87,3 +88,10 @@ save('hp_board', tone('triangle', 150, 90, 0.1, 0.35, 4.0) + tone('noise', 0, 0,
 save('hp_bounce', tone('triangle', 120, 70, 0.07, 0.3, 5.0))
 save('hp_buzzer', tone('square', 196, 196, 0.7, 0.2, 0.6) + tone('square', 233, 233, 0.7, 0.12, 0.6))
 save('hp_fire', tone('noise', 0, 0, 0.35, 0.12, 2.0) + tone('triangle', 330, 990, 0.35, 0.2, 2.0))
+
+# Coin pusher: a coin clinking onto the shelf, coins spilling into the tray, a
+# bonus fanfare and a prize dropping.
+save('cp_clink', tone('triangle', 2637, 2637, 0.08, 0.16, 5.0) + tone('triangle', 3520, 3520, 0.08, 0.08, 6.0))
+save('cp_spill', seq(*(tone('triangle', f, f, 0.04, 0.12, 4.0) for f in (2349, 2794, 2637, 3136))))
+save('cp_bonus', seq(*(tone('square', f, f, 0.06, 0.18, 2.5) for f in (784, 988, 1175, 1568, 1175, 1568)), tone('square', 2093, 2093, 0.3, 0.2, 2.5)))
+save('cp_prize', seq(tone('triangle', 523, 523, 0.1, 0.25, 2.5), tone('triangle', 784, 784, 0.1, 0.25, 2.5), tone('triangle', 1047, 1047, 0.3, 0.25, 3.0)))

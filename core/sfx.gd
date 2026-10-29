@@ -44,6 +44,10 @@ const SOUNDS := {
 	hp_bounce = preload("res://assets/audio/hp_bounce.wav"),
 	hp_buzzer = preload("res://assets/audio/hp_buzzer.wav"),
 	hp_fire = preload("res://assets/audio/hp_fire.wav"),
+	cp_clink = preload("res://assets/audio/cp_clink.wav"),
+	cp_spill = preload("res://assets/audio/cp_spill.wav"),
+	cp_bonus = preload("res://assets/audio/cp_bonus.wav"),
+	cp_prize = preload("res://assets/audio/cp_prize.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]
