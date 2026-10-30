@@ -6,7 +6,8 @@ hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
 pusher's (clink, spill, bonus, prize) and whack-it's (bonk, whiff, pop, clang,
 squeak, gold) the prize crane's (motor, drop, clack, prize) and the VR pod's (whoosh,
 crystal, crash, shield, star) the photo booth's (beep, shutter, print,
-pop) and the social feed's (like, trend, spam, viral).
+pop) the social feed's (like, trend, spam, viral)
+and the motion sim's coaster (clank, rush, ticket, queasy).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -135,3 +136,10 @@ save('so_like', tone('triangle', 880, 1320, 0.08, 0.2, 3.0))
 save('so_trend', seq(tone('triangle', 1047, 1047, 0.07, 0.2, 2.5), tone('triangle', 1568, 1568, 0.12, 0.2, 3.0)))
 save('so_spam', tone('square', 150, 120, 0.25, 0.2, 2.0))
 save('so_viral', seq(*(tone('square', f, f, 0.06, 0.18, 2.5) for f in (784, 1047, 1319, 1568, 2093))))
+
+# Motion Sim coaster: the lift-hill clank, the rush of a drop, a ticket
+# grabbed and the queasy groan.
+save('ms_clank', tone('noise', 0, 0, 0.05, 0.15, 6.0) + tone('square', 140, 120, 0.05, 0.12, 5.0))
+save('ms_rush', tone('noise', 0, 0, 0.7, 0.14, 1.2) * np.linspace(0.3, 1, int(RATE * 0.7)) + tone('triangle', 300, 900, 0.7, 0.06, 1.5))
+save('ms_ticket', seq(tone('triangle', 1319, 1319, 0.06, 0.2, 2.5), tone('triangle', 1976, 1976, 0.1, 0.2, 3.0)))
+save('ms_queasy', tone('triangle', 220, 140, 0.45, 0.25, 1.5) * (1 + 0.3 * np.sin(np.linspace(0, 40, int(RATE * 0.45)))))

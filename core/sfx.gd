@@ -71,6 +71,10 @@ const SOUNDS := {
 	so_trend = preload("res://assets/audio/so_trend.wav"),
 	so_spam = preload("res://assets/audio/so_spam.wav"),
 	so_viral = preload("res://assets/audio/so_viral.wav"),
+	ms_clank = preload("res://assets/audio/ms_clank.wav"),
+	ms_rush = preload("res://assets/audio/ms_rush.wav"),
+	ms_ticket = preload("res://assets/audio/ms_ticket.wav"),
+	ms_queasy = preload("res://assets/audio/ms_queasy.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]
