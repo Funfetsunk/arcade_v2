@@ -4,7 +4,8 @@ pinball's own table sounds (flipper, bumper, drop target, lane, launch, drain) a
 the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
 hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
 pusher's (clink, spill, bonus, prize) and whack-it's (bonk, whiff, pop, clang,
-squeak, gold) and the prize crane's (motor, drop, clack, prize).
+squeak, gold) the prize crane's (motor, drop, clack, prize) and the VR pod's (whoosh,
+crystal, crash, shield, star).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -112,3 +113,11 @@ save('cr_motor', tone('square', 110, 110, 0.08, 0.06, 1.0) + tone('square', 220,
 save('cr_drop', tone('triangle', 600, 240, 0.4, 0.12, 1.5))
 save('cr_clack', tone('noise', 0, 0, 0.05, 0.2, 7.0) + tone('square', 330, 180, 0.05, 0.14, 5.0))
 save('cr_prize', seq(tone('triangle', 196, 98, 0.12, 0.35, 3.0), *(tone('square', f, f, 0.08, 0.2, 2.5) for f in (659, 784, 988)), tone('square', 1319, 1319, 0.3, 0.22, 3.0)))
+
+# VR Pod: a whoosh past each wave, a crystal's chime, a crash, a shield
+# coming back and a star.
+save('vr_whoosh', tone('noise', 0, 0, 0.25, 0.08, 2.0) * np.sin(np.linspace(0, np.pi, int(RATE * 0.25))))
+save('vr_crystal', tone('triangle', 1760, 1760, 0.1, 0.18, 3.0) + tone('triangle', 2637, 2637, 0.1, 0.1, 4.0))
+save('vr_crash', tone('noise', 0, 0, 0.4, 0.3, 3.0) + tone('square', 120, 50, 0.4, 0.2, 3.0))
+save('vr_shield', seq(tone('triangle', 523, 1047, 0.15, 0.22, 2.0), tone('triangle', 1047, 1568, 0.15, 0.22, 2.5)))
+save('vr_star', seq(*(tone('square', f, f, 0.06, 0.18, 2.5) for f in (1047, 1319, 1568, 2093))))

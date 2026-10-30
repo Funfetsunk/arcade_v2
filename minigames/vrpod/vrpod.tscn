@@ -7,7 +7,8 @@
 [node name="TunnelRush" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Tunnel Rush"
-star_scores = PackedInt32Array(300, 480, 650)
+star_scores = PackedInt32Array(400, 700, 1000)
 housing = ExtResource("housing")
+score_blip = false
 title_icon = "🥽"
-hint = "Drag around the tunnel — thread the gaps!"
+hint = "Drag left and right to roll — dodge the mines, grab the crystals!"

@@ -58,6 +58,11 @@ const SOUNDS := {
 	cr_drop = preload("res://assets/audio/cr_drop.wav"),
 	cr_clack = preload("res://assets/audio/cr_clack.wav"),
 	cr_prize = preload("res://assets/audio/cr_prize.wav"),
+	vr_whoosh = preload("res://assets/audio/vr_whoosh.wav"),
+	vr_crystal = preload("res://assets/audio/vr_crystal.wav"),
+	vr_crash = preload("res://assets/audio/vr_crash.wav"),
+	vr_shield = preload("res://assets/audio/vr_shield.wav"),
+	vr_star = preload("res://assets/audio/vr_star.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]
