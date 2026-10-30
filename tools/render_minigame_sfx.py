@@ -5,8 +5,8 @@ the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
 hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
 pusher's (clink, spill, bonus, prize) and whack-it's (bonk, whiff, pop, clang,
 squeak, gold) the prize crane's (motor, drop, clack, prize) and the VR pod's (whoosh,
-crystal, crash, shield, star) and the photo booth's (beep, shutter, print,
-pop).
+crystal, crash, shield, star) the photo booth's (beep, shutter, print,
+pop) and the social feed's (like, trend, spam, viral).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -129,3 +129,9 @@ save('sn_beep', tone('square', 988, 988, 0.08, 0.16, 3.0))
 save('sn_shutter', tone('noise', 0, 0, 0.04, 0.25, 6.0) + np.pad(tone('noise', 0, 0, 0.03, 0.2, 6.0), (int(RATE * 0.04) - int(RATE * 0.03), 0)))
 save('sn_print', tone('square', 160, 180, 0.35, 0.06, 0.5) + tone('noise', 0, 0, 0.35, 0.04, 0.5))
 save('sn_pop', tone('triangle', 400, 1200, 0.1, 0.2, 3.0))
+
+# Go Viral: a like's pop, a new trend's chime, and the buzz of liking spam.
+save('so_like', tone('triangle', 880, 1320, 0.08, 0.2, 3.0))
+save('so_trend', seq(tone('triangle', 1047, 1047, 0.07, 0.2, 2.5), tone('triangle', 1568, 1568, 0.12, 0.2, 3.0)))
+save('so_spam', tone('square', 150, 120, 0.25, 0.2, 2.0))
+save('so_viral', seq(*(tone('square', f, f, 0.06, 0.18, 2.5) for f in (784, 1047, 1319, 1568, 2093))))

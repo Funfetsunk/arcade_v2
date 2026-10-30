@@ -67,6 +67,10 @@ const SOUNDS := {
 	sn_shutter = preload("res://assets/audio/sn_shutter.wav"),
 	sn_print = preload("res://assets/audio/sn_print.wav"),
 	sn_pop = preload("res://assets/audio/sn_pop.wav"),
+	so_like = preload("res://assets/audio/so_like.wav"),
+	so_trend = preload("res://assets/audio/so_trend.wav"),
+	so_spam = preload("res://assets/audio/so_spam.wav"),
+	so_viral = preload("res://assets/audio/so_viral.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]

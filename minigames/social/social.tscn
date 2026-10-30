@@ -4,10 +4,11 @@
 [ext_resource type="Script" path="res://minigames/social/social.gd" id="2"]
 [ext_resource type="Resource" path="res://assets/sprites/minigames/housings/social.tres" id="housing"]
 
-[node name="TrendMatch" instance=ExtResource("1")]
+[node name="GoViral" instance=ExtResource("1")]
 script = ExtResource("2")
-game_name = "Trend Match"
-star_scores = PackedInt32Array(60, 140, 220)
+game_name = "Go Viral"
+star_scores = PackedInt32Array(60, 130, 220)
 housing = ExtResource("housing")
+score_blip = false
 title_icon = "📸"
-hint = "Watch the trend, then repeat it!"
+hint = "Like the posts on the trend — never the scams or trolls!"

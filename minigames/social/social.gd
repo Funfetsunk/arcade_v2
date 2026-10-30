@@ -1,134 +1,192 @@
 extends MiniGame
-## Trend Match: watch the trend flash up, then repeat it on the emoji pad.
-## Trends grow from 3 to 6; one slip ends the run.
+## Go Viral, at the Social Hub: a feed of posts scrolls up the phone. The
+## trending topic is up top, and it changes every few seconds. Tap to like posts
+## on the trend to win followers; likes in a row build a combo until you go
+## VIRAL. Don't like scam adverts or trolls, and don't let a trending post
+## scroll past unliked. The feed speeds up as it goes. 45 s.
 
-enum Phase { SHOW, INPUT, PAUSE }
+const BACKDROP: Texture2D = preload("res://assets/sprites/minigames/feed_backdrop.png")
+const CARD: Texture2D = preload("res://assets/sprites/minigames/feed_card.png")
+const HEART: Texture2D = preload("res://assets/sprites/minigames/feed_heart.png")
+const FIRE: Texture2D = preload("res://assets/sprites/minigames/feed_fire.png")
+const LIKE: Texture2D = preload("res://assets/sprites/minigames/feed_like.png")
 
-const EMOJI := ["😀", "🔥", "💃", "👍", "😎", "💜"]
-const COLS := 3
-const PAD := Vector2(100, 84)
-const GRID := Vector2((BOARD.x - COLS * 100) / 2, 250)
-const ROUNDS := 4
-## Frames allowed per step of the trend when repeating it.
-const STEP_TIME := 150
+## The topics that can trend, and the pictures posted about them.
+const TOPICS := {
+	&"cats": { tag = "#CATS", art = [preload("res://assets/sprites/minigames/feed_cat.png")] },
+	&"dogs": { tag = "#DOGS", art = [preload("res://assets/sprites/minigames/feed_dog.png")] },
+	&"food": { tag = "#FOOD", art = [preload("res://assets/sprites/minigames/feed_pizza.png"), preload("res://assets/sprites/minigames/feed_burger.png")] },
+	&"dance": { tag = "#DANCE", art = [preload("res://assets/sprites/minigames/feed_dancer.png")] },
+	&"selfies": { tag = "#SELFIE", art = [preload("res://assets/sprites/minigames/feed_selfie.png")] },
+	&"sunsets": { tag = "#SUNSET", art = [preload("res://assets/sprites/minigames/feed_sunset.png")] },
+	&"gaming": { tag = "#GAMING", art = [preload("res://assets/sprites/minigames/feed_gamepad.png")] },
+	&"skate": { tag = "#SKATE", art = [preload("res://assets/sprites/minigames/feed_skater.png")] },
+}
+## Posts never to like.
+const BAD := {
+	&"scam": { art = preload("res://assets/sprites/minigames/feed_scam.png"), says = "SCAM!" },
+	&"troll": { art = preload("res://assets/sprites/minigames/feed_troll.png"), says = "TROLL!" },
+}
 
-const TREND_ART := {"😀": preload("res://assets/sprites/minigames/face_grin.png"), "🔥": preload("res://assets/sprites/minigames/social_fire.png"), "💃": preload("res://assets/sprites/minigames/social_dancer.png"), "👍": preload("res://assets/sprites/minigames/social_like.png"), "😎": preload("res://assets/sprites/minigames/face_cool.png"), "💜": preload("res://assets/sprites/minigames/social_heart.png")}
+const TIME := 45 * 60
+const TREND_EVERY := 9 * 60
+const FOLLOW := 10
+const OFF_TREND := 1
+const BAD_LIKE := 15
+const VIRAL_AT := 8
+## Dark enough to read on the pastel app background.
+const INK := Color(0.3, 0.1, 0.4)
+## The feed, below the trending banner.
+const FEED_TOP := 92.0
+const CARD_ZOOM := 1.7
+const GAP := 146.0
+## The photo in the card art, from the card's centre (in art pixels).
+const PHOTO := Vector2(1, -6)
+const PHOTO_ZOOM := 1.35
 
-var trend_round := 0
-var sequence: Array[int] = []
-var phase := Phase.SHOW
-var won := false
-var msg := ""
-var _show_index := 0
-var _show_t := 0
-var _input_index := 0
-var _input_t := 0
-var _flash := -1
-var _flash_t := 0
-var _wrong := -1
+## Each post: what it is (a topic or a bad kind), its picture, how far up the
+## feed it is, and whether you've liked it.
+var posts: Array[Dictionary] = []
+var trend := &"cats"
+var time := TIME
+var combo := 0
+var _speed := 0.9
+var _trend_t := TREND_EVERY
+var _banner := 0
+var _bursts: Array[Dictionary] = []
 
 
 func _setup() -> void:
-	_new_round()
+	trend = TOPICS.keys().pick_random()
+	_banner = 50
+	var y := FEED_TOP + 120
+	while y < BOARD.y + GAP:
+		_post(y)
+		y += GAP
 
 
-func _new_round() -> void:
-	trend_round += 1
-	sequence.clear()
-	for i in 2 + trend_round:
-		sequence.append(randi() % EMOJI.size())
-	phase = Phase.SHOW
-	_show_index = 0
-	_show_t = 40
-	_input_index = 0
-	msg = "TREND %d / %d" % [trend_round, ROUNDS]
+func multiplier() -> int:
+	return 1 + mini(floori(combo / 4.0), 3)
 
 
-func _pad_rect(i: int) -> Rect2:
-	return Rect2(GRID + Vector2(i % COLS, floori(float(i) / COLS)) * PAD, PAD)
+func viral() -> bool:
+	return combo >= VIRAL_AT
+
+
+func _post(y: float) -> void:
+	var roll := randf()
+	var kind: StringName
+	var art: Texture2D
+	if roll < 0.18:
+		kind = BAD.keys().pick_random()
+		art = BAD[kind].art
+	else:
+		kind = trend if roll < 0.55 else TOPICS.keys().pick_random()
+		art = TOPICS[kind].art.pick_random()
+	posts.append({ kind = kind, art = art, y = y, liked = false })
 
 
 func _pointer_pressed(at: Vector2) -> void:
-	if phase != Phase.INPUT:
+	if at.y < FEED_TOP:
 		return
-	var pad := -1
-	for i in EMOJI.size():
-		if _pad_rect(i).has_point(at):
-			pad = i
-	if pad < 0:
+	for p in posts:
+		if not p.liked and absf(at.y - p.y) < CARD.get_height() * CARD_ZOOM / 2.0:
+			_like(p)
+			return
+
+
+func _like(p: Dictionary) -> void:
+	p.liked = true
+	if BAD.has(p.kind):
+		score = maxi(0, score - BAD_LIKE)
+		combo = 0
+		Sfx.play(&"so_spam")
+		add_pop(Vector2(BOARD.x / 2, p.y - 20), "%s -%d" % [BAD[p.kind].says, BAD_LIKE], 40, PINK)
 		return
-	_flash = pad
-	_flash_t = 8
-	if pad != sequence[_input_index]:
-		_wrong = pad
-		end_round("FLOPPED!", false)
-		return
-	_input_index += 1
-	if _input_index < sequence.size():
-		return
-	var points := 20
-	if _input_t < sequence.size() * 45:
-		points += 5 * sequence.size()
-	score += points
-	msg = "+%d VIRAL!" % points
-	if trend_round >= ROUNDS:
-		score += 50
-		won = true
-		end_round("GONE VIRAL!")
+	var on_trend: bool = p.kind == trend
+	var gain := (FOLLOW * multiplier() * (2 if viral() else 1)) if on_trend else OFF_TREND
+	score += gain
+	if on_trend:
+		combo += 1
+		if combo == VIRAL_AT:
+			Sfx.play(&"so_viral")
+			add_pop(Vector2(BOARD.x / 2, FEED_TOP + 40), "YOU WENT VIRAL!", 60, GOLD)
+		else:
+			Sfx.play(&"so_like")
 	else:
-		phase = Phase.PAUSE
-		_show_t = 50
+		Sfx.play(&"so_like")
+	_bursts.append({ y = p.y, t = 24 })
+	add_pop(Vector2(BOARD.x / 2 + 70, p.y + 38), "+%d" % gain, 30, GOLD if on_trend else CREAM)
 
 
 func _tick() -> void:
-	if _flash_t > 0:
-		_flash_t -= 1
-		if _flash_t == 0:
-			_flash = -1
-	match phase:
-		Phase.SHOW:
-			_show_t -= 1
-			if _show_t <= 0:
-				_show_index += 1
-				if _show_index >= sequence.size():
-					phase = Phase.INPUT
-					_input_t = 0
-				else:
-					_show_t = 40
-		Phase.INPUT:
-			_input_t += 1
-			if _input_t > sequence.size() * STEP_TIME:
-				end_round("FLOPPED!", false)
-		Phase.PAUSE:
-			_show_t -= 1
-			if _show_t <= 0:
-				_new_round()
+	time -= 1
+	if time <= 0:
+		end_round("GONE VIRAL!" if score >= star_scores[1] else "TIME'S UP", score >= star_scores[0])
+		return
+	var pace := 1.0 - float(time) / TIME
+	_speed = lerpf(0.9, 2.2, pace)
+	_banner = maxi(0, _banner - 1)
+	_trend_t -= 1
+	if _trend_t <= 0:
+		_trend_t = TREND_EVERY
+		var was := trend
+		while trend == was:
+			trend = TOPICS.keys().pick_random()
+		_banner = 50
+		Sfx.play(&"so_trend")
+	for p in posts:
+		p.y -= _speed
+	# A new post joins the bottom of the feed once the last one is up far enough.
+	var last: float = posts[-1].y if not posts.is_empty() else BOARD.y
+	if last < BOARD.y + GAP / 2.0:
+		_post(last + GAP)
+	for p in posts.duplicate():
+		if p.y < FEED_TOP - CARD.get_height() * CARD_ZOOM / 2.0:
+			if p.kind == trend and not p.liked:
+				combo = 0
+			posts.erase(p)
+	for b in _bursts.duplicate():
+		b.t -= 1
+		b.y -= _speed
+		if b.t <= 0:
+			_bursts.erase(b)
 
 
 func _draw_board() -> void:
-	var feed := Rect2(GRID.x, 60, COLS * PAD.x, 150)
-	board.draw_rect(feed, Color("1c1430"))
-	var mid := BOARD.x / 2
-	match phase:
-		Phase.SHOW:
-			if _show_index < sequence.size():
-				sprite(TREND_ART[EMOJI[sequence[_show_index]]], Vector2(mid, 135), 3.2)
-				text("%d / %d" % [_show_index + 1, sequence.size()], Vector2(mid, 199), 8, DIM)
-		Phase.INPUT:
-			text("YOUR TURN!", Vector2(mid, 124), 11, Color("06d6a0"))
-			text("%d / %d" % [_input_index, sequence.size()], Vector2(mid, 153), 9, DIM)
-			var left := 1.0 - float(_input_t) / (sequence.size() * STEP_TIME)
-			var bar := Rect2(feed.position.x + 20, 180, feed.size.x - 40, 8)
-			board.draw_rect(bar, Color("241a0e"))
-			board.draw_rect(Rect2(bar.position, Vector2(bar.size.x * maxf(0, left), bar.size.y)), Color("06d6a0") if left > 0.3 else Color("ff006e"))
-		Phase.PAUSE:
-			text(msg, Vector2(mid, 139), 12, Color("ffd166"))
-	for i in EMOJI.size():
-		var rect := _pad_rect(i).grow(-4)
-		board.draw_rect(rect, Color("b3324f") if i == _wrong else Color("3a3a6e") if i == _flash else Color("241a3a"))
-		board.draw_rect(rect, Color("3a3a55"), false, 1.0)
-		sprite(TREND_ART[EMOJI[i]], rect.get_center(), 1.7)
+	board.draw_texture_rect(BACKDROP, Rect2(Vector2.ZERO, BOARD), false)
+	for p in posts:
+		_draw_post(p)
+	for b in _bursts:
+		var k: float = b.t / 24.0
+		sprite(HEART, Vector2(BOARD.x / 2, b.y), 1.2 + (1.0 - k) * 1.5, 0.0, false, Color(1, 1, 1, minf(1.0, k * 2.0)))
+	_draw_banner()
+	draw_pops(0.5, 16)
+
+
+func _draw_post(p: Dictionary) -> void:
+	var at := Vector2(BOARD.x / 2, p.y)
+	sprite(CARD, at, CARD_ZOOM)
+	var art: Texture2D = p.art
+	var zoom := PHOTO_ZOOM * 60.0 / maxf(art.get_width(), art.get_height())
+	sprite(art, at + PHOTO * CARD_ZOOM, zoom)
+	if p.liked and not BAD.has(p.kind):
+		sprite(LIKE, at + Vector2(100, 37), 0.5)
+
+
+## The trending topic, up top (the posts scroll away under it): it bounces in
+## when it changes.
+func _draw_banner() -> void:
+	board.draw_texture_rect_region(BACKDROP, Rect2(0, 0, BOARD.x, FEED_TOP), Rect2(0, 0, BACKDROP.get_width(), FEED_TOP / 2.0))
+	var drop := float(_banner) / 50.0
+	var y := 46.0 - drop * drop * 60.0
+	sprite(FIRE, Vector2(46, y), 1.0)
+	text("TRENDING", Vector2(150, y - 14), 12, INK)
+	text(TOPICS[trend].tag, Vector2(150, y + 10), 22, PINK)
+	sprite(TOPICS[trend].art[0], Vector2(BOARD.x - 54, y), 0.95)
+	if combo > 0 and not over:
+		text(("VIRAL! " if viral() else "") + "COMBO x%d" % multiplier(), Vector2(BOARD.x / 2, FEED_TOP - 8), 12, PINK if viral() else INK)
 
 
 func _hud_text() -> String:
-	return "SCORE %d    TREND %d/%d" % [score, trend_round, ROUNDS]
+	return "FOLLOWERS %d    TIME %d" % [score, ceili(maxi(0, time) / 60.0)]
