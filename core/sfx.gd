@@ -63,6 +63,10 @@ const SOUNDS := {
 	vr_crash = preload("res://assets/audio/vr_crash.wav"),
 	vr_shield = preload("res://assets/audio/vr_shield.wav"),
 	vr_star = preload("res://assets/audio/vr_star.wav"),
+	sn_beep = preload("res://assets/audio/sn_beep.wav"),
+	sn_shutter = preload("res://assets/audio/sn_shutter.wav"),
+	sn_print = preload("res://assets/audio/sn_print.wav"),
+	sn_pop = preload("res://assets/audio/sn_pop.wav"),
 }
 const BLEEP_NOTES := [523, 587, 659, 784, 880, 1047]
 const BEEP_NOTES := [330, 440, 495, 660, 880]

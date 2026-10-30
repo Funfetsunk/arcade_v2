@@ -7,7 +7,8 @@
 [node name="SnapBooth" instance=ExtResource("1")]
 script = ExtResource("2")
 game_name = "Snap Booth"
-star_scores = PackedInt32Array(100, 175, 225)
+star_scores = PackedInt32Array(120, 180, 230)
 housing = ExtResource("housing")
+score_blip = false
 title_icon = "📸"
-hint = "Tap when the photo is sharp!"
+hint = "Tap to snap when they're centred and striking a pose!"

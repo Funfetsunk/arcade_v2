@@ -5,7 +5,8 @@ the slot machine's (lever, reel tick, reel stop, nudge, win, jackpot) and
 hoops' (swish, rim, backboard, bounce, buzzer, on fire) and the coin
 pusher's (clink, spill, bonus, prize) and whack-it's (bonk, whiff, pop, clang,
 squeak, gold) the prize crane's (motor, drop, clack, prize) and the VR pod's (whoosh,
-crystal, crash, shield, star).
+crystal, crash, shield, star) and the photo booth's (beep, shutter, print,
+pop).
 
 Each is a few square or triangle notes with a quick attack and decay, in the same
 spirit as tools/render_sfx.py (the original game's own sounds).
@@ -121,3 +122,10 @@ save('vr_crystal', tone('triangle', 1760, 1760, 0.1, 0.18, 3.0) + tone('triangle
 save('vr_crash', tone('noise', 0, 0, 0.4, 0.3, 3.0) + tone('square', 120, 50, 0.4, 0.2, 3.0))
 save('vr_shield', seq(tone('triangle', 523, 1047, 0.15, 0.22, 2.0), tone('triangle', 1047, 1568, 0.15, 0.22, 2.5)))
 save('vr_star', seq(*(tone('square', f, f, 0.06, 0.18, 2.5) for f in (1047, 1319, 1568, 2093))))
+
+# Snap Booth: the countdown beep, the shutter, the strip printing and a
+# photobomber popping in.
+save('sn_beep', tone('square', 988, 988, 0.08, 0.16, 3.0))
+save('sn_shutter', tone('noise', 0, 0, 0.04, 0.25, 6.0) + np.pad(tone('noise', 0, 0, 0.03, 0.2, 6.0), (int(RATE * 0.04) - int(RATE * 0.03), 0)))
+save('sn_print', tone('square', 160, 180, 0.35, 0.06, 0.5) + tone('noise', 0, 0, 0.35, 0.04, 0.5))
+save('sn_pop', tone('triangle', 400, 1200, 0.1, 0.2, 3.0))
